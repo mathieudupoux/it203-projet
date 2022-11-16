@@ -13,6 +13,25 @@ CREATE DATABASE IF NOT EXISTS bd;
 -- ============================================================
 --   DROP TABLES                                     
 -- ============================================================
+DROP TABLE IF EXISTS bd.preference_theme;
+
+DROP TABLE IF EXISTS bd.preference_mecanique;
+
+DROP TABLE IF EXISTS bd.utilsation_theme;
+
+DROP TABLE IF EXISTS bd.utilsation_mecanique;
+
+DROP TABLE IF EXISTS bd.appreciation;
+
+DROP TABLE IF EXISTS bd.avis;
+
+DROP TABLE IF EXISTS bd.extension_configuration;
+
+DROP TABLE IF EXISTS bd.configuration;
+
+DROP TABLE IF EXISTS bd.illustrateur;
+
+DROP TABLE IF EXISTS bd.concepteur;
 
 DROP TABLE IF EXISTS bd.mecanique;
 
@@ -60,7 +79,7 @@ CREATE TABLE bd.joueur(
     pseudo CHAR(32),
     mail CHAR(32),
     CONSTRAINT 
-        -- FOREIGN KEY (numero_personne) REFERENCES personne(num_personne),
+        FOREIGN KEY (numero_personne) REFERENCES personne(numero_personne),
         PRIMARY KEY (numero_personne)
 );
 
@@ -98,6 +117,126 @@ CREATE TABLE bd.extension(
 );
 
 -- ============================================================
---   Table :                                    
+--   Table : CONCEPTEUR                                        
 -- ============================================================
+CREATE TABLE bd.concepteur(
+    numero_personne INT,
+    numero_jeu INT NOT NULL,
+    CONSTRAINT
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        PRIMARY KEY (numero_jeu,numero_personne)
+ );
 
+-- ============================================================
+--   Table : ILLUSTRATEUR                                        
+-- ============================================================
+CREATE TABLE bd.illustrateur(
+    numero_personne INT,
+    numero_jeu INT NOT NULL,
+    CONSTRAINT
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        PRIMARY KEY (numero_jeu,numero_personne)
+ );
+
+-- ============================================================
+--   Table : CONFIGURATION                                       
+-- ============================================================
+CREATE TABLE bd.configuration(
+    numero_configuration INT NOT NULL,
+    nb_joueurs INT NOT NULL,
+    numero_jeu INT,
+    CONSTRAINT
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        PRIMARY KEY (numero_configuration)
+ );
+
+-- ============================================================
+--   Table : EXTENSION_CONFIGURATION                                       
+-- ============================================================
+CREATE TABLE bd.extension_configuration(
+    numero_extension INT NOT NULL,
+    numero_configuration INT NOT NULL,
+    CONSTRAINT
+        FOREIGN KEY (numero_extension) REFERENCES extension (numero_extension),
+        FOREIGN KEY (numero_configuration) REFERENCES configuration (numero_configuration),
+        PRIMARY KEY (numero_configuration,numero_extension)
+ );
+
+-- ============================================================
+--   Table : AVIS                                       
+-- ============================================================
+CREATE TABLE bd.avis(
+    numero_avis INT NOT NULL,
+    date_avis date,
+    note INT, 
+    commentaire CHAR(255),
+    numero_configuration INT NOT NULL,
+    numero_personne INT NOT NULL,
+    CONSTRAINT
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
+        FOREIGN KEY (numero_configuration) REFERENCES configuration (numero_configuration),
+        PRIMARY KEY (numero_avis)
+ );
+
+-- ============================================================
+--   Table : APPRECIATION                                 
+-- ============================================================
+CREATE TABLE bd.appreciation(
+    numero_personne INT NOT NULL,
+    numero_avis INT NOT NULL,
+    pertinence INT,
+    CONSTRAINT
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
+        FOREIGN KEY (numero_avis) REFERENCES avis (numero_avis),
+        PRIMARY KEY (numero_personne,numero_avis)
+ );
+
+-- ============================================================
+--   Table : UTILISATION_MECANIQUE                                 
+-- ============================================================
+CREATE TABLE bd.utilsation_mecanique(
+    numero_mecanique INT NOT NULL,
+    numero_jeu INT NOT NULL,
+    CONSTRAINT
+        FOREIGN KEY (numero_mecanique) REFERENCES mecanique (numero_mecanique),
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        PRIMARY KEY (numero_mecanique,numero_jeu)
+ );
+
+ -- ============================================================
+--   Table : UTILISATION_THEME                              
+-- ============================================================
+CREATE TABLE bd.utilsation_theme(
+    numero_theme INT,
+    numero_jeu INT,
+    CONSTRAINT
+        FOREIGN KEY (numero_theme) REFERENCES theme (numero_theme),
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        PRIMARY KEY (numero_theme,numero_jeu)
+ );
+
+ -- ============================================================
+--   Table : PREFERENCE_MECANIQUE                                 
+-- ============================================================
+CREATE TABLE bd.preference_mecanique(
+    numero_personne INT NOT NULL,
+    numero_mecanique INT NOT NULL,
+    CONSTRAINT
+        FOREIGN KEY (numero_mecanique) REFERENCES mecanique (numero_mecanique),
+        FOREIGN KEY (numero_personne) REFERENCES joueur (numero_personne),
+        PRIMARY KEY (numero_mecanique,numero_personne)
+ );
+
+-- ============================================================
+--   Table : PREFERENCE_THEME                               
+-- ============================================================
+CREATE TABLE bd.preference_theme(
+    numero_personne INT NOT NULL,
+    numero_theme INT NOT NULL,
+    CONSTRAINT
+        FOREIGN KEY (numero_theme) REFERENCES theme(numero_theme),
+        FOREIGN KEY (numero_personne) REFERENCES joueur (numero_personne),
+        PRIMARY KEY (numero_theme,numero_personne)
+ );
