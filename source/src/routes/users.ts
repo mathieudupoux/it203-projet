@@ -20,9 +20,10 @@ router.get('/list', function (req, res) {
 router.post('/new', function (req, res) {
   let sql = `INSERT INTO users(name, gender) VALUES (?)`;
   let values = [
-    req.body.name,
-    req.body.gender
+    req.body.user_name,
+    req.body.user_gender
   ];
+  console.log(values);
   execute(sql, [values]).then(data => res.json(data)).catch(err => res.status(200).json(err));
 });
 
