@@ -4,7 +4,7 @@
     <!-- Navbar Brand containing the Heading -->
     <div class="navbar-brand">
       <a class="navbar-item has-background-info" href="#">
-        <h1 class="has-text-white">Sujet Jeux</h1>
+        <router-link class="navbar-item has-text-white" to="/">Sujet Jeux</router-link>
       </a>
 
       <!-- Burger Icons for responsive navbar -->
