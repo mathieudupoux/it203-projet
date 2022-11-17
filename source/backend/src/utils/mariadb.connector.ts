@@ -12,7 +12,6 @@ export const init = () => {
         pool = mysql.createPool({
             connectionLimit: dataSource.DB_CONNECTION_LIMIT,
             host: dataSource.DB_HOST,
-            // port: dataSource.DB_PORT,
             user: dataSource.DB_USER,
             password: dataSource.DB_PASSWORD,
             database: dataSource.DB_DATABASE,
