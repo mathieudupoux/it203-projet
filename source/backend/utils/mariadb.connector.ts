@@ -1,5 +1,5 @@
 import mysql from 'mysql';
-import { DATA_SOURCES } from '../config/vars.config';
+import { DATA_SOURCES } from '../config/db';
 const dataSource = DATA_SOURCES.mySqlDataSource;
 
 let pool: mysql.Pool;
