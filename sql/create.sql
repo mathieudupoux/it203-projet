@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS bd.jeu;
 --   Table : PERSONNE                                         
 -- ============================================================
 CREATE TABLE bd.personne(
-    numero_personne INT NOT NULL,
+    numero_personne INT NOT NULL AUTO_INCREMENT, 
     nom CHAR(32),
     prenom CHAR(32),
     CONSTRAINT 
@@ -61,7 +61,7 @@ CREATE TABLE bd.personne(
 --   Table : JEU                                        
 -- ============================================================
 CREATE TABLE bd.jeu(
-    numero_jeu INT NOT NULL,
+    numero_jeu INT NOT NULL AUTO_INCREMENT,
     nom CHAR(32),
     editeur CHAR(32),
     date_de_parution date,
@@ -87,7 +87,7 @@ CREATE TABLE bd.joueur(
 --   Table : MECANIQUE                                       
 -- ============================================================
 CREATE TABLE bd.mecanique(
-    numero_mecanique INT NOT NULL,
+    numero_mecanique INT NOT NULL AUTO_INCREMENT,
     mecanisme CHAR(32),
     CONSTRAINT 
         PRIMARY KEY (numero_mecanique)
@@ -97,7 +97,7 @@ CREATE TABLE bd.mecanique(
 --   Table : THEME                                      
 -- ============================================================
 CREATE TABLE bd.theme(
-    numero_theme INT NOT NULL,
+    numero_theme INT NOT NULL AUTO_INCREMENT,
     theme CHAR(32),
     CONSTRAINT 
         PRIMARY KEY (numero_theme)
@@ -107,7 +107,7 @@ CREATE TABLE bd.theme(
 --   Table : EXTENSION                                     
 -- ============================================================
 CREATE TABLE bd.extension(
-    numero_extension INT NOT NULL,
+    numero_extension INT NOT NULL AUTO_INCREMENT,
     nom CHAR(32),
     date_parution date,
     numero_jeu INT NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE bd.illustrateur(
 --   Table : CONFIGURATION                                       
 -- ============================================================
 CREATE TABLE bd.configuration(
-    numero_configuration INT NOT NULL,
+    numero_configuration INT NOT NULL AUTO_INCREMENT,
     nb_joueurs INT NOT NULL,
     numero_jeu INT,
     CONSTRAINT
@@ -168,7 +168,7 @@ CREATE TABLE bd.extension_configuration(
 --   Table : AVIS                                       
 -- ============================================================
 CREATE TABLE bd.avis(
-    numero_avis INT NOT NULL,
+    numero_avis INT NOT NULL AUTO_INCREMENT,
     date_avis date,
     note INT, 
     commentaire CHAR(255),
