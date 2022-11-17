@@ -1,5 +1,5 @@
 import express from 'express';
-import { execute } from 'utils/mariadb.connector'
+import { execute } from '../utils/mariadb.connector'
 
 const router = express.Router();
 
