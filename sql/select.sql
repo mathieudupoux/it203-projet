@@ -4,9 +4,9 @@
 
 
  -------------------------------------------------------
---Requête pour avoir toutes les infos sur tous les jeux--
+--Requête pour avoir la liste des noms de tous les jeux--
  -------------------------------------------------------
-SELECT * FROM bd.jeu;
+ SELECT bd.jeu.nom FROM bd.jeu;
 
  -------------------------------------------------------
 --Requête pour avoir toutes les infos sur un jeu "game"--
@@ -68,3 +68,39 @@ SELECT * FROM bd.jeu;
  --------------------------------------------------------------------------------------------------
 -------                                     JOUEUR                                            ------
  --------------------------------------------------------------------------------------------------
+
+  -------------------------------------------------
+--Requête pour avoir la liste des pseudos des joueurs --
+  -------------------------------------------------
+
+ SELECT bd.joueur.pseudo FROM bd.joueur;  
+
+  ------------------------------------------------------------------
+--Requête pour avoir le mail d'un joueur dont le pseudo est "pseudo"--
+  ------------------------------------------------------------------
+
+ SELECT bd.joueur.mail FROM bd.joueur WHERE bd.joueur.pseudo = pseudo;
+
+  ------------------------------------------------------------------
+--Requête pour avoir le mail d'un joueur dont le pseudo est "pseudo"--
+  ------------------------------------------------------------------
+
+ SELECT bd.joueur.mail FROM bd.joueur WHERE bd.joueur.pseudo = pseudo;
+
+  ----------------------------------------------------------------------------
+--Requête pour avoir la liste des avis d'un joueur dont le pseudo est "pseudo"--
+  ----------------------------------------------------------------------------
+
+ SELECT bd.avis.date_avis, bd.avis.note, bd.avis.commentaire FROM bd.joueur, bd.avis WHERE bd.joueur.numero_personne = bd.joueur.numero_personne && bd.joueur.pseudo = pseudo;
+
+  ------------------------------------------------------------------------------------
+--Requête pour avoir la liste des joueurs dont leur thème préféré est le thème "theme"--
+  ------------------------------------------------------------------------------------
+
+ SELECT bd.joueur.nom FROM bd.joueur, bd.preference_theme, bd.theme WHERE bd.joueur.numero_personne = bd.preference_theme.numero_personne && bd.theme.numero_theme = bd.preference_theme.numero_theme && bd.theme.theme = theme;
+
+  ------------------------------------------------------------------------------------------------
+--Requête pour avoir la liste des joueurs dont leur mécanique préféré est la mécanique "mécanique"--
+  ------------------------------------------------------------------------------------------------
+
+ SELECT bd.joueur.nom FROM bd.joueur, bd.preference_mecanique, bd.mecanique WHERE bd.joueur.numero_personne = bd.preference_mecanique.numero_personne && bd.mecanique.numero_mecanique = bd.preference_mecanique.numero_mecanique && bd.mecanique.mecanique = mecanique;
