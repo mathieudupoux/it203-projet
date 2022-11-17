@@ -2,9 +2,8 @@
   <div id="app" class="container is-max-desktop">
     <Navigation></Navigation>
     <div class="container">
-      <h1 class="title">Title</h1>
+      <router-view></router-view>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
