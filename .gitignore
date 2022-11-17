@@ -61,4 +61,5 @@ typings/
 .next
 
 # docker 
-docker-compose.yaml
+docker-compose.yml
+init
