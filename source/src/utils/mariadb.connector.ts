@@ -1,15 +1,15 @@
-import { createConnection, createPool, Pool, QueryOptions } from 'mysql';
+import mysql from 'mysql';
 import { DATA_SOURCES } from '../config/vars.config';
 const dataSource = DATA_SOURCES.mySqlDataSource;
 
-let pool: Pool;
+let pool: mysql.Pool;
 
 /**
  * generates pool connection to be used throughout the app
  */
 export const init = () => {
     try {
-        pool = createPool({
+        pool = mysql.createPool({
             connectionLimit: dataSource.DB_CONNECTION_LIMIT,
             host: dataSource.DB_HOST,
             // port: dataSource.DB_PORT,

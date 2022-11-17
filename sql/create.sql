@@ -186,7 +186,7 @@ CREATE TABLE bd.avis(
 CREATE TABLE bd.appreciation(
     numero_personne INT NOT NULL,
     numero_avis INT NOT NULL,
-    pertinence INT,
+    pertinence BOOLEAN,
     CONSTRAINT
         FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
         FOREIGN KEY (numero_avis) REFERENCES avis (numero_avis),
