@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <h1>Jeux</h1>
-
-    <h2>Jeux classés par thèmes</h2>
-
-    <p>Vous pouvez ici sélectionner les jeux enregistrés selon leur thème :</p>
-    <select class="form-control" @change="toggleThemeMenu($event)">
-      <option value="" selected disabled>Choisir un thème</option>
-      <option v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme" :value="menuItem.numero_theme">
-        {{ menuItem.theme }}
-      </option>
-    </select>
+  <div class="container">
+    <h2 class="title">Jeux classés par thèmes</h2>
+    <p>Vous pouvez ici sélectionner les jeux enregistrés selon leur thème :
+      <select class="dropdown-content" @change="toggleThemeMenu($event)">
+        <option class="dropdown-content" value="" selected disabled>Choisir un thème</option>
+        <option class="dropdown-item" v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme"
+          :value="menuItem.numero_theme">
+          {{ menuItem.theme }}
+        </option>
+      </select>
+    </p>
 
     <table class="table is-striped is-bordered mt-2 is-fullwidth">
       <thead>

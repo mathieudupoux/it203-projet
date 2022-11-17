@@ -1,15 +1,21 @@
 <template>
-  <div id="app" class="container is-max-desktop"></div>
-  <Games></Games>
+  <div id="app" class="container is-max-desktop">
+    <Navigation></Navigation>
+    <div class="container">
+      <h1 class="title">Title</h1>
+    </div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Games from "./components/games.vue";
+import Navigation from "./components/navigation.vue";
+
 
 export default defineComponent({
   name: "App",
-  components: { Games },
+  components: { Navigation },
 });
 </script>
 
