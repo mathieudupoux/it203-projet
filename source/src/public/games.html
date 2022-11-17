@@ -1,0 +1,18 @@
+<html>
+
+<head>
+  <title>Jeux</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <h1>Liste des jeux évalués</h1>
+  <p>Voici la liste des jeux filtrés par mecanisme</p>
+
+  <form action="http://127.0.0.1:3000/games/list" method="POST">
+    Mecanisme: <input type="text" name="thema_filter"> <br>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+
+</html>

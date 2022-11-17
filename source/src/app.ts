@@ -7,7 +7,8 @@ import { init } from './utils/mariadb.connector';
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
-import usersAdmin from './routes/admin';
+import adminRouter from './routes/admin';
+import gamesRouter from './routes/games';
 
 class App {
   public app: express.Application;
@@ -32,7 +33,8 @@ class App {
   private routerSetup() {
     this.app.use('/', indexRouter);
     this.app.use('/users', usersRouter);
-    this.app.use('/admin', usersAdmin);
+    this.app.use('/admin', adminRouter);
+    this.app.use('/games', gamesRouter)
   }
 
 }
