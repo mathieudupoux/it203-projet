@@ -11,7 +11,7 @@ sed -i "s/USER_PWD/dev/g" .env
 cp .env source/backend/.env
 
 # Build and start database
-sudo docker compose build
+sudo docker compose build db
 sudo docker compose up -d db adminer
 
 # Restore database
@@ -21,9 +21,5 @@ sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROO
 sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROOT_PASSWORD"' < ./sql/insert.sql;
 
 # Start interface
-cd source/frontend && npm i && npm run serve &
-cd source/backend && npm i && npm start
-
-# Kill interface with a simple Ctrl+C
-killall "npm run serve"
-killall "npm start"
+cd source/frontend && npm i && npm run serve & 
+cd source/backend && npm i && npm start 
