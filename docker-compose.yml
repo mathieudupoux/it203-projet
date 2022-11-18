@@ -1,0 +1,39 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+    volumes:
+      - ./sql:/var/lib/mariadb
+
+  backend :
+    depends_on : 
+      - db
+    build : ./source/backend
+    restart : unless-stopped
+    ports : 
+      - 3000:3000
+    env_file :
+      - .env
+  
+  frontend:
+    depends_on : 
+      - db
+    build : ./source/frontend
+    restart : unless-stopped
+    ports : 
+      - 4444:80
+    env_file :
+      - .env
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
