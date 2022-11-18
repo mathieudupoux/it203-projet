@@ -11,6 +11,7 @@ read -r -p "Nom utilisateur : " user_name
 read -r -s -p "Mot de passe utilisateur : " user_password
 echo ""
 
+sed -i "s/DATABASE_HOSTNAME/db/g" .env
 sed -i "s/ROOT_PWD/$root_password/g" .env 
 sed -i "s/USER_NAME/$user_name/g" .env
 sed -i "s/USER_PWD/$user_password/g" .env
