@@ -114,11 +114,20 @@
  SELECT bd.joueur.nom FROM bd.joueur, bd.preference_mecanique, bd.mecanique WHERE bd.joueur.numero_personne = bd.preference_mecanique.numero_personne && bd.mecanique.numero_mecanique = bd.preference_mecanique.numero_mecanique && bd.mecanique.mecanique = mecanique;
 
 
+  -------------------------------------------------------------------------
+--Requête pour avoir la liste des mécaniques qu'un joueur "joueur" préfère --
+  -------------------------------------------------------------------------
+
+ SELECT bd.mecanique.mecanique FROM bd.joueur, bd.preference_mecanique, bd.mecanique WHERE bd.joueur.numero_personne = bd.preference_mecanique.numero_personne && bd.mecanique.numero_mecanique = bd.preference_mecanique.numero_mecanique && bd.joueur.nom = joueur;
 
 
+  ---------------------------------------------------------------------
+--Requête pour avoir la liste des thèmes qu'un joueur "joueur" préfère --
+  ---------------------------------------------------------------------
 
+ SELECT bd.theme.theme FROM bd.joueur, bd.preference_theme, bd.theme WHERE bd.joueur.numero_personne = bd.preference_theme.numero_personne && bd.theme.numero_theme = bd.preference_theme.numero_theme && bd.joueur.nom = joueur;
 
-
+  
 
  --------------------------------------------------------------------------------------------------
 -------                                       AVIS                                            ------
@@ -129,3 +138,5 @@
   ----------------------------------------------------------------------------
 
  SELECT bd.avis.date_avis, bd.avis.note, bd.avis.commentaire FROM bd.joueur, bd.avis WHERE bd.joueur.numero_personne = bd.joueur.numero_personne && bd.joueur.pseudo = pseudo;
+
+
