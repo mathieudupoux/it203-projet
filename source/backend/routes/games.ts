@@ -1,5 +1,5 @@
 import express from 'express';
-import { getGamesByMechanics, getThemeNames } from '../models/gameModels';
+import { getGamesByMechanics, getThemeNames, getPlayers } from '../models/gameModels';
 const router = express.Router();
 
 /* GET theme names */

@@ -7,6 +7,11 @@ export const getThemeNames = (req: Request, res: Response) => {
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(499).json(err));
 }
 
+export const getPlayers = (req: Request, res: Response) => {
+    let sql = "SELECT numero_personne,pseudo,mail FROM joueur";
+    execute(sql, []).then(data => res.json(data)).catch(err => res.status(499).json(err));
+}
+
 export const getGamesByMechanics = (req: Request, res: Response) => {
     let sql = "SELECT J.numero_jeu, J.nom, M.mecanisme FROM jeu as J " +
         "INNER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
