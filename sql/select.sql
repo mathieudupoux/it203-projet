@@ -4,9 +4,9 @@
 
 
  -------------------------------------------------------
---Requête pour avoir toutes les infos sur tous les jeux--
+--Requête pour avoir la liste des noms de tous les jeux--
  -------------------------------------------------------
-SELECT * FROM bd.jeu;
+ SELECT bd.jeu.nom FROM bd.jeu;
 
  -------------------------------------------------------
 --Requête pour avoir toutes les infos sur un jeu "game"--
@@ -64,7 +64,79 @@ SELECT * FROM bd.jeu;
 
  SELECT * FROM bd.jeu WHERE bd.jeu.duree > duree_min && bd.jeu.duree < duree_max;
 
+  -----------------------------------------------------------------
+--Requête pour avoir la liste des jeux qui utilise le thème "theme"--
+  -----------------------------------------------------------------
+
+ SELECT bd.jeu.nom FROM bd.jeu, bd.utilisation_theme, bd.theme WHERE bd.jeu.numero_jeu = bd.utilisation_theme.numero_jeu && bd.theme.numero_theme = bd.utilisation_theme.numero_theme && bd.theme.theme = theme;
+
+
+  -------------------------------------------------------------------------
+--Requête pour avoir la liste des jeux qui utilise la mécanique "mécanique"--
+  -------------------------------------------------------------------------
+
+ SELECT bd.jeu.nom FROM bd.jeu, bd.utilisation_mecanique, bd.mecanique WHERE bd.jeu.numero_jeu = bd.utilisation_mecanique.numero_jeu && bd.mecanique.numero_mecanique = bd.utilisation_mecanique.numero_mecanique && bd.mecanique.mecanique = mecanique;
+
+
 
  --------------------------------------------------------------------------------------------------
 -------                                     JOUEUR                                            ------
  --------------------------------------------------------------------------------------------------
+
+  -------------------------------------------------
+--Requête pour avoir la liste des pseudos des joueurs --
+  -------------------------------------------------
+
+ SELECT bd.joueur.pseudo FROM bd.joueur;  
+
+  ------------------------------------------------------------------
+--Requête pour avoir le mail d'un joueur dont le pseudo est "pseudo"--
+  ------------------------------------------------------------------
+
+ SELECT bd.joueur.mail FROM bd.joueur WHERE bd.joueur.pseudo = pseudo;
+
+  ------------------------------------------------------------------
+--Requête pour avoir le mail d'un joueur dont le pseudo est "pseudo"--
+  ------------------------------------------------------------------
+
+ SELECT bd.joueur.mail FROM bd.joueur WHERE bd.joueur.pseudo = pseudo;
+
+  ------------------------------------------------------------------------------------
+--Requête pour avoir la liste des joueurs dont leur thème préféré est le thème "theme"--
+  ------------------------------------------------------------------------------------
+
+ SELECT bd.joueur.nom FROM bd.joueur, bd.preference_theme, bd.theme WHERE bd.joueur.numero_personne = bd.preference_theme.numero_personne && bd.theme.numero_theme = bd.preference_theme.numero_theme && bd.theme.theme = theme;
+
+  ------------------------------------------------------------------------------------------------
+--Requête pour avoir la liste des joueurs dont leur mécanique préféré est la mécanique "mécanique"--
+  ------------------------------------------------------------------------------------------------
+
+ SELECT bd.joueur.nom FROM bd.joueur, bd.preference_mecanique, bd.mecanique WHERE bd.joueur.numero_personne = bd.preference_mecanique.numero_personne && bd.mecanique.numero_mecanique = bd.preference_mecanique.numero_mecanique && bd.mecanique.mecanique = mecanique;
+
+
+  -------------------------------------------------------------------------
+--Requête pour avoir la liste des mécaniques qu'un joueur "joueur" préfère --
+  -------------------------------------------------------------------------
+
+ SELECT bd.mecanique.mecanique FROM bd.joueur, bd.preference_mecanique, bd.mecanique WHERE bd.joueur.numero_personne = bd.preference_mecanique.numero_personne && bd.mecanique.numero_mecanique = bd.preference_mecanique.numero_mecanique && bd.joueur.nom = joueur;
+
+
+  ---------------------------------------------------------------------
+--Requête pour avoir la liste des thèmes qu'un joueur "joueur" préfère --
+  ---------------------------------------------------------------------
+
+ SELECT bd.theme.theme FROM bd.joueur, bd.preference_theme, bd.theme WHERE bd.joueur.numero_personne = bd.preference_theme.numero_personne && bd.theme.numero_theme = bd.preference_theme.numero_theme && bd.joueur.nom = joueur;
+
+  
+
+ --------------------------------------------------------------------------------------------------
+-------                                       AVIS                                            ------
+ --------------------------------------------------------------------------------------------------
+
+  ----------------------------------------------------------------------------
+--Requête pour avoir la liste des avis d'un joueur dont le pseudo est "pseudo"--
+  ----------------------------------------------------------------------------
+
+ SELECT bd.avis.date_avis, bd.avis.note, bd.avis.commentaire FROM bd.joueur, bd.avis WHERE bd.joueur.numero_personne = bd.joueur.numero_personne && bd.joueur.pseudo = pseudo;
+
+
