@@ -1,8 +1,9 @@
 <template>
-  <div class="container">
+  <div class="block">
     <h1 class="title">Jeux</h1>
-    <h2 class="subtitle">Jeux classés par thèmes</h2>
-    <p>Vous pouvez ici sélectionner les jeux enregistrés selon leur thème :
+    Vous trouverez ici la liste des jeux recensés dans notre base de donnée. Celle-ci peut être filtrée par thème si
+    nécessaire.
+    <p>Trier par thème :
       <select class="dropdown-content" @change="toggleThemeMenu($event)">
         <option class="dropdown-content" value="" selected enabled></option>
         <option class="dropdown-item" v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme"
@@ -13,7 +14,6 @@
     </p>
 
     <div class="container">
-      Liste des jeux
       <div class="block" v-for="item in items" :key="item.numero_jeu">
         <GameView :jeu='item'></GameView>
       </div>

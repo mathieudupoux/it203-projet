@@ -61,8 +61,3 @@ export default defineComponent({
 
 })
 </script>
-
-<style>
-/* import style bulma */
-@import "~bulma/css/bulma.css";
-</style>

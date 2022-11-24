@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="container is-max-desktop">
+  <div id="app" class="block">
     <Navigation></Navigation>
-    <div class="container">
+    <div class="container is-fluid">
       <router-view></router-view>
     </div>
   </div>
