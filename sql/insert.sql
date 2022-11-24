@@ -163,9 +163,9 @@ commit;
 
 insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-09-16'  , 5 , 'Genial, nous avons passe un super moment !'                                           , 2 , 2) ;
 insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-09-15'  , 0 , 'Vraiment nul.'                                                                        , 3 , 3) ;
-insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-04-12'  , 2 , 'G pa compri le regle du bd.jeu'                                                       , 1, 1) ;
+insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-04-12'  , 2 , 'Pa compri le regle du jeu'                                                       , 1, 1) ;
 insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-03-01'  , 4 , 'Sympa mais je perds tout le temps...'                                                 , 1 , 5) ;
-insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-11-19'  , 3 , 'J avais commande le dernier FIFA a Noel et j ai eut ce bd.jeu... Bien malgre tout '   , 2 , 2) ;
+insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-11-19'  , 3 , 'J avais commande le dernier FIFA a Noel et j ai eut ce jeu... Bien malgre tout '   , 2 , 2) ;
 
 commit;
 
