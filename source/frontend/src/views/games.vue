@@ -72,9 +72,7 @@ export default defineComponent({
     // Get All Games
     async getGames() {
       try {
-        const response = await axios.post("http://localhost:3000/games/list", {
-          thema_filter: this.selectedTheme,
-        });
+        const response = await axios.get(`http://localhost:3000/games/list/${this.selectedTheme}`);
         this.items = response.data;
       } catch (err) {
         console.log(err);

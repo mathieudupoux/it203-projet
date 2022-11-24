@@ -45,7 +45,7 @@
       async getListPlayers() {
         try {
           const response = await axios.get(
-            "http://localhost:3000/users/list"
+            "http://localhost:3000/players/list"
           );
           this.items = response.data;
         } catch (err) {

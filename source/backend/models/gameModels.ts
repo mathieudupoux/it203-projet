@@ -20,7 +20,7 @@ export const getGamesByMechanics = (req: Request, res: Response) => {
         "INNER JOIN theme as T on T.numero_theme = UT.numero_theme " +
         "WHERE T.theme LIKE (?)";
     let values = [
-        req.body.thema_filter,
+        req.params.mechanic,
     ];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }

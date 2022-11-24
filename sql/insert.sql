@@ -161,7 +161,7 @@ commit;
 
 -- avis
 
-insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-09-16'  , 5 , 'Genial, nous avons passe un super moment !'                                           , 2 , 2) ;
+insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-09-16'  , 5 , 'Genial, nous avons passe un super moment !'                                           , 3 , 2) ;
 insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-09-15'  , 0 , 'Vraiment nul.'                                                                        , 3 , 3) ;
 insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-04-12'  , 2 , 'G pa compri le regle du bd.jeu'                                                       , 1, 1) ;
 insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_personne) values ( '2022-03-01'  , 4 , 'Sympa mais je perds tout le temps...'                                                 , 1 , 5) ;

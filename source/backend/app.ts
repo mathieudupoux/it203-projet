@@ -7,7 +7,8 @@ import logger from 'morgan';
 import { init } from "./utils/mariadb.connector";
 
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
+import playersRouter from './routes/players';
+import commentsRouter from './routes/comments';
 import adminRouter from './routes/admin';
 import gamesRouter from './routes/games';
 
@@ -27,7 +28,8 @@ init();
 // Router setup
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/players', playersRouter);
+app.use('/comments', commentsRouter);
 app.use('/admin', adminRouter);
 app.use('/games', gamesRouter)
 
