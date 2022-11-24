@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/themeNames', getThemeNames);
 
 /* GET games filtered by mechanics */
-router.post('/list', getGamesByMechanics);
+router.get('/list/:mechanic', getGamesByMechanics);
 
 export default router;
