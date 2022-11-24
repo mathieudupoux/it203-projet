@@ -4,7 +4,7 @@
     <h2 class="subtitle">Jeux classés par thèmes</h2>
     <p>Vous pouvez ici sélectionner les jeux enregistrés selon leur thème :
       <select class="dropdown-content" @change="toggleThemeMenu($event)">
-        <option class="dropdown-content" value="" selected disabled>Choisir un thème</option>
+        <option class="dropdown-content" value="" selected enabled></option>
         <option class="dropdown-item" v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme"
           :value="menuItem.numero_theme">
           {{ menuItem.theme }}
@@ -12,32 +12,25 @@
       </select>
     </p>
 
-    <table class="table is-striped is-bordered mt-2 is-fullwidth">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nom</th>
-          <th>Mécanique</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in items" :key="item.numero_jeu">
-          <td>{{ item.numero_jeu }}</td>
-          <td>{{ item.nom }}</td>
-          <td>{{ item.mecanisme }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container">
+      Liste des jeux
+      <div class="block" v-for="item in items" :key="item.numero_jeu">
+        <GameView :jeu='item'></GameView>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script lang="ts">
 // import axios
+import GameView from "@/components/gameView.vue";
 import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "GamesList",
+  components: { GameView },
   data() {
     return {
       themeMenuActive: false,

@@ -1,6 +1,9 @@
 import express from 'express';
-import { getGamesByMechanics, getThemeNames, getPlayers } from '../models/gameModels';
+import { getAllGames, getGamesByMechanics, getThemeNames } from '../models/gameModels';
 const router = express.Router();
+
+/* GET all games */
+router.get('/list/', getAllGames);
 
 /* GET theme names */
 router.get('/themeNames', getThemeNames);
