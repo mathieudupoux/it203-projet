@@ -4,10 +4,10 @@ import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
 
 export const getCommentsAppreciators = (req: Request, res: Response) => {
-    let sql = "SELECT * FROM joueur as J " +
-        "INNER JOIN appreciation as A on J.numero_personne=A.numero_personne " +
-        "INNER JOIN avis as C on A.numero_avis = C.numero_avis " +
-        "WHERE A.numero_avis = (?) and A.pertinence=true ";
+    let sql = "select * from bd.joueur " +
+        "inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne " +
+        "inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis " +
+        "where bd.avis.numero_avis=(?) and bd.appreciation.pertinence=true;"
     let values = [
         req.params.commentID,
     ];
