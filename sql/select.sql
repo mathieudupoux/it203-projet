@@ -255,4 +255,4 @@ from c_table
 inner join d_table on c_table.numero_avis=d_table.numero_avis
 group by c_table.numero_avis)
 as classement on bd.avis.numero_avis=classement.numero_avis
-order by classement.indice;
+order by classement.indice DESC;
