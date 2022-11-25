@@ -35,7 +35,7 @@
                     </div>
                     <button class="button js-modal-trigger" data-target="appreciators"
                         @click="openAppreciators = !openAppreciators" v-bind:class="{ 'is-active': openAppreciators }">
-                        <span>15</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
+                        <span>{{ appreciators.length }}</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
                     </button>
                 </div>
                 <div class="level-right">
