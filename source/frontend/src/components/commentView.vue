@@ -16,12 +16,26 @@
             </div>
 
             <nav class="level is-mobile">
-                <div class="level-left">
-                    <button class="button level-item">
-                        <span>15 </span>
-                        <span class="icon">
-                            <i class="fas fa-thumbs-up"></i>
-                        </span>
+                <div id="appreciators" class="level-left">
+                    <div class="modal" v-bind:class="{ 'is-active': openAppreciators }">
+                        <div class="modal-background" @click="openAppreciators = false"></div>
+                        <div class="modal-content" @click="openAppreciators = false">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h1 class="title">Joueurs ayant appréciés ce commentaire :</h1>
+                                    <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
+                                        <li>{{ a.pseudo }}</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <button class="modal-close is-large" aria-label="open"
+                            @click="openAppreciators = false"></button>
+                    </div>
+                    <button class="button js-modal-trigger" data-target="appreciators"
+                        @click="openAppreciators = !openAppreciators" v-bind:class="{ 'is-active': openAppreciators }">
+                        <span>15</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
                     </button>
                 </div>
                 <div class="level-right">
@@ -49,6 +63,7 @@ export default defineComponent({
 
     data() {
         return {
+            openAppreciators: false,
             player: String,
             appreciators: [],
             nbAppreciatons: Number,
@@ -57,6 +72,7 @@ export default defineComponent({
 
     created() {
         this.getAuthor();
+        this.getAppreciators();
     },
 
     methods: {
