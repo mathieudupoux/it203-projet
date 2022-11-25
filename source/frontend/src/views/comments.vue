@@ -4,8 +4,8 @@
     Vous trouverez ici la liste des derniers commentaires données sur la plate-forme.
 
     <div class="container">
-      <div class="block">
-        <CommentView></CommentView>
+      <div class="block" v-for="comments in commentsItems" :key="comments.numero_avis">
+        <CommentView :avis='comments'></CommentView>
       </div>
     </div>
 
@@ -24,43 +24,28 @@ export default defineComponent({
   data() {
     return {
       themeMenuActive: false,
-      themeMenuItems: [],
+      commentsItems: [],
       items: [],
       selectedTheme: "",
     };
   },
 
   created() {
-    this.getThemeNames();
+    this.getAllComments();
   },
 
   methods: {
-    toggleThemeMenu(e: any) {
-      this.selectedTheme =
-        e.target.options[e.target.options.selectedIndex].text;
-      this.getGames();
-    },
 
-    async getThemeNames() {
+    async getAllComments() {
       try {
         const response = await axios.get(
-          "http://localhost:3000/games/themeNames"
+          "http://localhost:3000/comments"
         );
-        this.themeMenuItems = response.data;
+        this.commentsItems = response.data;
       } catch (err) {
         console.log(err);
       }
-    },
-
-    // Get All Games
-    async getGames() {
-      try {
-        const response = await axios.get(`http://localhost:3000/games/list/${this.selectedTheme}`);
-        this.items = response.data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    }
   },
 });
 </script>

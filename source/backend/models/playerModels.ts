@@ -2,6 +2,12 @@ import { Request, RequestHandler } from "express";
 import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
 
+export const getPlayerById = (req: Request, res: Response) => {
+    let sql = "select * from bd.joueur where numero_personne = (?)";
+    let values = [req.params.id];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
 export const getPlayerCommentsOnPreferedGames = (req: Request, res: Response) => {
     let sql = "select * from bd.avis " +
         "inner join bd.configuration on bd.configuration.numero_configuration=bd.avis.numero_configuration " +

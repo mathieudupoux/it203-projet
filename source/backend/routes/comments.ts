@@ -1,8 +1,11 @@
 import express from 'express';
-import { getCommentsAppreciators } from '../models/commentModels';
+import { getAllComments, getCommentsAppreciators } from '../models/commentModels';
 const router = express.Router();
 
-/* GET theme names */
+/* GET appreciators by comment id */
 router.get('/:commentID/Appreciators', getCommentsAppreciators);
+
+/* GET all comments*/
+router.get('/', getAllComments);
 
 export default router;

@@ -1,13 +1,11 @@
 import express from 'express';
 import { execute } from '../utils/mariadb.connector'
-import { getPlayerCommentsOnPreferedGames, getPlayerGamesByPreferences } from '../models/playerModels';
+import { getPlayerById, getPlayerCommentsOnPreferedGames, getPlayerGamesByPreferences } from '../models/playerModels';
 
 const router = express.Router();
 
-/* GET player listing. */
-router.get('/', function (_req, res, _next) {
-  res.send('respond with a resource');
-});
+/* GET player by id. */
+router.get('/:id', getPlayerById);
 
 router.get('/list', function (req, res) {
   let sql = `SELECT * FROM joueur`;
