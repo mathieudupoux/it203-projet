@@ -22,12 +22,16 @@ export const getPlayers = (req: Request, res: Response) => {
 }
 
 export const getGamesByMechanics = (req: Request, res: Response) => {
-    let sql = "SELECT * FROM jeu as J " +
-        "INNER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
-        "INNER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
-        "INNER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu " +
-        "INNER JOIN theme as T on T.numero_theme = UT.numero_theme " +
-        "WHERE T.theme LIKE (?)";
+    let sql = "select * from bd.jeu " +
+        "inner join bd.utilsation_theme on bd.utilsation_theme.numero_jeu=bd.jeu.numero_jeu " +
+        "inner join  bd.theme on bd.theme.numero_theme=bd.utilsation_theme.numero_theme " +
+        "inner join bd.configuration on bd.configuration.numero_jeu=bd.jeu.numero_jeu " +
+        "inner join bd.avis on bd.avis.numero_configuration=bd.configuration.numero_configuration " +
+        "inner join bd.utilsation_mecanique on bd.jeu.numero_jeu=bd.utilsation_mecanique.numero_jeu " +
+        "inner join bd.mecanique on bd.mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique " +
+        "where bd.theme.theme=(?) " +
+        "group by bd.jeu.numero_jeu " +
+        "order by bd.mecanique.mecanisme;"
     let values = [
         req.params.mechanic,
     ];
