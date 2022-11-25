@@ -1,8 +1,11 @@
 <template>
   <div class="block">
-    <h1 class="title">Derniers commentaires</h1>
-    Vous trouverez ici la liste des derniers commentaires données sur la plate-forme.
-
+    <h1 class="title">Top commentaire</h1>
+    Voici le commentaire le plus jugé du site :
+    <div class="block">
+      <CommentView :avis='mostDebatedComment'></CommentView>
+    </div>
+    <h1 class="title">Commentaires récents</h1>
     <div class="container">
       <div class="block" v-for="comments in commentsItems" :key="comments.numero_avis">
         <CommentView :avis='comments'></CommentView>
@@ -23,18 +26,27 @@ export default defineComponent({
   components: { CommentView },
   data() {
     return {
-      themeMenuActive: false,
       commentsItems: [],
-      items: [],
-      selectedTheme: "",
+      mostDebatedComment: String,
     };
   },
 
   created() {
+    this.getMostDebatedComment();
     this.getAllComments();
   },
 
   methods: {
+    async getMostDebatedComment() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/comments/mostDebated"
+        );
+        this.mostDebatedComment = response.data[0];
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
     async getAllComments() {
       try {

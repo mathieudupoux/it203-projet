@@ -42,6 +42,7 @@ export default defineComponent({
 
   created() {
     this.getThemeNames();
+    this.getGames();
   },
 
   methods: {
