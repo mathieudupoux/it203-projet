@@ -140,3 +140,56 @@
  SELECT bd.avis.date_avis, bd.avis.note, bd.avis.commentaire FROM bd.joueur, bd.avis WHERE bd.joueur.numero_personne = bd.joueur.numero_personne && bd.joueur.pseudo = pseudo;
 
 
+
+--------------------------------------------------------------------------
+-------------------------- Consultation ----------------------------------
+--------------------------------------------------------------------------
+
+
+----------------------------  1  ------------------------------
+select * 
+from bd.jeu, bd.theme, bd.utilsation_theme, bd.configuration, bd.avis, bd.mecanique, bd.utilsation_mecanique
+where bd.theme.theme='Policier' 
+and bd.theme.numero_theme=bd.utilsation_theme.numero_theme
+and bd.jeu.numero_jeu=bd.utilsation_theme.numero_jeu
+and bd.avis.numero_configuration=bd.configuration.numero_configuration
+and bd.configuration.numero_jeu=bd.jeu.numero_jeu
+and bd.jeu.numero_jeu=bd.utilsation_mecanique.numero_jeu
+and bd.mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+group by bd.jeu.numero_jeu
+order by bd.mecanique.mecanisme;
+
+--- ou 
+
+select * 
+from bd.jeu
+inner join bd.utilsation_theme on bd.utilsation_theme.numero_jeu=bd.jeu.numero_jeu
+inner join  bd.theme on bd.theme.numero_theme=bd.utilsation_theme.numero_theme
+inner join bd.configuration on bd.configuration.numero_jeu=bd.jeu.numero_jeu
+inner join bd.avis on bd.avis.numero_configuration=bd.configuration.numero_configuration
+inner join bd.utilsation_mecanique on bd.jeu.numero_jeu=bd.utilsation_mecanique.numero_jeu
+inner join bd.mecanique on bd.mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+where bd.theme.theme='Policier'
+group by bd.jeu.numero_jeu
+order by bd.mecanique.mecanisme;
+
+----------------------------  2  ------------------------------
+
+select *
+from bd.avis
+inner join bd.configuration on bd.configuration.numero_configuration=bd.avis.numero_configuration
+inner join bd.jeu on bd.jeu.numero_jeu=bd.configuration.numero_jeu
+inner join bd.utilsation_mecanique on bd.utilsation_mecanique.numero_jeu=bd.jeu.numero_jeu
+inner join bd.preference_mecanique on bd.preference_mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+inner join bd.joueur on bd.preference_mecanique.numero_personne=bd.joueur.numero_personne
+where bd.joueur.numero_personne=6;
+-- réslutat qu'avec 6 pour le moment vu les données
+
+
+----------------------------  3  ------------------------------
+
+select *
+from bd.joueur
+inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne
+inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis
+where bd.avis.numero_avis=3;
