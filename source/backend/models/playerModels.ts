@@ -3,16 +3,15 @@ import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
 
 export const getPlayerCommentsOnPreferedGames = (req: Request, res: Response) => {
-    let sql = "SELECT * FROM avis as A " +
-        "INNER JOIN configuration as C on A.numero_configuration = C.numero_configuration " +
-        "INNER JOIN jeu as G on G.numero_jeu = C.numero_jeu " +
-        "INNER JOIN utilsation_mecanique as UM on G.numero_jeu=UM.numero_jeu " +
-        "INNER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
-        "INNER JOIN preference_mecanique as PU on PU.numero_mecanique=UM.numero_mecanique " +
-        "INNER JOIN joueur as J on J.numero_personne = PU.numero_personne " +
-        "WHERE J.pseudo LIKE (?)";
+    let sql = "select * from bd.avis " +
+        "inner join bd.configuration on bd.configuration.numero_configuration=bd.avis.numero_configuration " +
+        "inner join bd.jeu on bd.jeu.numero_jeu=bd.configuration.numero_jeu " +
+        "inner join bd.utilsation_mecanique on bd.utilsation_mecanique.numero_jeu=bd.jeu.numero_jeu " +
+        "inner join bd.preference_mecanique on bd.preference_mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique " +
+        "inner join bd.joueur on bd.preference_mecanique.numero_personne=bd.joueur.numero_personne " +
+        "where bd.joueur.numero_personne=(?);"
     let values = [
-        req.params.name,
+        req.params.id,
     ];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
@@ -23,9 +22,9 @@ export const getPlayerGamesByPreferences = (req: Request, res: Response) => {
         "INNER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
         "INNER JOIN preference_mecanique as PU on PU.numero_mecanique=UM.numero_mecanique " +
         "INNER JOIN joueur as J on J.numero_personne = PU.numero_personne " +
-        "WHERE J.pseudo LIKE (?)";
+        "WHERE J.numero_personne=(?)";
     let values = [
-        req.params.pseudo,
+        req.params.id,
     ];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }

@@ -25,8 +25,8 @@ router.post('/new', function (req, res) {
   execute(sql, [values]).then(data => res.json(data)).catch(err => res.status(200).json(err));
 });
 
-router.get('/getPlayerGames/:pseudo/preferedOnly', getPlayerGamesByPreferences);
+router.get('/games/:id/preferedOnly', getPlayerGamesByPreferences);
 
-router.get('/getPlayerComments/:pseudo/preferedOnly', getPlayerCommentsOnPreferedGames);
+router.get('/comments/:id/preferedOnly', getPlayerCommentsOnPreferedGames);
 
 export default router;
