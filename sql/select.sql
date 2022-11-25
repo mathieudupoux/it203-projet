@@ -229,3 +229,30 @@ inner join bd.appreciation on bd.appreciation.numero_avis=bd.avis.numero_avis
 group by bd.avis.numero_avis
 order by count(bd.appreciation.pertinence) desc
 limit 1;
+
+
+----------------------------  4  ------------------------------
+
+
+select * from bd.avis inner join
+(
+with c_table as ( select numero_avis,
+case 
+  WHEN sum(pertinence)>=1 THEN sum(pertinence)
+  ELSE 0
+end as c
+from bd.appreciation
+group by numero_avis)
+, d_table as ( select numero_avis,
+case 
+  WHEN sum(pertinence)<=-1 THEN sum(pertinence)*-1
+  ELSE 0
+end as d
+from bd.appreciation
+group by numero_avis)
+select c_table.numero_avis,(1+c_table.c)/(1+d_table.d) as indice
+from c_table
+inner join d_table on c_table.numero_avis=d_table.numero_avis
+group by c_table.numero_avis)
+as classement on bd.avis.numero_avis=classement.numero_avis
+order by classement.indice;
