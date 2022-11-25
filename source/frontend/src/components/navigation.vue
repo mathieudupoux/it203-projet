@@ -31,13 +31,14 @@
         <div id="navMenu" class="navbar-menu" v-bind:class="{ 'is-active': isOpen }">
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link"> Jeux </a>
+              <router-link class="navbar-link" to="/games"> Jeux </router-link>
               <div class="navbar-dropdown">
                 <router-link class="navbar-item" to="/games"> Voir les jeux </router-link>
                 <router-link class="navbar-item" to="/games/add"> Ajouter un jeux </router-link>
                 <a class="navbar-item"> Supprimer un jeu </a>
               </div>
             </div>
+            <router-link class="navbar-item" to="/comments"> Derniers commentaires </router-link>
             <router-link class="navbar-item" to="/players"> Joueurs </router-link>
 
             <div class="navbar-item has-dropdown is-hoverable">
