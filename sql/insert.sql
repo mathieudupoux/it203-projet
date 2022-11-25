@@ -175,6 +175,7 @@ insert into bd.appreciation values (  13 , 1 ,  1  ) ;
 insert into bd.appreciation values (   8 , 2 , -1  ) ;
 insert into bd.appreciation values (   7 , 5 , -1  ) ;
 insert into bd.appreciation values (   6 , 3 ,  1  ) ;
+insert into bd.appreciation values (   8 , 3 ,  1  ) ;
 
 commit;
 

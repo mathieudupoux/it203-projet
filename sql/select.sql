@@ -193,3 +193,39 @@ from bd.joueur
 inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne
 inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis
 where bd.avis.numero_avis=3;
+
+
+
+--------------------------------------------------------------------------
+-------------------------- Statistiques ----------------------------------
+--------------------------------------------------------------------------
+
+
+----------------------------  1  ------------------------------
+
+select count(bd.avis.numero_avis) , bd.joueur.* 
+from joueur
+inner join bd.avis on bd.avis.numero_personne=bd.joueur.numero_personne
+group by bd.joueur.numero_personne
+order by count(bd.avis.numero_avis) DESC;
+-- attention, on pourrait croire qu'il pourrait y avoir plus de joueurs, mais les autres personnes ne sont pas des joueurs !
+
+
+
+----------------------------  2  ------------------------------
+
+select * 
+from bd.avis
+order by bd.avis.date_avis DESC
+limit 3;
+
+
+
+----------------------------  3  ------------------------------
+
+select *, count(bd.appreciation.pertinence) 
+from bd.avis
+inner join bd.appreciation on bd.appreciation.numero_avis=bd.avis.numero_avis
+group by bd.avis.numero_avis
+order by count(bd.appreciation.pertinence) desc
+limit 1;
