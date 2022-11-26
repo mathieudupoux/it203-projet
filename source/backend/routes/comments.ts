@@ -9,7 +9,7 @@ router.get('/:commentID/Appreciators', getCommentsAppreciators);
 router.get('/', getAllComments);
 
 /* GET most recent comments*/
-router.get('/:count', getMostRecentComments);
+router.get('/all/:count', getMostRecentComments);
 
 /* GET most debated comment*/
 router.get('/mostDebated', getMostDebatedComment);
