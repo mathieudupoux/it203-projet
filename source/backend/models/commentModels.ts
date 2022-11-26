@@ -8,6 +8,16 @@ export const getAllComments = (req: Request, res: Response) => {
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
+export const getMostRecentComments = (req: Request, res: Response) => {
+    let sql = "select * from bd.avis " +
+        "order by bd.avis.date_avis DESC " +
+        "limit " + req.params.count + ";";
+    let values = [
+        req.params.count
+    ]
+    execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
 export const getMostDebatedComment = (req: Request, res: Response) => {
     let sql = "select *, count(bd.appreciation.pertinence) from bd.avis " +
         "inner join bd.appreciation on bd.appreciation.numero_avis=bd.avis.numero_avis " +
