@@ -31,7 +31,7 @@
         <div id="navMenu" class="navbar-menu" v-bind:class="{ 'is-active': isOpen }">
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
-              <router-link class="navbar-link" to="/games"> Jeux </router-link>
+              <router-link class="navbar-link" to=""> Jeux </router-link>
               <div class="navbar-dropdown">
                 <router-link class="navbar-item" to="/games"> Voir les jeux </router-link>
                 <router-link class="navbar-item" to="/games/add"> Ajouter un jeux </router-link>
@@ -42,7 +42,7 @@
             <router-link class="navbar-item" to="/players"> Joueurs </router-link>
 
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link"> Admininatration </a>
+              <a class="navbar-link"> Administration </a>
 
               <div class="navbar-dropdown">
                 <a class="navbar-item"> Modération </a>
