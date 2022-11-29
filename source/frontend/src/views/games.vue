@@ -27,6 +27,8 @@
 import GameView from "@/components/gameView.vue";
 import axios from "axios";
 import { defineComponent } from "vue";
+import { Theme } from '../types/Theme';
+import { Game } from '../types/Game';
 
 export default defineComponent({
   name: "GamesList",
@@ -34,8 +36,8 @@ export default defineComponent({
   data() {
     return {
       themeMenuActive: false,
-      themeMenuItems: [],
-      items: [],
+      themeMenuItems: [] as Theme[],
+      items: [] as Game[],
       selectedTheme: "",
     };
   },

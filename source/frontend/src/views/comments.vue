@@ -35,13 +35,14 @@
 import CommentView from "@/components/commentView.vue";
 import axios from "axios";
 import { defineComponent } from "vue";
+import { Comment } from '../types/Comment';
 
 export default defineComponent({
   name: "CommentList",
   components: { CommentView },
   data() {
     return {
-      commentsItems: [],
+      commentsItems: [] as Comment[],
       mostDebatedComment: String,
       nbRecentComments: 100,
     };

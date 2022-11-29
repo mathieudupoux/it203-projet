@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in items" :key="item.numero_joueur">
+        <tr v-for="item in items" :key="item.numero_personne">
           <td>{{ item.numero_personne }}</td>
           <td>{{ item.pseudo }}</td>
           <td>{{ item.mail }}</td>
@@ -28,12 +28,13 @@
 // import axios
 import axios from "axios";
 import { defineComponent } from "vue";
+import { Player } from "../types/Player";
 
 export default defineComponent({
   name: "GamesList",
   data() {
     return {
-      items: [],
+      items: [] as Player[],
     };
   },
 

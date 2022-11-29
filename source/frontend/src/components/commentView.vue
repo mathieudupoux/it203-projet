@@ -55,6 +55,8 @@
 <script lang="ts">
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import { Player } from '../types/Player';
+
 export default defineComponent({
     name: "CommentView",
     props: [
@@ -64,8 +66,8 @@ export default defineComponent({
     data() {
         return {
             openAppreciators: false,
-            player: String,
-            appreciators: [],
+            player: {} as Player,
+            appreciators: [] as Player[],
             nbAppreciatons: Number,
         }
     },
