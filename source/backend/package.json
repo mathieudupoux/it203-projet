@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "dev": "nodemon --watch src -e js,ts,json --exec \"ts-node app.ts\"",
+    "dev": "nodemon --watch . -e js,ts,json --exec \"ts-node app.ts\"",
     "build": "tsup app.ts --format cjs --clean",
     "start": "ts-node app.ts"
   },
