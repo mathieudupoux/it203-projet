@@ -45,7 +45,7 @@ export default defineComponent({
     async getListPlayers() {
       try {
         const response = await axios.get(
-          "http://localhost:3000/players/list"
+          "http://localhost:3000/players/"
         );
         this.items = response.data;
       } catch (err) {

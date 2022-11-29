@@ -2,11 +2,17 @@ import { Request, RequestHandler } from "express";
 import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
 
+export const getAllPlayers = (req: Request, res: Response) => {
+    let sql = "select * from joueur";
+    execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
 export const getPlayerById = (req: Request, res: Response) => {
-    let sql = "select * from bd.joueur where numero_personne = (?)";
+    let sql = "select * from bd.joueur where numero_personne = (?);";
     let values = [req.params.id];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+
 
 export const getPlayerCommentsOnPreferedGames = (req: Request, res: Response) => {
     let sql = "select * from bd.avis " +
@@ -34,3 +40,13 @@ export const getPlayerGamesByPreferences = (req: Request, res: Response) => {
     ];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+
+export const addNewPlayer =   (req: Request, res : Response) => {
+    let sql = `INSERT INTO joueur(pseudo, mail) VALUES (?)`;
+    let values = [
+      req.body.user_name,
+      req.body.user_gender
+    ];
+    console.log(values);
+    execute(sql, [values]).then(data => res.json(data)).catch(err => res.status(200).json(err));
+  }
