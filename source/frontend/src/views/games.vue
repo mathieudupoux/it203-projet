@@ -4,13 +4,7 @@
     Vous trouverez ici la liste des jeux recensés dans notre base de donnée. Celle-ci peut être filtrée par thème si
     nécessaire.
     <p>Trier par thème :
-      <select class="dropdown-content" @change="toggleThemeMenu($event)">
-        <option class="dropdown-content" value="" selected enabled></option>
-        <option class="dropdown-item" v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme"
-          :value="menuItem.numero_theme">
-          {{ menuItem.theme }}
-        </option>
-      </select>
+      <ThemeList v-model="selectedTheme"></ThemeList>
     </p>
 
     <div class="container">
@@ -25,46 +19,34 @@
 <script lang="ts">
 // import axios
 import GameView from "@/components/gameView.vue";
+import ThemeList from "@/components/utils/ThemeList.vue";
+
 import axios from "axios";
 import { defineComponent } from "vue";
-import { Theme } from '../types/Theme';
 import { Game } from '../types/Game';
 
 export default defineComponent({
   name: "GamesList",
-  components: { GameView },
+  components: { ThemeList, GameView },
   data() {
     return {
       themeMenuActive: false,
-      themeMenuItems: [] as Theme[],
       items: [] as Game[],
       selectedTheme: "",
     };
   },
 
   created() {
-    this.getThemeNames();
     this.getGames();
   },
 
-  methods: {
-    toggleThemeMenu(e: any) {
-      this.selectedTheme =
-        e.target.options[e.target.options.selectedIndex].text;
+  watch: {
+    selectedTheme() {
       this.getGames();
-    },
+    }
+  },
 
-    async getThemeNames() {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/games/themeNames"
-        );
-        this.themeMenuItems = response.data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-
+  methods: {
     // Get All Games
     async getGames() {
       try {

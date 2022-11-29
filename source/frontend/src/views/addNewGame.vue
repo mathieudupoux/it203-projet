@@ -21,7 +21,7 @@
     <div class="field">
       <label class="label">Date de parution</label>
       <div class="control">
-        <input class="input" v-model.lazy="item.date_de_parution" />
+        <input type="date" class="demo input" v-model.lazy="item.date_de_parution" />
       </div>
     </div>
 
@@ -39,8 +39,14 @@
       </div>
     </div>
 
-    <button class="button is-info">Soumettre</button>
+    <div class="field">
+      <label class="label">Thème</label>
+      <div class="control">
+        <ThemeList v-model="selectedTheme"></ThemeList> {{ selectedTheme }}
+      </div>
+    </div>
 
+    <button class="button is-info">Soumettre</button>
 
     <div class="notification is-info is-light">
       <button class="delete"></button>
@@ -52,26 +58,35 @@
   
 <script lang="ts">
 import { defineComponent } from "vue";
+import bulmaCalendar from 'bulma-calendar';
+import ThemeList from "@/components/utils/ThemeList.vue";
 
 
 export default defineComponent({
   data() {
     return {
-      value: '',
+      value: "",
       item: {
         nom_jeu: "",
         editeur: "",
         date_de_parution: "",
         type_de_jeu: "",
         duree_jeu: ""
-      }
+      },
+      dateTime: bulmaCalendar.attach(".date", {
+        type: "datetime"
+      }),
+      selectedTheme: "",
     };
   },
+  components: { ThemeList }
 });
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import "~bulma-calendar/dist/css/bulma-calendar.min.css";
+
 h3 {
   margin: 40px 0 0;
 }
