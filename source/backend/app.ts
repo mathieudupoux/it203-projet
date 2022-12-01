@@ -11,6 +11,8 @@ import playersRouter from './routes/players';
 import commentsRouter from './routes/comments';
 import adminRouter from './routes/admin';
 import gamesRouter from './routes/games';
+import usersRouter from './routes/users';
+
 
 // init express
 const app = express();
@@ -32,5 +34,7 @@ app.use('/players', playersRouter);
 app.use('/comments', commentsRouter);
 app.use('/admin', adminRouter);
 app.use('/games', gamesRouter)
+app.use('/users', usersRouter)
+
 
 app.listen(3000, () => console.log('Server running at http://localhost:3000'));

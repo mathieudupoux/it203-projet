@@ -22,4 +22,4 @@ sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROO
 
 # Start interface
 cd source/frontend && npm i && npm run serve & 
-cd source/backend && npm i && npm start 
+cd source/backend && npm i && npm run dev & cd .
