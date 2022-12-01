@@ -1,6 +1,8 @@
 import { Request, RequestHandler } from "express";
-import { Response } from "express-serve-static-core";
+import { Query, Response } from "express-serve-static-core";
+import { ServerResponse } from "http";
 import { execute } from "../utils/mariadb.connector";
+import mysql from "mysql";
 
 export const getAllPlayers = (req: Request, res: Response) => {
     let sql = "select * from joueur";
@@ -41,12 +43,15 @@ export const getPlayerGamesByPreferences = (req: Request, res: Response) => {
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
-export const addNewPlayer =   (req: Request, res : Response) => {
-    let sql = `INSERT INTO joueur(pseudo, mail) VALUES (?)`;
+export const addNewPlayer = (req: Request, res: Response) => {
+    let sql = /*`START TRANSACTION;`*/ `INSERT INTO personne(nom,prenom) VALUES (?,?);`;
+    /*`SELECT @id=LAST_INSERT_ID();
+    INSERT INTO joueur(numero_personne,pseudo,mail) VALUES (@id, ?, ?);`*/
     let values = [
-      req.body.user_name,
-      req.body.user_gender
+        req.body.userLastName,
+        req.body.userFirstName,
+        req.body.playerPseudo,
+        req.body.playerMail,
     ];
-    console.log(values);
-    execute(sql, [values]).then(data => res.json(data)).catch(err => res.status(200).json(err));
-  }
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
