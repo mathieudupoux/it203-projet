@@ -2,7 +2,10 @@
   <div class="block">
     <h1 class="title">Top commentaire</h1>
     Voici le commentaire le plus jugé du site :
-    <div class="block">
+    <div class="card">
+      <header class="card-header subtitle">
+        <p class="card-header-title">Game View</p>
+      </header>
       <CommentView :avis='mostDebatedComment'></CommentView>
     </div>
     <h1 class="title">Commentaires récents</h1>
@@ -23,7 +26,12 @@
         </div>
       </div>
       <div class="block" v-for="comments in commentsItems" :key="comments.numero_avis">
-        <CommentView :avis='comments'></CommentView>
+        <div class="card">
+          <header class="card-header subtitle">
+            <p class="card-header-title">Sur {{ comments.numero_configuration }}</p>
+          </header>
+          <CommentView :avis='comments'></CommentView>
+        </div>
       </div>
     </div>
 
