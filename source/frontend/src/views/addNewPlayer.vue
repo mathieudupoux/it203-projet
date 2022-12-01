@@ -76,7 +76,7 @@ export default defineComponent({
       try{
         console.log("verif arg : nom :"+this.item.nom_joueur+" prenom :"+ this.item.prenom_joueur);
         const res = await axios.post(
-          "http://localhost:3000/users/new", {nom : this.item.nom_joueur, prenom : this.item.prenom_joueur});
+          `http://localhost:3000/users/new?nom=${this.item.nom_joueur}&prenom=${this.item.prenom_joueur}`);
           console.log("My res", res);
       }catch(err){
         console.log("Erreur pour ajout d'une personne");

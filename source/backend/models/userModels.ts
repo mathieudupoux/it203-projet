@@ -9,9 +9,9 @@ export const getAllUsers = (req: Request, res: Response) => {
 }
 
 export const addNewUser = (req: Request, res: Response) => {
-    console.log("Test Please");
+    // console.log("Test Please");
     let sql = `insert into bd.personne(nom, prenom) VALUES (?,?);`;
-    execute(sql, [req.params.nom, req.params.prenom]).then(data => res.json(data)).catch(err => res.status(500).json(err));
+    execute(sql, [req.query.nom, req.query.prenom]).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
 export const getUserById = (req: Request, res: Response) => {
