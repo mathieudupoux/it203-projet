@@ -5,4 +5,7 @@ export type Comment = {
     numero_configuration: number,
     numero_personne: number
     commentaire: string
+    numero_jeu: number,
+    nom: string,
+    nbUp: string
 }

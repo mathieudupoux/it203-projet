@@ -12,9 +12,9 @@
                 <p>{{ avis.commentaire }}</p>
             </div>
         </div>
-        <nav class="level is-mobile">
-            <div id="appreciators" class="level-left">
-                <div class="modal" v-bind:class="{ 'is-active': openAppreciators }">
+        <nav class="media-right">
+            <div class="level-right">
+                <div id="appreciators" class="modal" v-bind:class="{ 'is-active': openAppreciators }">
                     <div class="modal-background" @click="openAppreciators = false"></div>
                     <div class="modal-content" @click="openAppreciators = false">
                         <div class="card">
@@ -24,17 +24,14 @@
                                     <li>{{ a.pseudo }}</li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                     <button class="modal-close is-large" aria-label="open" @click="openAppreciators = false"></button>
                 </div>
-                <button class="button js-modal-trigger" data-target="appreciators"
+                <button class="button level-item js-modal-trigger" data-target="appreciators"
                     @click="openAppreciators = !openAppreciators" v-bind:class="{ 'is-active': openAppreciators }">
-                    <span>{{ appreciators.length }}</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
+                    <span>{{ avis.nbUp }}</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
                 </button>
-            </div>
-            <div class="level-right">
                 <button class="button level-item is-info">
                     <span class="icon"><i class="fas fa-edit"></i></span>
                 </button>
@@ -79,6 +76,9 @@ export default defineComponent({
                     `http://localhost:3000/players/${this.avis.numero_personne}`
                 );
                 this.player = response.data[0];
+                if (this.player.pseudo === "") {
+                    this.player.pseudo = "Unknown"
+                }
             } catch (err) {
                 console.log(err);
             }

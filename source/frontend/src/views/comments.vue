@@ -4,10 +4,12 @@
     Voici le commentaire le plus jugé du site :
     <div class="card">
       <header class="card-header subtitle">
-        <p class="card-header-title">Game View</p>
+        <p class="card-header-title">Sur {{ mostDebatedComment.nom }} :</p>
       </header>
       <CommentView :avis='mostDebatedComment'></CommentView>
     </div>
+  </div>
+  <div class="block">
     <h1 class="title">Commentaires récents</h1>
 
     <div class="container">
@@ -25,12 +27,12 @@
           </div>
         </div>
       </div>
-      <div class="block" v-for="comments in commentsItems" :key="comments.numero_avis">
+      <div class="block" v-for="comment in commentsItems" :key="comment.numero_avis">
         <div class="card">
           <header class="card-header subtitle">
-            <p class="card-header-title">Sur {{ comments.numero_configuration }}</p>
+            <p class="card-header-title">Sur {{ comment.nom }} :</p>
           </header>
-          <CommentView :avis='comments'></CommentView>
+          <CommentView :avis='comment'></CommentView>
         </div>
       </div>
     </div>
@@ -51,7 +53,7 @@ export default defineComponent({
   data() {
     return {
       commentsItems: [] as Comment[],
-      mostDebatedComment: String,
+      mostDebatedComment: {} as Comment,
       nbRecentComments: 100,
     };
   },
