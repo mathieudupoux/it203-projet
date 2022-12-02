@@ -48,9 +48,3 @@ export const addNewPlayer = (req: Request, res: Response) => {
     let values = [req.query.id,req.query.pseudo, req.query.mail];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
-
-export const deletePlayer = (req: Request, res: Response) => {
-    let sql =`INSERT INTO joueur(numero_personne,pseudo,mail) VALUES (?,?,?);`;
-    let values = [req.query.id,req.query.pseudo, req.query.mail];
-    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
-}

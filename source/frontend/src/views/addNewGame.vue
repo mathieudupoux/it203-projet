@@ -58,8 +58,8 @@
   
 <script lang="ts">
 import { defineComponent } from "vue";
-import bulmaCalendar from 'bulma-calendar';
-import ThemeList from "@/components/utils/ThemeList.vue";
+import ThemeList from "../components/utils/ThemeList.vue";
+import bulmaCalendar from "bulma-calendar";
 
 
 export default defineComponent({
@@ -85,7 +85,7 @@ export default defineComponent({
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import "~bulma-calendar/dist/css/bulma-calendar.min.css";
+/* @import "~bulma-calendar/dist/css/bulma-calendar.min.css"; */
 
 h3 {
   margin: 40px 0 0;
