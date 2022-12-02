@@ -11,8 +11,8 @@ sed -i "s/USER_PWD/dev/g" .env
 cp .env source/backend/.env
 
 # Build and start database
-sudo docker-compose build db
-sudo docker-compose up -d db adminer
+sudo docker compose build db
+sudo docker compose up -d db adminer
 
 # Restore database
 echo "Wait for 5 second to finish installation before restore database"
