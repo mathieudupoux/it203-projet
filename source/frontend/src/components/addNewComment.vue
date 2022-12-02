@@ -29,9 +29,9 @@
       <label class="label">Configurations disponibles</label>
       <select class="dropdown-content" v-model="item.numero_configuration">
         <option class="dropdown-content" value="" selected enabled></option>
-        <option class="dropdown-item" v-for"config in configList" :key="config.numero_configuration"
+        <option class="dropdown-item" v-for="config in configList" :key="config.numero_configuration"
           :value="config.numero_configuration">
-          {{ (config.nomJeu }} "avec l'extension" {{ config.nomExtension }}
+          {{ config.jeu.numero_jeu }} "avec l'extension" {{ config.extension.nom }}
         </option>
       </select>
     </div>
@@ -56,6 +56,7 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import { Comment } from "../types/Comment";
 import { Player } from "../types/Player";
+import { Config } from "../types/Config";
 
 export default defineComponent({
   data() {
