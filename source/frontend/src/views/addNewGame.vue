@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <button class="button is-info">Soumettre</button>
+    <button class="button is-info" v-on:click='addGame'>Soumettre</button>
 
 
     <div class="notification is-info is-light">
@@ -75,8 +75,7 @@ export default defineComponent({
   methods: {
     async addGame() {
       try {
-        const response = await axios.get(`http://localhost:3000/games/add`);
-        this.item = response.data;
+        const response = await axios.post(`http://localhost:3000/games/add`,this.item);
       } catch (err) {
         console.log(err);
       }
@@ -84,7 +83,7 @@ export default defineComponent({
   },
 });
 </script>
-  
+
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
