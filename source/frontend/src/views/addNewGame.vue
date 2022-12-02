@@ -42,7 +42,7 @@
     <div class="field">
       <label class="label">Thème</label>
       <div class="control">
-        <ThemeList v-model="selectedTheme"></ThemeList> {{ selectedTheme }}
+        <ThemeCheckBox v-model="selectedTheme"></ThemeCheckBox> {{ selectedTheme }}
       </div>
     </div>
 
@@ -59,12 +59,13 @@
 <script lang="ts">
 import axios from "axios";
 import { defineComponent } from "vue";
-import ThemeList from "../components/utils/ThemeList.vue";
-import bulmaCalendar from "bulma-calendar";
+import bulmaCalendar from 'bulma-calendar';
+import ThemeCheckBox from "@/components/utils/ThemeCheckbox.vue";
 
 
 export default defineComponent({
   name: "addGameRequest",
+  components: { ThemeCheckBox },
   data() {
     return {
       value: "",
@@ -88,7 +89,7 @@ export default defineComponent({
   methods: {
     async addGame() {
       try {
-        const response = await axios.post(`http://localhost:3000/games/add`,this.item);
+        await axios.post(`http://localhost:3000/games/add`, this.item);
       } catch (err) {
         console.log(err);
       }

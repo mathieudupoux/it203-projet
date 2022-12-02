@@ -21,6 +21,11 @@
                 </ul>
             </div>
         </div>
+        <div class="card-content">
+            <div class="content">
+                <NewComment></NewComment>
+            </div>
+        </div>
         <footer class="card-footer buttons">
             <button href="#" class="button card-footer-item is-info is-light is-rounded">Modifier</button>
             <button href="#" class="button card-footer-item is-danger is-rounded">Supprimer</button>
@@ -30,8 +35,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import NewComment from "./addNewComment.vue"
 export default defineComponent({
     name: "GameView",
+    components: { NewComment },
     props: [
         "jeu",
         "type_de_jeu",
