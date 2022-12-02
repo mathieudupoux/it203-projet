@@ -51,13 +51,14 @@
 </template>
   
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 
 
 export default defineComponent({
+  name: "addGameRequest",
   data() {
     return {
-      value: '',
       item: {
         nom_jeu: "",
         editeur: "",
@@ -66,6 +67,20 @@ export default defineComponent({
         duree_jeu: ""
       }
     };
+  },
+  created() {
+    this.addGame();
+  },
+
+  methods: {
+    async addGame() {
+      try {
+        const response = await axios.get(`http://localhost:3000/games/add`);
+        this.item = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 });
 </script>
@@ -90,3 +105,4 @@ a {
   color: #42b983;
 }
 </style>
+

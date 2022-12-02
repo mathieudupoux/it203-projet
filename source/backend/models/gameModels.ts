@@ -37,3 +37,10 @@ export const getGamesByMechanics = (req: Request, res: Response) => {
     ];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+export const addGame = (req: Request, res: Response) => {
+    let sql = "INSERT INTO bd.jeu (nom, editeur, date_de_parution, type_de_jeu, duree) VALUES ((?), (?), (?) , (?), (?)); commit;";
+    let values = [
+        req.params.data[1],
+    ]
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(499).json(err));
+}
