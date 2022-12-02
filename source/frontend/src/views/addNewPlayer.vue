@@ -62,24 +62,35 @@ export default defineComponent({
     
   },
 
-  // created() {
-  //   this.postNewUser();
-  // },
-
   methods : {
     notif(){
       console.log("Le bouton a été activé");
       console.log(this.item);
-      this.postNewUser();
+      this.postNewUser().then(this.postNewPlayer,()=>{console.log("Probleme")});
+
     },
     async postNewUser() {
       try{
         console.log("verif arg : nom :"+this.item.nom_joueur+" prenom :"+ this.item.prenom_joueur);
         const res = await axios.post(
           `http://localhost:3000/users/new?nom=${this.item.nom_joueur}&prenom=${this.item.prenom_joueur}`);
-          console.log("My res", res);
+        console.log("My res", res);
+        console.log("My id :",res.data.insertId)
+        return res.data.insertId;
       }catch(err){
         console.log("Erreur pour ajout d'une personne");
+      }
+    },
+
+
+
+    async postNewPlayer(id : string) {
+      try{
+        const res = await axios.post(
+          `http://localhost:3000/players/new?pseudo=${this.item.pseudo}&mail=${this.item.mail}&id=${id}`);
+          console.log("My res", res);
+      }catch(err){
+        console.log("Erreur pour ajout d'un joueur");
       }
     },
   }
