@@ -156,6 +156,7 @@ insert into bd.configuration (nb_joueurs, numero_jeu) values ( 4 ,  1  ) ;
 insert into bd.configuration (nb_joueurs, numero_jeu) values ( 2 ,  2  ) ;
 insert into bd.configuration (nb_joueurs, numero_jeu) values ( 5 ,  2  ) ;
 insert into bd.configuration (nb_joueurs, numero_jeu) values ( 3 ,  3  ) ;
+insert into bd.configuration (nb_joueurs, numero_jeu) values ( 3 ,  6  ) ;
 
 commit;
 
