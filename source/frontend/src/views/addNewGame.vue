@@ -39,6 +39,13 @@
       </div>
     </div>
 
+    <div class="field">
+      <label class="label">Thème</label>
+      <div class="control">
+        <ThemeCheckBox v-model="selectedTheme"></ThemeCheckBox> {{ selectedTheme }}
+      </div>
+    </div>
+    
     <button class="button is-info" v-on:click='addGame'>Soumettre</button>
 
 
