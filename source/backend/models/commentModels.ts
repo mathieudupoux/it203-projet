@@ -52,3 +52,16 @@ export const getMainGameFromComment = (req: Request, res: Response) => {
     ]
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(499).json(err));
 }
+
+export const addCommentOnConfig = (req: Request, res: Response) => {
+    let sql = "INSERT INTO bd.avis(date_avis,note,commentaire,numero_configuration,numero_personne) VALUES (?,?,?,?,?);";
+    let values = [
+        req.body.dateTime,
+        req.body.mark,
+        req.body.comment,
+        req.body.configID,
+        req.body.playerID
+    ];
+    console.log(values);
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}

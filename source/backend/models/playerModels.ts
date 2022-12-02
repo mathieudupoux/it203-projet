@@ -44,9 +44,7 @@ export const getPlayerGamesByPreferences = (req: Request, res: Response) => {
 }
 
 export const addNewPlayer = (req: Request, res: Response) => {
-    let sql = /*`START TRANSACTION;`*/ `INSERT INTO personne(nom,prenom) VALUES (?,?);`;
-    /*`SELECT @id=LAST_INSERT_ID();
-    INSERT INTO joueur(numero_personne,pseudo,mail) VALUES (@id, ?, ?);`*/
+    let sql = "START TRANSACTION; INSERT INTO personne(nom,prenom) VALUES (?,?); SELECT @id=LAST_INSERT_ID(); INSERT INTO joueur(numero_personne,pseudo,mail) VALUES (@id, ?, ?);"
     let values = [
         req.body.userLastName,
         req.body.userFirstName,
