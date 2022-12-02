@@ -37,3 +37,8 @@ export const getGamesByMechanics = (req: Request, res: Response) => {
     ];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+export const addGame = (req: Request, res: Response) => {
+    let sql = `INSERT INTO bd.jeu (nom, editeur, date_de_parution, type_de_jeu, duree) VALUES (?,?,?,?,?)`;
+    let values = [req.query.nom_jeu,req.query.editeur,req.query.date_de_parution,req.query.type_de_jeu,req.query.duree_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}

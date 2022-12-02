@@ -57,12 +57,14 @@
 </template>
   
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 import ThemeList from "../components/utils/ThemeList.vue";
 import bulmaCalendar from "bulma-calendar";
 
 
 export default defineComponent({
+  name: "addGameRequest",
   data() {
     return {
       value: "",
@@ -79,10 +81,22 @@ export default defineComponent({
       selectedTheme: "",
     };
   },
-  components: { ThemeList }
+  created() {
+    this.addGame();
+  },
+
+  methods: {
+    async addGame() {
+      try {
+        const response = await axios.post(`http://localhost:3000/games/add`,this.item);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
 });
 </script>
-  
+
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 /* @import "~bulma-calendar/dist/css/bulma-calendar.min.css"; */
@@ -105,3 +119,4 @@ a {
   color: #42b983;
 }
 </style>
+
