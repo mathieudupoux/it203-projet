@@ -7,5 +7,6 @@ export type Comment = {
     commentaire: string
     numero_jeu: number,
     nom: string,
-    nbUp: string
+    nbUp: string,
+    indice: number,
 }

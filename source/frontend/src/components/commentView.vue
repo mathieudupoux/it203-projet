@@ -13,26 +13,36 @@
             </div>
         </div>
         <nav class="media-right">
-            <div class="level-right">
-                <div class="level-item">
-                    <Popper :hover="true" class="container" :disabled="avis.nbUp == 0">
-                        <span :hover="openAppreciators">{{ avis.nbUp }} jugements</span>
-                        <template #content>
-                            <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
-                                <li>{{ a.pseudo }}</li>
-                            </ul>
-                        </template>
-                    </Popper>
+            <div class="level">
+                <div class="level-right">
+                    <div class="level-item">
+                        <Popper :hover="true" class="container" :disabled="avis.nbUp == 0">
+                            <span :hover="openAppreciators">{{ avis.nbUp }} jugements</span>
+                            <template #content>
+                                <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
+                                    <li>{{ a.pseudo }}</li>
+                                </ul>
+                            </template>
+                        </Popper>
+                    </div>
+                    <button class="button level-item">
+                        <span>{{ avis.indice }}</span><span class="icon"><i class="fas fa-star-half-stroke"></i></span>
+                    </button>
+                    <div CLASS="level-item">
+                        <button class="button is-primary is-outlined">
+                            <span class="icon"><i class="fas fa-thumbs-up"></i></span>
+                        </button>
+                        <button class="button is-danger is-outlined">
+                            <span class="icon"><i class="fas fa-thumbs-down"></i></span>
+                        </button>
+                    </div>
+                    <button class="button level-item is-info">
+                        <span class="icon"><i class="fas fa-edit"></i></span>
+                    </button>
+                    <button class="button level-item is-danger">
+                        <span class="icon"><i class="fas fa-trash"></i></span>
+                    </button>
                 </div>
-                <button class="button level-item">
-                    <span>{{ avis.nbUp }}</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
-                </button>
-                <button class="button level-item is-info">
-                    <span class="icon"><i class="fas fa-edit"></i></span>
-                </button>
-                <button class="button level-item is-danger">
-                    <span class="icon"><i class="fas fa-trash"></i></span>
-                </button>
             </div>
         </nav>
     </article>

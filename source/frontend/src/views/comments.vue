@@ -10,8 +10,23 @@
     </div>
   </div>
   <div class="block">
-    <h1 class="title">Commentaires récents</h1>
-
+    <h1 class="title">Tous les commentaires</h1>
+    <div class="tabs is-centered">
+      <ul>
+        <li :class="viewMostRecent" @click="getMostRecentComments()">
+          <a>
+            <span>Les plus récents</span>
+            <span class="icon is-small"><i class="fas fa-clock" aria-hidden="true"></i></span>
+          </a>
+        </li>
+        <li :class="viewMostReliable" @click="getMostReliableComments()">
+          <a>
+            <span>Les plus fiables</span>
+            <span class="icon is-small"><i class="far fa-star-half-stroke" aria-hidden="true"></i></span>
+          </a>
+        </li>
+      </ul>
+    </div>
     <div class="container">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
@@ -52,6 +67,8 @@ export default defineComponent({
   components: { CommentView },
   data() {
     return {
+      viewMostRecent: "is-active",
+      viewMostReliable: "",
       commentsItems: [] as Comment[],
       mostDebatedComment: {} as Comment,
       nbRecentComments: 100,
@@ -60,10 +77,11 @@ export default defineComponent({
 
   created() {
     this.getMostDebatedComment();
-    this.getMostRecentComments();
+    this.getMostReliableComments();
   },
 
   methods: {
+
     async getMostDebatedComment() {
       try {
         const response = await axios.get(
@@ -80,6 +98,21 @@ export default defineComponent({
         const response = await axios.get(
           `http://localhost:3000/comments/all/mostRecent/${this.nbRecentComments}`
         );
+        this.viewMostRecent = "is-active";
+        this.viewMostReliable = "";
+        this.commentsItems = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async getMostReliableComments() {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/comments/all/mostReliable/`
+        );
+        this.viewMostRecent = "";
+        this.viewMostReliable = "is-active";
         this.commentsItems = response.data;
       } catch (err) {
         console.log(err);
