@@ -56,12 +56,7 @@ export default defineComponent({
         formatDate(value: string) {
             if (value != "") {
                 const d = new Date(value);
-                console.log(d)
-                const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Jullet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-                const year = d.getFullYear();
-                const month = d.getMonth();
-                const day = d.getDay();
-                return day.toString() + " " + months[month] + " " + year.toString();
+                return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' }).format(d);
             }
         },
     },

@@ -98,13 +98,8 @@ export default defineComponent({
         getDate() {
             const value = this.avis.date_avis;
             if (value) {
-                const d = new Date(value);
-                console.log(d)
-                const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Jullet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-                const year = d.getFullYear();
-                const month = d.getMonth();
-                const day = d.getDay();
-                return day.toString() + " " + months[month] + " " + year.toString();
+                const d = new Date(this.avis.date_avis);
+                return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Paris' }).format(d);
             }
         },
     }

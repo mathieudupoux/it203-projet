@@ -82,7 +82,7 @@ export default defineComponent({
 
     getCurrentDate() {
       let d = new Date;
-      return d.toISOString().slice(0, 10) + " " + d.toISOString().slice(12, 19);
+      return d.toISOString().slice(0, 10) + " " + d.toISOString().slice(11, 19);
     },
 
     async getConfigList() {
