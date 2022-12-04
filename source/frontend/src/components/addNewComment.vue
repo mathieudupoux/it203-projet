@@ -1,44 +1,73 @@
 <template>
 
-
   <div class="box">
-    <h1 class="subtitle">Commenter</h1>
+    <article class="media">
+      <div class="media-content">
+        <div class="field">
+          <p class="control">
+            <textarea class="textarea" placeholder="Votre commentaire" v-model="item.commentaire"></textarea>
+          </p>
+        </div>
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <p class="control subtitle"><label class="label">Joueur</label></p>
+            </div>
+            <div class="level-item">
+              <div class="field">
+                <p class="control">
+                  <select class="dropdown-content" v-model="item.numero_personne">
+                    <option class="dropdown-item" v-for="player in players" :key="player.numero_personne"
+                      :value="player.numero_personne">
+                      {{ player.pseudo }}
+                    </option>
+                  </select>
+                </p>
+              </div>
+            </div>
 
+            <div class="level-item">
+              <p class="control"><label class="label">Note</label></p>
+            </div>
+            <div class="level-item">
+              <div class="field">
+                <p class="control">
+                  <select class="dropdown-content" v-model="item.note">
+                    <option class="dropdown-item" v-for="n in 21" :key="n" :value="(n - 1)">
+                      {{ n - 1 }}
+                    </option>
+                  </select>
+                </p>
+              </div>
+            </div>
+
+            <div class="level-item">
+              <p class=control><label class="label">Configurations disponibles</label></p>
+            </div>
+            <div class="level-item">
+              <div class="field">
+                <p class="control">
+                  <select class="dropdown-content" v-model="item.numero_configuration">
+                    <option class="dropdown-item" v-for="config in configList" :key="config.numero_configuration"
+                      :value="config.numero_configuration">
+                      {{ config.nomJeu }} avec l'extension {{ config.nomExtension }}
+                    </option>
+                  </select>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="level-right">
+            <div class="level-item">
+
+              <button class="button is-info" v-on:click="notif">Commenter</button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </article>
     <div class="field">
-      <label class="label">Joueur</label>
-      <select class="dropdown-content" v-model="item.numero_personne">
-        <option class="dropdown-item" v-for="player in players" :key="player.numero_personne"
-          :value="player.numero_personne">
-          {{ player.pseudo }}
-        </option>
-      </select>
     </div>
-
-    <div class="field">
-      <label class="label">Note</label>
-      <select class="dropdown-content" v-model="item.note">
-        <option class="dropdown-item" v-for="n in 21" :key="n" :value="(n - 1)">
-          {{ n - 1 }}
-        </option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label class="label">Configurations disponibles</label>
-      <select class="dropdown-content" v-model="item.numero_configuration">
-        <option class="dropdown-item" v-for="config in configList" :key="config.numero_configuration"
-          :value="config.numero_configuration">
-          {{ config.nomJeu }} avec l'extension {{ config.nomExtension }}
-        </option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="label">Commentaire</label>
-      <textarea class="textarea" placeholder="Votre commentaire" v-model="item.commentaire"></textarea>
-    </div>
-
-    <button class="button is-info" v-on:click="notif">Commenter</button>
-
 
     <div class="notification is-info is-light">
       <button class="delete"></button>
