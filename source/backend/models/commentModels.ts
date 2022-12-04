@@ -22,6 +22,32 @@ export const getMostRecentComments = (req: Request, res: Response) => {
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
+export const getMostReliableComments = (req: Request, res: Response) => {
+    let sql = `select * from bd.avis inner join
+    (
+    with c_table as ( select numero_avis,
+    case 
+      WHEN sum(pertinence)>=1 THEN sum(pertinence)
+      ELSE 0
+    end as c
+    from bd.appreciation
+    group by numero_avis)
+    , d_table as ( select numero_avis,
+    case 
+      WHEN sum(pertinence)<=-1 THEN sum(pertinence)*-1
+      ELSE 0
+    end as d
+    from bd.appreciation
+    group by numero_avis)
+    select c_table.numero_avis,(1+c_table.c)/(1+d_table.d) as indice
+    from c_table
+    inner join d_table on c_table.numero_avis=d_table.numero_avis
+    group by c_table.numero_avis)
+    as classement on bd.avis.numero_avis=classement.numero_avis
+    order by classement.indice DESC;`;
+    execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
 export const getMostDebatedComment = (req: Request, res: Response) => {
     let sql = `select bd.avis.*, count(bd.appreciation.pertinence) as nbUp, jeu.numero_jeu, jeu.nom from bd.avis
     inner join bd.appreciation on bd.appreciation.numero_avis=bd.avis.numero_avis

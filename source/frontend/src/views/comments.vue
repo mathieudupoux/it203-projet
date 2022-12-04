@@ -78,7 +78,7 @@ export default defineComponent({
     async getMostRecentComments() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/comments/all/${this.nbRecentComments}`
+          `http://localhost:3000/comments/all/mostRecent/${this.nbRecentComments}`
         );
         this.commentsItems = response.data;
       } catch (err) {
