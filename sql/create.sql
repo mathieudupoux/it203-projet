@@ -163,7 +163,7 @@ CREATE TABLE bd.extension_configuration(
         FOREIGN KEY (numero_configuration) REFERENCES configuration (numero_configuration),
         PRIMARY KEY (numero_configuration,numero_extension)
  );
-
+ 
 -- ============================================================
 --   Table : AVIS                                       
 -- ============================================================
