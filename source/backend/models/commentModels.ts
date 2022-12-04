@@ -9,9 +9,11 @@ export const getAllComments = (req: Request, res: Response) => {
 }
 
 export const getMostRecentComments = (req: Request, res: Response) => {
-    let sql = `select bd.avis.*, jeu.numero_jeu, jeu.nom from bd.avis
+    let sql = `select bd.avis.*, count(bd.appreciation.pertinence) as nbUp, jeu.numero_jeu, jeu.nom from bd.avis
+    left join bd.appreciation using(numero_avis)
     inner join bd.configuration using(numero_configuration)
     inner join bd.jeu using(numero_jeu)
+    group by bd.avis.numero_avis
     order by bd.avis.date_avis DESC
     limit ${req.params.count};`;
     let values = [

@@ -20,9 +20,11 @@
                         <div class="card">
                             <div class="card-content">
                                 <h1 class="title">Joueurs ayant appréciés ce commentaire :</h1>
+                                <p>
                                 <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
                                     <li>{{ a.pseudo }}</li>
                                 </ul>
+                                </p>
                             </div>
                         </div>
                     </div>
