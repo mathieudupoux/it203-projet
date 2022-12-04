@@ -2,12 +2,11 @@
 
 
   <div class="box">
-    <h1 class="title">Commenter</h1>
+    <h1 class="subtitle">Commenter</h1>
 
     <div class="field">
       <label class="label">Joueur</label>
       <select class="dropdown-content" v-model="item.numero_personne">
-        <option class="dropdown-content" value="" selected enabled></option>
         <option class="dropdown-item" v-for="player in players" :key="player.numero_personne"
           :value="player.numero_personne">
           {{ player.pseudo }}
@@ -18,8 +17,7 @@
     <div class="field">
       <label class="label">Note</label>
       <select class="dropdown-content" v-model="item.note">
-        <option class="dropdown-content" value="" selected enabled></option>
-        <option class="dropdown-item" v-for="n in 21" :key="n" :value="n">
+        <option class="dropdown-item" v-for="n in 21" :key="n" :value="(n - 1)">
           {{ n - 1 }}
         </option>
       </select>
@@ -28,10 +26,9 @@
     <div class="field">
       <label class="label">Configurations disponibles</label>
       <select class="dropdown-content" v-model="item.numero_configuration">
-        <option class="dropdown-content" value="" selected enabled></option>
         <option class="dropdown-item" v-for="config in configList" :key="config.numero_configuration"
           :value="config.numero_configuration">
-          {{ config.jeu.numero_jeu }} "avec l'extension" {{ config.extension.nom }}
+          {{ config.nomJeu }} avec l'extension {{ config.nomExtension }}
         </option>
       </select>
     </div>
@@ -59,6 +56,9 @@ import { Player } from "../types/Player";
 import { Config } from "../types/Config";
 
 export default defineComponent({
+
+  props: ["mainGame"],
+
   data() {
     return {
       configList: [] as Array<Config>,
@@ -70,6 +70,7 @@ export default defineComponent({
 
   created() {
     this.getPlayers();
+    this.getConfigList();
   },
 
   methods: {
@@ -80,8 +81,13 @@ export default defineComponent({
     },
 
     getCurrentDate() {
-      let currentDate = new Date;
-      return currentDate.toISOString();
+      let d = new Date;
+      return d.toISOString().slice(0, 10) + " " + d.toISOString().slice(12, 19);
+    },
+
+    async getConfigList() {
+      const res = await axios.get(`http://localhost:3000/games/config/${this.mainGame}`);
+      this.configList = res.data;
     },
 
     async getPlayers() {
@@ -91,8 +97,7 @@ export default defineComponent({
 
     async postNewComment() {
       try {
-        let currentDate = new Date;
-        this.item.date_avis = currentDate.toISOString();
+        this.item.date_avis = this.getCurrentDate();
         console.log("verif arg : note :" + this.item.note + " avis :" + this.item.commentaire);
         const res = await axios.post(
           `http://localhost:3000/comments/new`, this.item);

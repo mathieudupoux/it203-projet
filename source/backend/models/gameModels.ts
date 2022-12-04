@@ -23,11 +23,12 @@ export const getPlayers = (req: Request, res: Response) => {
 }
 
 export const getConfigFromMainGame = (req: Request, res: Response) => {
-    let sql = `SELECT bd.C.*, J.*, E.* FROM configuration as C
+    let sql = `SELECT C. numero_configuration, J.numero_jeu, J.nom as nomJeu, E.numero_extension, E.nom as nomExtension FROM configuration as C
     INNER JOIN extension_configuration as EC ON EC.numero_configuration = C.numero_configuration
     INNER JOIN extension as E ON E.numero_extension=EC.numero_extension
     INNER JOIN jeu as J on C.numero_jeu = J.numero_jeu
-    WHERE J.numero_jeu = (?)`;
+    WHERE J.numero_jeu = (?)`
+
     let values = [
         req.params.numero_jeu,
     ];

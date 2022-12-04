@@ -23,7 +23,7 @@
         </div>
         <div class="card-content">
             <div class="content">
-                <NewComment></NewComment>
+                <NewComment :mainGame='jeu.numero_jeu'></NewComment>
             </div>
         </div>
         <footer class="card-footer buttons">
