@@ -1,3 +1,4 @@
+import { JsonWebKeyInput } from "crypto";
 import { Request, RequestHandler } from "express";
 import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
@@ -21,6 +22,19 @@ export const getPlayers = (req: Request, res: Response) => {
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(499).json(err));
 }
 
+export const getConfigFromMainGame = (req: Request, res: Response) => {
+    let sql = `SELECT bd.C.*, J.*, E.* FROM configuration as C
+    INNER JOIN extension_configuration as EC ON EC.numero_configuration = C.numero_configuration
+    INNER JOIN extension as E ON E.numero_extension=EC.numero_extension
+    INNER JOIN jeu as J on C.numero_jeu = J.numero_jeu
+    WHERE J.numero_jeu = (?)`;
+    let values = [
+        req.params.numero_jeu,
+    ];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+
+}
+
 export const getGamesByMechanics = (req: Request, res: Response) => {
     let sql = "select * from bd.jeu " +
         "inner join bd.utilsation_theme on bd.utilsation_theme.numero_jeu=bd.jeu.numero_jeu " +
@@ -39,6 +53,6 @@ export const getGamesByMechanics = (req: Request, res: Response) => {
 }
 export const addGame = (req: Request, res: Response) => {
     let sql = `INSERT INTO bd.jeu (nom, editeur, date_de_parution, type_de_jeu, duree) VALUES (?,?,?,?,?)`;
-    let values = [req.query.nom_jeu,req.query.editeur,req.query.date_de_parution,req.query.type_de_jeu,req.query.duree_jeu];
+    let values = [req.query.nom_jeu, req.query.editeur, req.query.date_de_parution, req.query.type_de_jeu, req.query.duree_jeu];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
