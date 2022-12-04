@@ -169,7 +169,7 @@ CREATE TABLE bd.extension_configuration(
 -- ============================================================
 CREATE TABLE bd.avis(
     numero_avis INT NOT NULL AUTO_INCREMENT,
-    date_avis timestamp,
+    date_avis date,
     note INT, 
     commentaire CHAR(255),
     numero_configuration INT NOT NULL,
