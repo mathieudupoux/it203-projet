@@ -14,24 +14,17 @@
         </div>
         <nav class="media-right">
             <div class="level-right">
-                <div id="appreciators" class="modal" v-bind:class="{ 'is-active': openAppreciators }">
-                    <div class="modal-background" @click="openAppreciators = false"></div>
-                    <div class="modal-content" @click="openAppreciators = false">
-                        <div class="card">
-                            <div class="card-content">
-                                <h1 class="title">Joueurs ayant appréciés ce commentaire :</h1>
-                                <p>
-                                <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
-                                    <li>{{ a.pseudo }}</li>
-                                </ul>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="modal-close is-large" aria-label="open" @click="openAppreciators = false"></button>
+                <div class="level-item">
+                    <Popper :hover="true" class="container" :disabled="avis.nbUp == 0">
+                        <span :hover="openAppreciators">{{ avis.nbUp }} jugements</span>
+                        <template #content>
+                            <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
+                                <li>{{ a.pseudo }}</li>
+                            </ul>
+                        </template>
+                    </Popper>
                 </div>
-                <button class="button level-item js-modal-trigger" data-target="appreciators"
-                    @click="openAppreciators = !openAppreciators" v-bind:class="{ 'is-active': openAppreciators }">
+                <button class="button level-item">
                     <span>{{ avis.nbUp }}</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
                 </button>
                 <button class="button level-item is-info">
@@ -47,6 +40,7 @@
 </template>
 
 <script lang="ts">
+import Popper from "vue3-popper";
 import axios from 'axios';
 import { defineComponent } from 'vue';
 import { Player } from '../types/Player';
@@ -56,12 +50,12 @@ export default defineComponent({
     props: [
         "avis"
     ],
-
+    components: { Popper },
     data() {
         return {
             openAppreciators: false,
             player: {} as Player,
-            appreciators: [] as Player[],
+            appreciators: [] as Array<Player>,
             nbAppreciatons: Number,
         }
     },
@@ -72,6 +66,7 @@ export default defineComponent({
     },
 
     methods: {
+
         async getAuthor() {
             try {
                 const response = await axios.get(
@@ -108,3 +103,18 @@ export default defineComponent({
 })
 
 </script>
+
+
+<style>
+#app {
+    --popper-theme-background-color: #ffffff;
+    --popper-theme-background-color-hover: #ffffff;
+    --popper-theme-text-color: inherit;
+    --popper-theme-border-width: 1px;
+    --popper-theme-border-style: solid;
+    --popper-theme-border-color: #eeeeee;
+    --popper-theme-border-radius: 6px;
+    --popper-theme-padding: 16px;
+    --popper-theme-box-shadow: 0 6px 30px -6px rgba(0, 0, 0, 0.25), width: 500px;
+}
+</style>

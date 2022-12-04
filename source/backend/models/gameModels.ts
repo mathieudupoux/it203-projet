@@ -1,5 +1,4 @@
-import { JsonWebKeyInput } from "crypto";
-import { Request, RequestHandler } from "express";
+import { Request } from "express";
 import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
 

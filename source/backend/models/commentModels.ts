@@ -37,7 +37,7 @@ export const getCommentsAppreciators = (req: Request, res: Response) => {
     let sql = "select * from bd.joueur " +
         "inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne " +
         "inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis " +
-        "where bd.avis.numero_avis=(?) and bd.appreciation.pertinence=true;"
+        "where bd.avis.numero_avis=(?);"
     let values = [
         req.params.commentID,
     ];
