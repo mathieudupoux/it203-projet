@@ -11,6 +11,11 @@ export const getAllGames = (req: Request, res: Response) => {
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
+export const getGames = (req: Request, res: Response) => {
+    let sql = "SELECT * FROM bd.jeu ";
+    execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
 export const getThemeNames = (req: Request, res: Response) => {
     let sql = "SELECT numero_theme, theme FROM theme";
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(499).json(err));
@@ -54,5 +59,11 @@ export const getGamesByMechanics = (req: Request, res: Response) => {
 export const addGame = (req: Request, res: Response) => {
     let sql = `INSERT INTO bd.jeu (nom, editeur, date_de_parution, type_de_jeu, duree) VALUES (?,?,?,?,?)`;
     let values = [req.query.nom_jeu, req.query.editeur, req.query.date_de_parution, req.query.type_de_jeu, req.query.duree_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const removeGame = (req: Request, res: Response) => {
+    let sql = "DELETE FROM bd.jeu WHERE numero_jeu = ?";
+    let values = [req.params.id];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
