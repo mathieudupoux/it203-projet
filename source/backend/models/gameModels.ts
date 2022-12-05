@@ -43,8 +43,15 @@ export const getPlayers = (req: Request, res: Response) => {
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(499).json(err));
 }
 
+export const getConfigFromID = (req: Request, res: Response) => {
+    let sql = `SELECT * from vue_config WHERE numero_configuration = (?)`
+    let values = [
+        req.params.numero_configuration,
+    ];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
 export const getConfigFromMainGame = (req: Request, res: Response) => {
-    let sql = `SELECT * from vue_config WHERE J.numero_jeu = (?)`
+    let sql = `SELECT * from vue_config WHERE numero_jeu = (?)`
     let values = [
         req.params.numero_jeu,
     ];
