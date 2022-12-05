@@ -262,3 +262,25 @@ inner join d_table on c_table.numero_avis=d_table.numero_avis
 group by c_table.numero_avis)
 as classement on bd.avis.numero_avis=classement.numero_avis
 order by classement.indice DESC;
+
+
+--------------------------------------------------------------------------------------
+-------- Requête supplémentaire getAllGames
+
+
+SELECT J.numero_jeu, J.nom, J.editeur, J.date_de_parution, J.type_de_jeu, J.duree,
+CASE 
+WHEN M.numero_mecanique IS NOT NULL 
+THEN M.mecanisme 
+ELSE 'Pas de mécanique'
+END,
+CASE 
+WHEN T.numero_theme IS NOT NULL 
+THEN T.theme 
+ELSE 'Pas de thème'
+END
+FROM jeu as J 
+LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu 
+LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique 
+LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu 
+LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ;
