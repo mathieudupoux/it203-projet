@@ -3,11 +3,23 @@ import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
 
 export const getAllGames = (req: Request, res: Response) => {
-    let sql = "SELECT * FROM jeu as J " +
-        "LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
-        "LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
-        "LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu " +
-        "LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ";
+    let sql = "SELECT J.numero_jeu, J.nom, J.editeur, J.date_de_parution, J.type_de_jeu, J.duree," +
+    " CASE " +
+    " WHEN M.numero_mecanique IS NOT NULL " +
+    " THEN M.mecanisme " +
+    " ELSE 'Pas de mécanique'" +
+    " END as mecanique," +
+    " CASE " +
+    " WHEN T.numero_theme IS NOT NULL " +
+    " THEN T.theme " +
+    " ELSE 'Pas de thème'" +
+    " END as theme" +
+    " FROM jeu as J " +
+    " LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
+    " LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
+    " LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu " +
+    " LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ;";
+
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
