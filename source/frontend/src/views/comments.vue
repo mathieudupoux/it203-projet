@@ -28,7 +28,7 @@
       </ul>
     </div>
     <div class="container">
-      <div class="field is-horizontal">
+      <div class="field is-horizontal" :class="viewMostRecentNb">
         <div class="field-label is-normal">
           <label class="label">Nombre d'éléments à afficher</label>
         </div>
@@ -69,6 +69,7 @@ export default defineComponent({
     return {
       viewMostRecent: "is-active",
       viewMostReliable: "",
+      viewMostRecentNb: "",
       commentsItems: [] as Comment[],
       mostDebatedComment: {} as Comment,
       nbRecentComments: 100,
@@ -77,7 +78,7 @@ export default defineComponent({
 
   created() {
     this.getMostDebatedComment();
-    this.getMostReliableComments();
+    this.getMostRecentComments();
   },
 
   methods: {
@@ -94,26 +95,32 @@ export default defineComponent({
     },
 
     async getMostRecentComments() {
+      this.commentsItems = [];
       try {
-        const response = await axios.get(
+        await axios.get(
           `http://localhost:3000/comments/all/mostRecent/${this.nbRecentComments}`
-        );
-        this.viewMostRecent = "is-active";
-        this.viewMostReliable = "";
-        this.commentsItems = response.data;
+        ).then(res => {
+          this.viewMostRecent = "is-active";
+          this.viewMostReliable = "";
+          this.viewMostRecentNb = "";
+          this.commentsItems = res.data;
+        })
       } catch (err) {
         console.log(err);
       }
     },
 
     async getMostReliableComments() {
+      this.commentsItems = [];
       try {
-        const response = await axios.get(
+        await axios.get(
           `http://localhost:3000/comments/all/mostReliable/`
-        );
-        this.viewMostRecent = "";
-        this.viewMostReliable = "is-active";
-        this.commentsItems = response.data;
+        ).then(res => {
+          this.viewMostRecent = "";
+          this.viewMostReliable = "is-active";
+          this.viewMostRecentNb = "is-hidden";
+          this.commentsItems = res.data;
+        })
       } catch (err) {
         console.log(err);
       }
