@@ -13,31 +13,36 @@
             </div>
         </div>
         <nav class="media-right">
-            <div class="level-right">
-                <div id="appreciators" class="modal" v-bind:class="{ 'is-active': openAppreciators }">
-                    <div class="modal-background" @click="openAppreciators = false"></div>
-                    <div class="modal-content" @click="openAppreciators = false">
-                        <div class="card">
-                            <div class="card-content">
-                                <h1 class="title">Joueurs ayant appréciés ce commentaire :</h1>
+            <div class="level">
+                <div class="level-right">
+                    <div class="level-item">
+                        <Popper :hover="true" class="container" :disabled="avis.nb_appreciations == 0">
+                            <span :hover="openAppreciators">{{ avis.nb_appreciations }} jugements</span>
+                            <template #content>
                                 <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
                                     <li>{{ a.pseudo }}</li>
                                 </ul>
-                            </div>
-                        </div>
+                            </template>
+                        </Popper>
                     </div>
-                    <button class="modal-close is-large" aria-label="open" @click="openAppreciators = false"></button>
+                    <button class="button level-item">
+                        <span>{{ avis.indice }}</span><span class="icon"><i class="fas fa-star-half-stroke"></i></span>
+                    </button>
+                    <div CLASS="level-item">
+                        <button class="button is-primary is-outlined">
+                            <span class="icon"><i class="fas fa-thumbs-up"></i></span>
+                        </button>
+                        <button class="button is-danger is-outlined">
+                            <span class="icon"><i class="fas fa-thumbs-down"></i></span>
+                        </button>
+                    </div>
+                    <button class="button level-item is-info">
+                        <span class="icon"><i class="fas fa-edit"></i></span>
+                    </button>
+                    <button class="button level-item is-danger">
+                        <span class="icon"><i class="fas fa-trash"></i></span>
+                    </button>
                 </div>
-                <button class="button level-item js-modal-trigger" data-target="appreciators"
-                    @click="openAppreciators = !openAppreciators" v-bind:class="{ 'is-active': openAppreciators }">
-                    <span>{{ avis.nbUp }}</span><span class="icon"><i class="fas fa-thumbs-up"></i></span>
-                </button>
-                <button class="button level-item is-info">
-                    <span class="icon"><i class="fas fa-edit"></i></span>
-                </button>
-                <button class="button level-item is-danger">
-                    <span class="icon"><i class="fas fa-trash"></i></span>
-                </button>
             </div>
         </nav>
     </article>
@@ -45,6 +50,7 @@
 </template>
 
 <script lang="ts">
+import Popper from "vue3-popper";
 import axios from 'axios';
 import { defineComponent } from 'vue';
 import { Player } from '../types/Player';
@@ -54,12 +60,12 @@ export default defineComponent({
     props: [
         "avis"
     ],
-
+    components: { Popper },
     data() {
         return {
             openAppreciators: false,
             player: {} as Player,
-            appreciators: [] as Player[],
+            appreciators: [] as Array<Player>,
             nbAppreciatons: Number,
         }
     },
@@ -70,6 +76,7 @@ export default defineComponent({
     },
 
     methods: {
+
         async getAuthor() {
             try {
                 const response = await axios.get(
@@ -98,16 +105,26 @@ export default defineComponent({
         getDate() {
             const value = this.avis.date_avis;
             if (value) {
-                const d = new Date(value);
-                console.log(d)
-                const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Jullet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-                const year = d.getFullYear();
-                const month = d.getMonth();
-                const day = d.getDay();
-                return day.toString() + " " + months[month] + " " + year.toString();
+                const d = new Date(this.avis.date_avis);
+                return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Paris' }).format(d);
             }
         },
     }
 })
 
 </script>
+
+
+<style>
+#app {
+    --popper-theme-background-color: #ffffff;
+    --popper-theme-background-color-hover: #ffffff;
+    --popper-theme-text-color: inherit;
+    --popper-theme-border-width: 1px;
+    --popper-theme-border-style: solid;
+    --popper-theme-border-color: #eeeeee;
+    --popper-theme-border-radius: 6px;
+    --popper-theme-padding: 16px;
+    --popper-theme-box-shadow: 0 6px 30px -6px rgba(0, 0, 0, 0.25), width: 500px;
+}
+</style>

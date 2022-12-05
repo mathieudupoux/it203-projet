@@ -1,13 +1,30 @@
-import { Request, RequestHandler } from "express";
+import { Request } from "express";
 import { Response } from "express-serve-static-core";
 import { execute } from "../utils/mariadb.connector";
 
 export const getAllGames = (req: Request, res: Response) => {
-    let sql = "SELECT * FROM jeu as J " +
-        "LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
-        "LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
-        "LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu " +
-        "LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ";
+    let sql = "SELECT J.numero_jeu, J.nom, J.editeur, J.date_de_parution, J.type_de_jeu, J.duree," +
+        " CASE " +
+        " WHEN M.numero_mecanique IS NOT NULL " +
+        " THEN M.mecanisme " +
+        " ELSE 'Pas de mécanique'" +
+        " END as mecanique," +
+        " CASE " +
+        " WHEN T.numero_theme IS NOT NULL " +
+        " THEN T.theme " +
+        " ELSE 'Pas de thème'" +
+        " END as theme" +
+        " FROM jeu as J " +
+        " LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
+        " LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
+        " LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu " +
+        " LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ;";
+
+    execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const getGames = (req: Request, res: Response) => {
+    let sql = "SELECT * FROM bd.jeu ";
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -24,6 +41,14 @@ export const getMechanicNames = (req: Request, res: Response) => {
 export const getPlayers = (req: Request, res: Response) => {
     let sql = "SELECT numero_personne,pseudo,mail FROM joueur";
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(499).json(err));
+}
+
+export const getConfigFromMainGame = (req: Request, res: Response) => {
+    let sql = `SELECT * from vue_config WHERE J.numero_jeu = (?)`
+    let values = [
+        req.params.numero_jeu,
+    ];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
 export const getGamesByMechanics = (req: Request, res: Response) => {
@@ -46,6 +71,12 @@ export const addGame = (req: Request, res: Response) => {
     console.log(req.query.selectedThemes);
     console.log(req.query.selectedMecanics);
     let sql = `INSERT INTO bd.jeu (nom, editeur, date_de_parution, type_de_jeu, duree) VALUES (?,?,?,?,?)`;
-    let values = [req.query.nom_jeu,req.query.editeur,req.query.date_de_parution,req.query.type_de_jeu,req.query.duree_jeu];
+    let values = [req.query.nom_jeu, req.query.editeur, req.query.date_de_parution, req.query.type_de_jeu, req.query.duree_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const removeGame = (req: Request, res: Response) => {
+    let sql = "DELETE FROM bd.jeu WHERE numero_jeu = ?";
+    let values = [req.params.id];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }

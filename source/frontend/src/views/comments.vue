@@ -10,10 +10,25 @@
     </div>
   </div>
   <div class="block">
-    <h1 class="title">Commentaires récents</h1>
-
+    <h1 class="title">Tous les commentaires</h1>
+    <div class="tabs is-centered">
+      <ul>
+        <li :class="viewMostRecent" @click="getMostRecentComments()">
+          <a>
+            <span>Les plus récents</span>
+            <span class="icon is-small"><i class="fas fa-clock" aria-hidden="true"></i></span>
+          </a>
+        </li>
+        <li :class="viewMostReliable" @click="getMostReliableComments()">
+          <a>
+            <span>Les plus fiables</span>
+            <span class="icon is-small"><i class="far fa-star-half-stroke" aria-hidden="true"></i></span>
+          </a>
+        </li>
+      </ul>
+    </div>
     <div class="container">
-      <div class="field is-horizontal">
+      <div class="field is-horizontal" :class="viewMostRecentNb">
         <div class="field-label is-normal">
           <label class="label">Nombre d'éléments à afficher</label>
         </div>
@@ -52,6 +67,9 @@ export default defineComponent({
   components: { CommentView },
   data() {
     return {
+      viewMostRecent: "is-active",
+      viewMostReliable: "",
+      viewMostRecentNb: "",
       commentsItems: [] as Comment[],
       mostDebatedComment: {} as Comment,
       nbRecentComments: 100,
@@ -64,6 +82,7 @@ export default defineComponent({
   },
 
   methods: {
+
     async getMostDebatedComment() {
       try {
         const response = await axios.get(
@@ -76,11 +95,32 @@ export default defineComponent({
     },
 
     async getMostRecentComments() {
+      this.commentsItems = [];
       try {
-        const response = await axios.get(
-          `http://localhost:3000/comments/all/${this.nbRecentComments}`
-        );
-        this.commentsItems = response.data;
+        await axios.get(
+          `http://localhost:3000/comments/all/mostRecent/${this.nbRecentComments}`
+        ).then(res => {
+          this.viewMostRecent = "is-active";
+          this.viewMostReliable = "";
+          this.viewMostRecentNb = "";
+          this.commentsItems = res.data;
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async getMostReliableComments() {
+      this.commentsItems = [];
+      try {
+        await axios.get(
+          `http://localhost:3000/comments/all/mostReliable/`
+        ).then(res => {
+          this.viewMostRecent = "";
+          this.viewMostReliable = "is-active";
+          this.viewMostRecentNb = "is-hidden";
+          this.commentsItems = res.data;
+        })
       } catch (err) {
         console.log(err);
       }

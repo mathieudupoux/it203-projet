@@ -1,5 +1,5 @@
 import express from 'express';
-import { addNewPlayer,getPlayerById, getAllPlayers,getPlayerCommentsOnPreferedGames, getPlayerGamesByPreferences } from '../models/playerModels';
+import { addNewPlayer,getPlayerById, getAllPlayers,getPlayerCommentsOnPreferedGames, getPlayerGamesByPreferences, removePlayer } from '../models/playerModels';
 const router = express.Router();
 
 router.get('/', getAllPlayers);
@@ -14,4 +14,5 @@ router.get('/games/:id/preferedOnly', getPlayerGamesByPreferences);
 
 router.get('/comments/:id/preferedOnly', getPlayerCommentsOnPreferedGames);
 
+router.get('/remove/:id', removePlayer);
 export default router;

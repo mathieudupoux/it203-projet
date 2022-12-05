@@ -79,7 +79,7 @@ CREATE TABLE bd.joueur(
     pseudo CHAR(32),
     mail CHAR(32),
     CONSTRAINT 
-        FOREIGN KEY (numero_personne) REFERENCES personne(numero_personne),
+        FOREIGN KEY (numero_personne) REFERENCES personne(numero_personne) ON DELETE CASCADE,
         PRIMARY KEY (numero_personne)
 );
 
@@ -112,7 +112,7 @@ CREATE TABLE bd.extension(
     date_parution date,
     numero_jeu INT NOT NULL,
     CONSTRAINT 
-        FOREIGN KEY (numero_jeu) REFERENCES jeu(numero_jeu),
+        FOREIGN KEY (numero_jeu) REFERENCES jeu(numero_jeu) ON DELETE CASCADE,
         PRIMARY KEY (numero_extension)
 );
 
@@ -120,11 +120,11 @@ CREATE TABLE bd.extension(
 --   Table : CONCEPTEUR                                        
 -- ============================================================
 CREATE TABLE bd.concepteur(
-    numero_personne INT,
+    numero_personne INT NOT NULL,
     numero_jeu INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
-        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne) ON DELETE CASCADE,
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu) ON DELETE CASCADE,
         PRIMARY KEY (numero_jeu,numero_personne)
  );
 
@@ -132,11 +132,11 @@ CREATE TABLE bd.concepteur(
 --   Table : ILLUSTRATEUR                                        
 -- ============================================================
 CREATE TABLE bd.illustrateur(
-    numero_personne INT,
+    numero_personne INT NOT NULL,
     numero_jeu INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
-        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne) ON DELETE CASCADE,
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu) ON DELETE CASCADE,
         PRIMARY KEY (numero_jeu,numero_personne)
  );
 
@@ -148,7 +148,7 @@ CREATE TABLE bd.configuration(
     nb_joueurs INT NOT NULL,
     numero_jeu INT,
     CONSTRAINT
-        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu) ON DELETE CASCADE,
         PRIMARY KEY (numero_configuration)
  );
 
@@ -159,25 +159,26 @@ CREATE TABLE bd.extension_configuration(
     numero_extension INT NOT NULL,
     numero_configuration INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_extension) REFERENCES extension (numero_extension),
-        FOREIGN KEY (numero_configuration) REFERENCES configuration (numero_configuration),
+        FOREIGN KEY (numero_extension) REFERENCES extension (numero_extension) ON DELETE CASCADE,
+        FOREIGN KEY (numero_configuration) REFERENCES configuration (numero_configuration) ON DELETE CASCADE,
         PRIMARY KEY (numero_configuration,numero_extension)
  );
-
+ 
 -- ============================================================
 --   Table : AVIS                                       
 -- ============================================================
 CREATE TABLE bd.avis(
     numero_avis INT NOT NULL AUTO_INCREMENT,
     date_avis date,
-    note INT, 
+    note INT,
     commentaire CHAR(255),
     numero_configuration INT NOT NULL,
     numero_personne INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
-        FOREIGN KEY (numero_configuration) REFERENCES configuration (numero_configuration),
-        PRIMARY KEY (numero_avis)
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne) ON DELETE CASCADE,
+        FOREIGN KEY (numero_configuration) REFERENCES configuration (numero_configuration) ON DELETE CASCADE,
+        PRIMARY KEY (numero_avis),
+        CHECK (note>=0 AND note<=20)
  );
 
 -- ============================================================
@@ -188,8 +189,8 @@ CREATE TABLE bd.appreciation(
     numero_avis INT NOT NULL,
     pertinence BOOLEAN,
     CONSTRAINT
-        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne),
-        FOREIGN KEY (numero_avis) REFERENCES avis (numero_avis),
+        FOREIGN KEY (numero_personne) REFERENCES personne (numero_personne) ON DELETE CASCADE,
+        FOREIGN KEY (numero_avis) REFERENCES avis (numero_avis) ON DELETE CASCADE,
         PRIMARY KEY (numero_personne,numero_avis)
  );
 
@@ -200,8 +201,8 @@ CREATE TABLE bd.utilsation_mecanique(
     numero_mecanique INT NOT NULL,
     numero_jeu INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_mecanique) REFERENCES mecanique (numero_mecanique),
-        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        FOREIGN KEY (numero_mecanique) REFERENCES mecanique (numero_mecanique) ON DELETE CASCADE,
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu) ON DELETE CASCADE,
         PRIMARY KEY (numero_mecanique,numero_jeu)
  );
 
@@ -209,11 +210,11 @@ CREATE TABLE bd.utilsation_mecanique(
 --   Table : UTILISATION_THEME                              
 -- ============================================================
 CREATE TABLE bd.utilsation_theme(
-    numero_theme INT,
-    numero_jeu INT,
+    numero_theme INT NOT NULL,
+    numero_jeu INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_theme) REFERENCES theme (numero_theme),
-        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu),
+        FOREIGN KEY (numero_theme) REFERENCES theme (numero_theme) ON DELETE CASCADE,
+        FOREIGN KEY (numero_jeu) REFERENCES jeu (numero_jeu) ON DELETE CASCADE,
         PRIMARY KEY (numero_theme,numero_jeu)
  );
 
@@ -224,8 +225,8 @@ CREATE TABLE bd.preference_mecanique(
     numero_personne INT NOT NULL,
     numero_mecanique INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_mecanique) REFERENCES mecanique (numero_mecanique),
-        FOREIGN KEY (numero_personne) REFERENCES joueur (numero_personne),
+        FOREIGN KEY (numero_mecanique) REFERENCES mecanique (numero_mecanique) ON DELETE CASCADE,
+        FOREIGN KEY (numero_personne) REFERENCES joueur (numero_personne) ON DELETE CASCADE,
         PRIMARY KEY (numero_mecanique,numero_personne)
  );
 
@@ -236,7 +237,7 @@ CREATE TABLE bd.preference_theme(
     numero_personne INT NOT NULL,
     numero_theme INT NOT NULL,
     CONSTRAINT
-        FOREIGN KEY (numero_theme) REFERENCES theme(numero_theme),
-        FOREIGN KEY (numero_personne) REFERENCES joueur (numero_personne),
+        FOREIGN KEY (numero_theme) REFERENCES theme(numero_theme) ON DELETE CASCADE,
+        FOREIGN KEY (numero_personne) REFERENCES joueur (numero_personne) ON DELETE CASCADE,
         PRIMARY KEY (numero_theme,numero_personne)
  );

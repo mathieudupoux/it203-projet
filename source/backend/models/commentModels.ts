@@ -9,10 +9,8 @@ export const getAllComments = (req: Request, res: Response) => {
 }
 
 export const getMostRecentComments = (req: Request, res: Response) => {
-    let sql = `select bd.avis.*, jeu.numero_jeu, jeu.nom from bd.avis
-    inner join bd.configuration using(numero_configuration)
-    inner join bd.jeu using(numero_jeu)
-    order by bd.avis.date_avis DESC
+    let sql = `select * from vue_avis
+    order by date_avis DESC
     limit ${req.params.count};`;
     let values = [
         req.params.count
@@ -20,14 +18,14 @@ export const getMostRecentComments = (req: Request, res: Response) => {
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
+export const getMostReliableComments = (req: Request, res: Response) => {
+    let sql = `select * from vue_avis 
+    order by indice DESC`;
+    execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
 export const getMostDebatedComment = (req: Request, res: Response) => {
-    let sql = `select bd.avis.*, count(bd.appreciation.pertinence) as nbUp, jeu.numero_jeu, jeu.nom from bd.avis
-    inner join bd.appreciation on bd.appreciation.numero_avis=bd.avis.numero_avis
-    inner join bd.configuration using(numero_configuration)
-    inner join bd.jeu using(numero_jeu)
-    group by bd.avis.numero_avis
-    order by nbUp desc
-    limit 1`;
+    let sql = `select * from vue_avis order by nb_appreciations DESC limit 1;`
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -35,7 +33,7 @@ export const getCommentsAppreciators = (req: Request, res: Response) => {
     let sql = "select * from bd.joueur " +
         "inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne " +
         "inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis " +
-        "where bd.avis.numero_avis=(?) and bd.appreciation.pertinence=true;"
+        "where bd.avis.numero_avis=(?);"
     let values = [
         req.params.commentID,
     ];
@@ -56,12 +54,19 @@ export const getMainGameFromComment = (req: Request, res: Response) => {
 export const addCommentOnConfig = (req: Request, res: Response) => {
     let sql = "INSERT INTO bd.avis(date_avis,note,commentaire,numero_configuration,numero_personne) VALUES (?,?,?,?,?);";
     let values = [
-        req.body.dateTime,
-        req.body.mark,
-        req.body.comment,
-        req.body.configID,
-        req.body.playerID
+        req.body.date_avis,
+        req.body.note,
+        req.body.commentaire,
+        req.body.numero_configuration,
+        req.body.numero_personne
     ];
     console.log(values);
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const removeComment = (req: Request, res: Response) => {
+    let sql = "DELETE FROM bd.avis WHERE numero_avis = ?";
+    let values = [req.params.id];
+    // console.log(values);
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }

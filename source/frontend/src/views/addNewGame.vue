@@ -1,6 +1,5 @@
 <template>
 
-
   <div class="box">
     <h1 class="title">Ajouter un jeu</h1>
 
@@ -61,6 +60,7 @@
     </div>
   </div>
 
+
 </template>
   
 <script lang="ts">
@@ -92,16 +92,19 @@ export default defineComponent({
       }),
     };
   },
-  created() {
-    this.addGame();
-  },
+  // created() {
+  //   this.addGame();
+  // },
 
   methods: {
     async addGame() {
+      console.log("Try to add Game ...")
       try {
-        const response = await axios.post(`http://localhost:3000/games/add`,this.item);
+        await axios.post(`http://localhost:3000/games/add?nom=${this.item.nom_jeu}&editeur=${this.item.editeur}&date_de_parution=${this.item.date_de_parution}&type_de_jeu=${this.item.type_de_jeu}&duree=${this.item.duree_jeu}`);
+        console.log("Success !")
       } catch (err) {
         console.log(err);
+        console.log("Error !")
       }
     },
   },
