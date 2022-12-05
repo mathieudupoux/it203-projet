@@ -6,7 +6,7 @@ DROP VIEW IF EXISTS bd.vue_config;
 --      Vue : vue_avis
 -- ========================================
 CREATE OR REPLACE VIEW bd.vue_avis AS (
-    SELECT bd.avis.numero_avis, bd.avis.numero_configuration, bd.avis.note, 
+    SELECT bd.avis.numero_avis, bd.avis.numero_configuration, bd.avis.note, bd.avis.numero_personne, 
     CASE
         WHEN classement.nb_appreciations IS NOT NULL 
         THEN classement.nb_appreciations
