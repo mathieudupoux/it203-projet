@@ -54,3 +54,9 @@ export const removePlayer = (req: Request, res: Response) => {
     let values = [req.params.id];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+
+export const updatePlayer = (req: Request, res: Response) => {
+    let sql = "UPDATE bd.joueur SET pseudo = ?, mail = ? WHERE numero_personne = ?";;
+    let values = [req.query.pseudo,req.query.mail,req.params.id];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
