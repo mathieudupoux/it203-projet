@@ -240,7 +240,7 @@ case
   when classement.indice IS NOT NULL 
   then classement.indice
   else 0
-  end , bd.avis.date_avis, bd.avis.commentaire from bd.avis left join
+  end as indice , bd.avis.date_avis, bd.avis.commentaire from bd.avis left join
 (
 with c_table as ( select numero_avis,
 case 
