@@ -93,3 +93,10 @@ export const addCommentOnConfig = (req: Request, res: Response) => {
     console.log(values);
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+
+export const removeComment = (req: Request, res: Response) => {
+    let sql = "DELETE FROM bd.avis WHERE numero_avis = ?";
+    let values = [req.params.id];
+    // console.log(values);
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}

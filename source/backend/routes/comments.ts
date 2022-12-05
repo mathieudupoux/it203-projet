@@ -1,5 +1,5 @@
 import express from 'express';
-import { addCommentOnConfig, getAllComments, getCommentsAppreciators, getMainGameFromComment, getMostDebatedComment, getMostRecentComments, getMostReliableComments } from '../models/commentModels';
+import { addCommentOnConfig, getAllComments, getCommentsAppreciators, getMainGameFromComment, getMostDebatedComment, getMostRecentComments, getMostReliableComments, removeComment } from '../models/commentModels';
 const router = express.Router();
 
 /* GET appreciators by comment id */
@@ -22,5 +22,8 @@ router.get('/:commentID/game', getMainGameFromComment)
 
 /* POST Comment */
 router.post('/new', addCommentOnConfig);
+
+/* GET removeComment */
+router.get('/remove/:id', removeComment);
 
 export default router;
