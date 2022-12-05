@@ -28,7 +28,7 @@
                     <button class="button level-item">
                         <span>{{ avis.indice }}</span><span class="icon"><i class="fas fa-star-half-stroke"></i></span>
                     </button>
-                    <div CLASS="level-item">
+                    <div class="level-item">
                         <button class="button is-primary is-outlined">
                             <span class="icon"><i class="fas fa-thumbs-up"></i></span>
                         </button>
@@ -39,7 +39,7 @@
                     <button class="button level-item is-info">
                         <span class="icon"><i class="fas fa-edit"></i></span>
                     </button>
-                    <button class="button level-item is-danger">
+                    <button @click="removeComment()" class="button level-item is-danger">
                         <span class="icon"><i class="fas fa-trash"></i></span>
                     </button>
                 </div>
@@ -109,6 +109,18 @@ export default defineComponent({
                 return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Paris' }).format(d);
             }
         },
+
+        async removeComment() {
+            try {
+                await axios.get(
+                    `http://localhost:3000/comments/remove/${this.avis.numero_avis}`
+                ).then(res => res.data);
+            } catch (err) {
+                console.log(err);
+            }
+            window.location.reload();
+
+        }
     }
 })
 
