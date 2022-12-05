@@ -9,7 +9,7 @@ export const getAllComments = (req: Request, res: Response) => {
 }
 
 export const getMostRecentComments = (req: Request, res: Response) => {
-    let sql = `select * from commentStats
+    let sql = `select * from vue_avis
     order by date_avis DESC
     limit ${req.params.count};`;
     let values = [
@@ -19,13 +19,13 @@ export const getMostRecentComments = (req: Request, res: Response) => {
 }
 
 export const getMostReliableComments = (req: Request, res: Response) => {
-    let sql = `select * from commentStats 
+    let sql = `select * from vue_avis 
     order by indice DESC`;
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
 export const getMostDebatedComment = (req: Request, res: Response) => {
-    let sql = `select * from commentStats order by nb_appreciation DESC limit 1;`
+    let sql = `select * from vue_avis order by nb_appreciations DESC limit 1;`
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 

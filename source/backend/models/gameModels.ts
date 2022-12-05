@@ -4,21 +4,21 @@ import { execute } from "../utils/mariadb.connector";
 
 export const getAllGames = (req: Request, res: Response) => {
     let sql = "SELECT J.numero_jeu, J.nom, J.editeur, J.date_de_parution, J.type_de_jeu, J.duree," +
-    " CASE " +
-    " WHEN M.numero_mecanique IS NOT NULL " +
-    " THEN M.mecanisme " +
-    " ELSE 'Pas de mécanique'" +
-    " END as mecanique," +
-    " CASE " +
-    " WHEN T.numero_theme IS NOT NULL " +
-    " THEN T.theme " +
-    " ELSE 'Pas de thème'" +
-    " END as theme" +
-    " FROM jeu as J " +
-    " LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
-    " LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
-    " LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu " +
-    " LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ;";
+        " CASE " +
+        " WHEN M.numero_mecanique IS NOT NULL " +
+        " THEN M.mecanisme " +
+        " ELSE 'Pas de mécanique'" +
+        " END as mecanique," +
+        " CASE " +
+        " WHEN T.numero_theme IS NOT NULL " +
+        " THEN T.theme " +
+        " ELSE 'Pas de thème'" +
+        " END as theme" +
+        " FROM jeu as J " +
+        " LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu " +
+        " LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique " +
+        " LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu " +
+        " LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ;";
 
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
@@ -39,17 +39,11 @@ export const getPlayers = (req: Request, res: Response) => {
 }
 
 export const getConfigFromMainGame = (req: Request, res: Response) => {
-    let sql = `SELECT C. numero_configuration, J.numero_jeu, J.nom as nomJeu, E.numero_extension, E.nom as nomExtension FROM configuration as C
-    INNER JOIN extension_configuration as EC ON EC.numero_configuration = C.numero_configuration
-    INNER JOIN extension as E ON E.numero_extension=EC.numero_extension
-    INNER JOIN jeu as J on C.numero_jeu = J.numero_jeu
-    WHERE J.numero_jeu = (?)`
-
+    let sql = `SELECT * from vue_config WHERE J.numero_jeu = (?)`
     let values = [
         req.params.numero_jeu,
     ];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
-
 }
 
 export const getGamesByMechanics = (req: Request, res: Response) => {
