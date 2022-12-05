@@ -49,7 +49,7 @@
 
     <div class="notification is-info is-light">
       <button class="delete"></button>
-      Requete sql ici ! {{item.type_de_jeu}}
+      Requete sql ici ! {{ item.type_de_jeu }}
     </div>
   </div>
 
