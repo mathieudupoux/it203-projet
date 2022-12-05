@@ -9,4 +9,6 @@ export type Comment = {
     nom: string,
     nb_appreciations: number,
     indice: number,
+    nom_jeu: string,
+    nom_extension: string
 }

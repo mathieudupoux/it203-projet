@@ -31,6 +31,7 @@
       </div>
     </div>
 
+
     <div class="field">
       <label class="label">Duree du jeu</label>
       <div class="control">
@@ -41,15 +42,21 @@
     <div class="field">
       <label class="label">Thème</label>
       <div class="control">
-        <ThemeCheckBox v-model="selectedTheme"></ThemeCheckBox> {{ selectedTheme }}
+        <ThemeCheckBox></ThemeCheckBox> 
       </div>
     </div>
 
-    <button class="button is-info" @click="addGame">Soumettre</button>
+    <div class="field">
+      <label class="label">Mécaniques</label>
+      <div class="control">
+        <MechanicCheckBox></MechanicCheckBox>
+      </div>
+    </div>
+
+    <button class="button is-info" v-on:click="addGame">Soumettre</button>
 
     <div class="notification is-info is-light">
       <button class="delete"></button>
-      Requete sql ici ! {{ item.type_de_jeu }}
     </div>
   </div>
 
@@ -59,13 +66,14 @@
 <script lang="ts">
 import axios from "axios";
 import { defineComponent } from "vue";
-import bulmaCalendar from 'bulma-calendar';
 import ThemeCheckBox from "@/components/utils/ThemeCheckbox.vue";
+import MechanicCheckBox from "@/components/utils/MecanicCheckbox.vue";
+import bulmaCalendar from "bulma-calendar";
 
 
 export default defineComponent({
   name: "addGameRequest",
-  components: { ThemeCheckBox },
+  components : { ThemeCheckBox, MechanicCheckBox},
   data() {
     return {
       value: "",
@@ -74,12 +82,14 @@ export default defineComponent({
         editeur: "",
         date_de_parution: "",
         type_de_jeu: "",
-        duree_jeu: ""
+        duree_jeu: "",
+        selectedMecanics: MechanicCheckBox.data().selectedMecanics,
+        selectedThemes:  ThemeCheckBox.data().selectedThemes,
+        
       },
       dateTime: bulmaCalendar.attach(".date", {
         type: "datetime"
       }),
-      selectedTheme: "",
     };
   },
   // created() {

@@ -3,13 +3,13 @@
         <ul class="is-info">
             <li v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme" :value="menuItem.numero_theme">
                 <div class="b-checkbox is-info">
-                    <input :id="'checkbox' + menuItem.numero_theme" type="checkbox" class="styled is-info">
-
-                    <label :for="'checkbox' + menuItem.numero_theme" class="checkbox" value=""> {{ menuItem.theme
+                    <input type="checkbox" :id="'checkbox' + menuItem.numero_theme" :value="menuItem.theme" class="styled is-info" v-model="selectedThemes">
+                    <label :for="'checkbox' + menuItem.numero_theme" class="checkbox"> {{ menuItem.theme
                     }}</label>
                 </div>
             </li>
         </ul>
+        <span>Thèmes cochées : {{ selectedThemes }} </span>
     </div>
 </template>
 
@@ -17,6 +17,8 @@
 import axios from 'axios';
 import { defineComponent } from 'vue';
 import { Theme } from '../../types/Theme';
+
+
 
 export default defineComponent({
     name: "ThemeList",
@@ -30,6 +32,7 @@ export default defineComponent({
             themeMenuActive: false,
             themeMenuItems: [] as Theme[],
             theme: "",
+            selectedThemes: [],
         };
     },
 
