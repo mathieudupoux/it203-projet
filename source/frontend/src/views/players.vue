@@ -11,6 +11,8 @@
           <th>ID</th>
           <th>Pseudo</th>
           <th>Mail</th>
+          <th>Action1</th>
+          <th>Action2</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +20,8 @@
           <td>{{ item.numero_personne }}</td>
           <td>{{ item.pseudo }}</td>
           <td>{{ item.mail }}</td>
+          <td><button class="button is-small is-success" @click="modifyPlayer(item.numero_personne)">Modifier</button></td>
+          <td><button class="button is-small is-danger" @click="deletePlayer(item.numero_personne)">Supprimer</button></td>
         </tr>
       </tbody>
     </table>
@@ -53,6 +57,22 @@ export default defineComponent({
         console.log(err);
       }
     },
+    async modifyPlayer(id : number){
+      console.log("Modify :",id);
+
+    },
+    async deletePlayer(id : number){
+      console.log("Delete :",id);
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/players/remove/${id.toString()}`
+        );
+        this.items = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+      location.reload();
+    }
 
   },
 });

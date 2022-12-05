@@ -58,7 +58,7 @@ export default defineComponent({
         // peut-etre a deplacer a un autre endroit si c'est possible pcq ca fait bizarre ici 
         async deleteGames(id : string) {
             try {
-            const response = await axios.get(`http://localhost:3000/games//remove/${id}`);
+            const response = await axios.get(`http://localhost:3000/games/remove/${id}`);
             this.items = response.data;
             } catch (err) {
                 console.log(err);
