@@ -25,7 +25,7 @@ export const getMostReliableComments = (req: Request, res: Response) => {
 }
 
 export const getMostDebatedComment = (req: Request, res: Response) => {
-    let sql = `select * from commentStats order by nbUp DESC limit 1;`
+    let sql = `select * from commentStats order by nb_appreciation DESC limit 1;`
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 

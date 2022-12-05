@@ -16,8 +16,8 @@
             <div class="level">
                 <div class="level-right">
                     <div class="level-item">
-                        <Popper :hover="true" class="container" :disabled="avis.nbUp == 0">
-                            <span :hover="openAppreciators">{{ avis.nbUp }} jugements</span>
+                        <Popper :hover="true" class="container" :disabled="avis.nb_appreciations == 0">
+                            <span :hover="openAppreciators">{{ avis.nb_appreciations }} jugements</span>
                             <template #content>
                                 <ul class="content" v-for="a in appreciators" :key="a.numero_personne">
                                     <li>{{ a.pseudo }}</li>

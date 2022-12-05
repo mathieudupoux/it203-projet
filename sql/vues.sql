@@ -4,8 +4,8 @@
 CREATE OR REPLACE VIEW bd.commentStats AS (
     SELECT bd.avis.numero_avis, bd.avis.note, 
     CASE
-        WHEN classement.nbUp IS NOT NULL 
-        THEN classement.nbUp
+        WHEN classement.nb_appreciations IS NOT NULL 
+        THEN classement.nb_appreciations
         ELSE 0
     END AS nb_appreciations , 
         CASE 
@@ -30,7 +30,7 @@ CREATE OR REPLACE VIEW bd.commentStats AS (
             END AS d
             FROM bd.appreciation
             GROUP BY numero_avis)
-        SELECT c_table.numero_avis, c_table.c+d_table.d AS nbUp, (1+c_table.c)/(1+d_table.d) AS indice
+        SELECT c_table.numero_avis, c_table.c+d_table.d AS nb_appreciations, (1+c_table.c)/(1+d_table.d) AS indice
         FROM c_table
         INNER JOIN d_table ON c_table.numero_avis=d_table.numero_avis
         GROUP BY c_table.numero_avis)
