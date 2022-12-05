@@ -1,16 +1,17 @@
 -- ========================================
 --      Vue : CommentStat
 -- ========================================
-CREATE OR REPLACE VIEW commentStats AS (
+CREATE OR REPLACE VIEW bd.commentStats AS (
     SELECT bd.avis.numero_avis, bd.avis.note, 
-  when classement.nbUp IS NOT NULL 
-  then classement.nbUp
-  else 0
-  end as nbUp , 
-    CASE 
-    WHEN classement.indice IS NOT NULL 
-    THEN classement.indice
-    ELSE 0
+    CASE
+        WHEN classement.nbUp IS NOT NULL 
+        THEN classement.nbUp
+        ELSE 0
+    END AS nb_appreciations , 
+        CASE 
+        WHEN classement.indice IS NOT NULL 
+        THEN classement.indice
+        ELSE 0
     END AS indice,bd.avis.date_avis, bd.avis.commentaire FROM bd.avis 
     LEFT JOIN ( 
         WITH c_table AS ( 
