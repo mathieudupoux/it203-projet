@@ -1,7 +1,7 @@
 <template>
   <div class="block">
     <h1 class="title">Jeux</h1>
-    Vous trouverez ici la liste des jeux recensés dans notre base de donnée. Celle-ci peut être filtrée par thème si
+    Vous trouverez ici la liste des jeux recensés dans notre base de données. Celle-ci peut être filtrée par thème si
     nécessaire.
     <p>Trier par thème :
       <ThemeList v-model="selectedTheme"></ThemeList>

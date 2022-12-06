@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllGames, getGamesByTheme, getThemeNames, addGame, getConfigFromMainGame, getConfigFromID, removeGame, getGames, getMechanicNames, linkGameMecanisme, linkGameTheme } from '../models/gameModels';
+import { updateGame, getAllGames, getGamesByTheme, getThemeNames, addGame, getConfigFromMainGame, getConfigFromID, removeGame, getGames, getMechanicNames, linkGameMecanisme, linkGameTheme } from '../models/gameModels';
 const router = express.Router();
 
 /* GET all games with mecanics and themes*/
@@ -34,5 +34,9 @@ router.get('/config/byMainGame/:numero_jeu', getConfigFromMainGame);
 
 /* Delete games from id */
 router.get('/remove/:id', removeGame);
+
+/* Update gamesfrom */
+router.post('/update', updateGame);
+
 
 export default router;

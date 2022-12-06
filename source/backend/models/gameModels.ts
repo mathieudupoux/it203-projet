@@ -90,3 +90,9 @@ export const removeGame = (req: Request, res: Response) => {
     let values = [req.params.id];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+
+export const updateGame = (req: Request, res: Response) => {
+    let sql = "UPDATE bd.jeu SET nom = ?, editeur = ?, date_de_parution = ?, type_de_jeu = ?, duree = ? WHERE numero_jeu = ?";;
+    let values = [req.body.nom,req.body.editeur,req.body.date_de_parution, req.body.type_de_jeu, req.body.duree, req.body.numero_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
