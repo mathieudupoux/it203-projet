@@ -48,7 +48,21 @@ export const getMainGameFromComment = (req: Request, res: Response) => {
     let values = [
         req.params.commentID,
     ]
-    execute(sql, values).then(data => res.json(data)).catch(err => res.status(499).json(err));
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const getCommentFromPlayerPreferences = (req: Request, res: Response) => {
+    let sql = `select avis.*, jeu.*
+        from bd.avis
+        inner join bd.configuration on bd.configuration.numero_configuration=bd.avis.numero_configuration
+        inner join bd.jeu on bd.jeu.numero_jeu=bd.configuration.numero_jeu
+        inner join bd.utilsation_mecanique on bd.utilsation_mecanique.numero_jeu=bd.jeu.numero_jeu
+        inner join bd.preference_mecanique on bd.preference_mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+        inner join bd.joueur on bd.preference_mecanique.numero_personne=bd.joueur.numero_personne
+        where bd.joueur.numero_personne=(?);`
+    let values = req.params.numero_joueur;
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+
 }
 
 export const addCommentOnConfig = (req: Request, res: Response) => {
@@ -73,6 +87,6 @@ export const removeComment = (req: Request, res: Response) => {
 
 export const updateComment = (req: Request, res: Response) => {
     let sql = "UPDATE bd.avis SET date_avis = ?, note = ?, commentaire = ?, numero_configuration = ?, numero_personne = ? WHERE numero_avis = ?";;
-    let values = [req.query.date_avis,req.query.note,req.query.commentaire, req.query.numero_configuration, req.query.numero_personne, req.query.numero_avis];
+    let values = [req.query.date_avis, req.query.note, req.query.commentaire, req.query.numero_configuration, req.query.numero_personne, req.query.numero_avis];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
