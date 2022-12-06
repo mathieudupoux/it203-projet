@@ -1,7 +1,7 @@
 --- un joueur ne peut pas apprécier son propre avis
 
 delimiter $$
-CREATE OR REPLACE TRIGGER tri1
+CREATE OR REPLACE TRIGGER bd.tri1
 BEFORE INSERT
 ON bd.appreciation
 FOR EACH ROW
@@ -18,7 +18,7 @@ $$
 --- un joueur ne peut pas commenter deux fois le même jeu
 
 delimiter $$
-CREATE OR REPLACE TRIGGER tri2
+CREATE OR REPLACE TRIGGER bd.tri2
 BEFORE INSERT
 ON bd.avis
 FOR EACH ROW
