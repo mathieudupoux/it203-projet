@@ -170,7 +170,7 @@ insert into bd.avis (date_avis, note, commentaire, numero_configuration, numero_
 
 commit;
 
--- appreciation
+-- appreciation : numero_personne,numero_avis,pertinence
 
 insert into bd.appreciation values (  13 , 1 ,  1  ) ;
 insert into bd.appreciation values (   8 , 2 , -1  ) ;
