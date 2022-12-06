@@ -17,7 +17,7 @@ router.get('/comments/:id/preferedOnly', getPlayerCommentsOnPreferedGames);
 router.get('/remove/:id', removePlayer);
 
 // Example of url 
-// http://localhost:3000/players/update/:id?pseudo=new_pseudo&mail=new_mail
-router.post('/update/:id', updatePlayer);
+// http://localhost:3000/players/update?id=new_id&pseudo=new_pseudo&mail=new_mail
+router.post('/update', updatePlayer);
 
 export default router;

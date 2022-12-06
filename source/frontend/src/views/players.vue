@@ -18,11 +18,11 @@
       <tbody>
         <tr v-for="item in items" :key="item.numero_personne">
                 <!-- modal -->
-                <div class="modal" :id="item.numero_personne" :class="{'is-active' : showModalFlag}">
+                <div class="modal" :class="{'is-active' : showModalFlag}">
                 <div class="modal-background"></div>
                 <div class="modal-card">
                   <header class="modal-card-head">
-                    <p class="modal-card-title">Modifier joueur {{item.numero_personne}}</p>
+                    <p class="modal-card-title">Modifier joueur {{tmp_id}}</p>
                     <button class="delete" aria-label="close"></button>
                   </header>
                   <section class="modal-card-body">
@@ -31,21 +31,21 @@
                     <div class="field">
                     <label class="label">Pseudo</label>
                     <div class="control">
-                      <input class="input" v-model="item.pseudo" />
+                      <input class="input" v-model="tmp_pseudo" />
                     </div>
                   </div>
 
                   <div class="field">
                     <label class="label">Mail</label>
                     <div class="control">
-                      <input class="input" v-model="item.mail" />
+                      <input class="input" v-model="tmp_mail" />
                     </div>
                   </div>
                   <!-- end form -->
 
                   </section>
                   <footer class="modal-card-foot">
-                    <button class="button is-success" @click="okModal(item.numero_personne, item.pseudo, item.mail)">Save changes</button>
+                    <button class="button is-success" @click="modifyPlayer">Save changes</button>
                     <button class="button" @click="cancelModal">Cancel</button>
                   </footer>
                 </div>
@@ -55,7 +55,7 @@
           <td>{{ item.numero_personne }}</td>
           <td>{{ item.pseudo }}</td>
           <td>{{ item.mail }}</td>
-          <td><button class="button is-small is-success" @click="showModal">Modifier</button></td>
+          <td><button class="button is-small is-success" @click="showModal(item.numero_personne, item.pseudo,item.mail)">Modifier</button></td>
           <td><button class="button is-small is-danger" @click="deletePlayer(item.numero_personne)">Supprimer</button></td>
 
         </tr>
@@ -80,6 +80,9 @@ export default defineComponent({
       okPressed : false, 
       message : "Press OK or Cancel",
       items: [] as Player[],
+      tmp_id : "default",
+      tmp_pseudo : "default",
+      tmp_mail : "default",
     };
   },
 
@@ -95,20 +98,28 @@ export default defineComponent({
         );
         this.items = response.data;
       } catch (err) {
+        console.log("Error here");
         console.log(err);
       }
     },
-    async modifyPlayer(id : number, pseudo : string, mail : string){
-      console.log("Modify :",id);
+    async modifyPlayer(){
+      console.log("Modify :",this.tmp_id);
+      console.log("Modify :",this.tmp_pseudo);
+      console.log(this.tmp_mail);
       // this.showModal();
       try {
-        const response = await axios.get(
-          `http://localhost:3000/players/remove/${id.toString()}`
+        const response = await axios.post(
+          `http://localhost:3000/players/update?id=${this.tmp_id}&pseudo=${this.tmp_pseudo}&mail=${this.tmp_mail}`
         );
         this.items = response.data;
+        console.log("update");
       } catch (err) {
+        console.log("Error here");
         console.log(err);
       }
+      this.okPressed = true;
+      this.showModalFlag = false;
+      this.getListPlayers();
     },
     async deletePlayer(id : number){
       console.log("Delete :",id);
@@ -120,16 +131,21 @@ export default defineComponent({
       } catch (err) {
         console.log(err);
       }
-      location.reload();
+      this.getListPlayers();
     },
-    showModal(){
+    showModal(id : number, pseudo : string, mail : string){
+      this.tmp_pseudo = pseudo;
+      this.tmp_mail = mail;
+      this.tmp_id = id.toString();
+
       this.okPressed = false;
       this.showModalFlag = true;
     },
-    okModal(id : number, pseudo : string, mail : string){
-      this.okPressed = true;
-      this.showModalFlag = false;
-    },
+    // async okModal(id : number, pseudo : string, mail : string){
+    //   this.modifyPlayer(id,pseudo,mail);
+    //   this.okPressed = true;
+    //   this.showModalFlag = false;
+    // },
     cancelModal() {
       this.okPressed = false;
       this.showModalFlag = false;
