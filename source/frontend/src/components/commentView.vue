@@ -64,7 +64,11 @@ export default defineComponent({
     data() {
         return {
             openAppreciators: false,
-            player: {} as Player,
+            player: {
+                numero_personne : -1,
+                pseudo : "Unknown",
+                mail : "Unknown"
+            } as Player,
             appreciators: [] as Array<Player>,
             nbAppreciatons: Number,
         }
@@ -82,9 +86,9 @@ export default defineComponent({
                 const response = await axios.get(
                     `http://localhost:3000/players/${this.avis.numero_personne}`
                 );
-                this.player = response.data[0];
-                if (this.player.pseudo === "") {
-                    this.player.pseudo = "Unknown"
+                let res = response.data[0];
+                if(res != undefined && res.pseudo != undefined){
+                    this.player = res;
                 }
             } catch (err) {
                 console.log(err);

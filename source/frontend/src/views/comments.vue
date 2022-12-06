@@ -1,5 +1,6 @@
 <template>
   <div class="block">
+  <div class="block">
     <h1 class="title">Top commentaire</h1>
     Voici le commentaire le plus jugé du site :
     <div class="card">
@@ -49,13 +50,13 @@
         </div>
       </div>
     </div>
-
+  </div>
   </div>
 </template>
 
 <script lang="ts">
 // import axios
-import CommentView from "@/components/commentView.vue";
+import CommentView from "../components/commentView.vue";
 import axios from "axios";
 import { defineComponent } from "vue";
 import { Comment } from '../types/Comment';
