@@ -35,7 +35,6 @@
               <div class="navbar-dropdown">
                 <router-link class="navbar-item" to="/games"> Voir les jeux </router-link>
                 <router-link class="navbar-item" to="/games/add"> Ajouter un jeux </router-link>
-                <a class="navbar-item"> Supprimer un jeu </a>
               </div>
             </div>
             <router-link class="navbar-item" to="/comments"> Derniers commentaires </router-link>
@@ -45,7 +44,6 @@
               <div class="navbar-dropdown">
                 <router-link class="navbar-item" to="/players"> Voir les joueurs </router-link>
                 <router-link class="navbar-item" to="/players/add"> Ajouter un joueur </router-link>
-                <a class="navbar-item"> Supprimer un joueur </a>
               </div>
             </div>
 

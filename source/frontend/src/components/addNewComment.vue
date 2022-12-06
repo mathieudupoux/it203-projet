@@ -50,7 +50,7 @@
                   <select class="dropdown-content" v-model="item.numero_configuration">
                     <option class="dropdown-item" v-for="config in configList" :key="config.numero_configuration"
                       :value="config.numero_configuration">
-                      {{ config.nomJeu }} avec l'extension {{ config.nomExtension }}
+                      {{ config.nom_jeu }} avec l'extension {{ config.nom_extension }}
                     </option>
                   </select>
                 </p>
@@ -115,7 +115,7 @@ export default defineComponent({
     },
 
     async getConfigList() {
-      const res = await axios.get(`http://localhost:3000/games/config/${this.mainGame}`);
+      const res = await axios.get(`http://localhost:3000/games/config/byMainGame/${this.mainGame}`);
       this.configList = res.data;
     },
 

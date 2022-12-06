@@ -4,7 +4,6 @@
     Voici le commentaire le plus jugé du site :
     <div class="card">
       <header class="card-header subtitle">
-        <p class="card-header-title">Sur {{ mostDebatedComment.nom }} :</p>
       </header>
       <CommentView :avis='mostDebatedComment'></CommentView>
     </div>
@@ -45,7 +44,6 @@
       <div class="block" v-for="comment in commentsItems" :key="comment.numero_avis">
         <div class="card">
           <header class="card-header subtitle">
-            <p class="card-header-title">Sur {{ comment.nom }} :</p>
           </header>
           <CommentView :avis='comment'></CommentView>
         </div>
@@ -82,7 +80,6 @@ export default defineComponent({
   },
 
   methods: {
-
     async getMostDebatedComment() {
       try {
         const response = await axios.get(

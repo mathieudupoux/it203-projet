@@ -2,7 +2,7 @@ export type Config = {
     numero_configuration: number,
     nb_joueurs: number,
     numero_jeu: number,
-    nomJeu: string,
+    nom_jeu: string,
     numero_extension: number,
-    nomExtension: string,
+    nom_extension: string,
 }
