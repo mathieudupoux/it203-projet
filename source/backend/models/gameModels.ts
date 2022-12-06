@@ -75,10 +75,28 @@ export const getGamesByMechanics = (req: Request, res: Response) => {
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 export const addGame = (req: Request, res: Response) => {
-    console.log(req.query.selectedThemes);
-    console.log(req.query.selectedMecanics);
     let sql = `INSERT INTO bd.jeu (nom, editeur, date_de_parution, type_de_jeu, duree) VALUES (?,?,?,?,?)`;
     let values = [req.query.nom_jeu, req.query.editeur, req.query.date_de_parution, req.query.type_de_jeu, req.query.duree_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const linkGameTheme = (req: Request, res: Response) => {
+    let sql = ` insert into bd.utilsation_theme
+    select bd.jeu.numero_jeu, bd.theme.numero_theme
+    from bd.jeu, bd.theme
+    where bd.jeu.nom=(?)
+    and bd.theme.theme=(?);`;
+    let values = [req.query.nom_jeu,req.query.theme];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const linkGameMecanisme = (req: Request, res: Response) => {
+    let sql = `insert into bd.utilsation_mecanique 
+    select bd.jeu.numero_jeu, bd.mecanique.numero_mecanique
+    from bd.jeu, bd.mecanique
+    where bd.jeu.nom=(?)
+    and bd.mecanique.mecanisme=(?);`;
+    let values = [req.query.nom_jeu,req.query.mecanisme];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 

@@ -46,7 +46,7 @@
           <li v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme" :value="menuItem.numero_theme">
             <div class="b-checkbox is-info">
               <input type="checkbox" :id="'themeCheckbox' + menuItem.numero_theme" :value="menuItem.theme"
-                class="styled is-info" v-model="selectedTheme">
+                class="styled is-info" v-model="selectedThemes">
               <label :for="'checkbox' + menuItem.numero_theme" class="checkbox"> {{ menuItem.theme
               }}</label>
             </div>
@@ -71,8 +71,8 @@
       </div>
     </div>
 
-    <button class="button is-info" v-on:click="addGame">Soumettre</button>
-
+    <router-link class="button is-primary" to="/games" v-on:click="addGame">Soumettre</router-link>
+    
     <div class="notification is-info is-light">
       <button class="delete"></button>
     </div>
@@ -103,7 +103,7 @@ export default defineComponent({
         type_de_jeu: "",
         duree_jeu: "",
       },
-      selectedTheme: [] as Array<Theme>,
+      selectedThemes: [] as Array<Theme>,
       selectedMechanics: [] as Array<Mechanic>,
       dateTime: bulmaCalendar.attach(".date", {
         type: "datetime"
@@ -141,11 +141,36 @@ export default defineComponent({
     async addGame() {
       console.log("Try to add Game ...")
       try {
-        await axios.post(`http://localhost:3000/games/add?nom=${this.item.nom_jeu}&editeur=${this.item.editeur}&date_de_parution=${this.item.date_de_parution}&type_de_jeu=${this.item.type_de_jeu}&duree=${this.item.duree_jeu}`);
-        console.log("Success !")
-      } catch (err) {
-        console.log(err);
-        console.log("Error !")
+          await axios.post(`http://localhost:3000/games/add?nom_jeu=${this.item.nom_jeu}&editeur=${this.item.editeur}&date_de_parution=${this.item.date_de_parution}&type_de_jeu=${this.item.type_de_jeu}&duree=${this.item.duree_jeu}`);
+          console.log("Success !")
+      } 
+      catch (err) {
+          console.log(err);
+          console.log("Error !")
+      }
+      if(this.selectedMechanics.length !== 0){
+          this.selectedMechanics.forEach(el => {
+          try {
+            axios.post(`http://localhost:3000/games/link/GameMecanisme?nom_jeu=${this.item.nom_jeu}&mecanisme=${el}`);
+            console.log("Success !")
+          } 
+          catch (err) {
+            console.log(err);
+            console.log("Error !")
+          }
+        });
+      }
+      if(this.selectedThemes.length !== 0){
+        this.selectedThemes.forEach(el => {
+          try {
+            axios.post(`http://localhost:3000/games/link/GameTheme?nom_jeu=${this.item.nom_jeu}&theme=${el}`);
+            console.log("Success !")
+          } 
+          catch (err) {
+            console.log(err);
+            console.log("Error !")
+          }
+      });
       }
     },
   },
