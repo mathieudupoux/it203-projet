@@ -57,7 +57,7 @@
           <td>{{ item.pseudo }}</td>
           <td>{{ item.mail }}</td>
           <td>{{ item.nombre_avis }}</td>
-          <td><button class="button is-small is-danger" @click="displayComments(item)">Afficher les
+          <td><button class="button is-small is-info" @click="displayComments(item)">Afficher les
               commentaires</button></td>
           <td><button class="button is-small is-success"
               @click="showModal(item.numero_personne, item.pseudo, item.mail)">Modifier</button></td>
@@ -68,7 +68,7 @@
     </table>
 
     <!-- Comment of players prefered list -->
-    <h1 class="Title">Commentaires sur les jeux préférés de {{ selectedPlayer.pseudo }}</h1>
+    <h1 class="title">Commentaires sur les jeux préférés de {{ selectedPlayer.pseudo }}</h1>
     <div class="block" v-for="comment in commentsItems" :key="comment.numero_avis">
       <div class="card">
         <header class="card-header subtitle">
@@ -84,11 +84,13 @@
 // import axios
 import axios from "axios";
 import { defineComponent } from "vue";
+import CommentView from "../components/commentView.vue";
 import { Player } from "../types/Player";
 import { Comment } from "../types/Comment";
 
 export default defineComponent({
   name: "GamesList",
+  components: { CommentView },
   data() {
     return {
       showModalFlag: false,
@@ -122,15 +124,14 @@ export default defineComponent({
 
     async displayComments(player: Player) {
       try {
+        this.selectedPlayer = player;
         const response = await axios.get(
-          `http://localhost:3000/comments/player/OnlyPrefered/${player.numero_personne}`
+          `http://localhost:3000/comments/player/OnlyPrefered/${this.selectedPlayer.numero_personne}`
         );
         this.commentsItems = response.data;
-        this.selectedPlayer = player;
       } catch (err) {
         console.log(err);
       }
-      this.getListPlayers();
     },
 
     async modifyPlayer() {
