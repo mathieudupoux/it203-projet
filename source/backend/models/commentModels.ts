@@ -73,6 +73,6 @@ export const removeComment = (req: Request, res: Response) => {
 
 export const updateComment = (req: Request, res: Response) => {
     let sql = "UPDATE bd.avis SET date_avis = ?, note = ?, commentaire = ?, numero_configuration = ?, numero_personne = ? WHERE numero_avis = ?";;
-    let values = [req.query.date_avis,req.query.note,req.query.commentaire, req.query.numero_configuration, req.query.numero_personne, req.query.numero_avis];
+    let values = [req.body.date_avis,req.body.note,req.body.commentaire, req.body.numero_configuration, req.body.numero_personne, req.body.numero_avis];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }

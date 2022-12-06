@@ -36,9 +36,43 @@
                             <span class="icon"><i class="fas fa-thumbs-down"></i></span>
                         </button>
                     </div>
-                    <button class="button level-item is-info">
+                    <button class="button level-item is-info" @click="modifyComment">
                         <span class="icon"><i class="fas fa-edit"></i></span>
                     </button>
+
+                      <!-- modal -->
+                      <div class="modal" :class="{'is-active' : showModalFlag}">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Modifier commentaire {{avis.numero_avis}}</p>
+                            <button class="delete" aria-label="close" @click="cancelModal"></button>
+                        </header>
+                        <section class="modal-card-body">
+
+                         <!-- beginning form -->
+                         <div class="card-content">
+                            <div class="content">
+
+
+                    <UpdateComment :mainGame='avis.numero_jeu' :avis='avis'></UpdateComment>
+
+
+  J                             e ne sais pas ce que je fais !
+                                <!-- {{ avis }} -->
+                            </div>
+                        </div>
+                        <!-- end form -->
+
+                        </section>
+                        <footer class="modal-card-foot">
+                            <button class="button is-success" @click="okModal">Save changes</button>
+                            <button class="button" @click="cancelModal">Cancel</button>
+                        </footer>
+                        </div>
+                    </div>
+                    <!-- end modal  -->
+
                     <button @click="removeComment()" class="button level-item is-danger">
                         <span class="icon"><i class="fas fa-trash"></i></span>
                     </button>
@@ -54,13 +88,15 @@ import Popper from "vue3-popper";
 import axios from 'axios';
 import { defineComponent } from 'vue';
 import { Player } from '../types/Player';
+import UpdateComment from '../components/updateComment.vue';
+
 
 export default defineComponent({
     name: "CommentView",
     props: [
         "avis"
     ],
-    components: { Popper },
+    components: { Popper, UpdateComment },
     data() {
         return {
             openAppreciators: false,
@@ -71,6 +107,9 @@ export default defineComponent({
             } as Player,
             appreciators: [] as Array<Player>,
             nbAppreciatons: Number,
+            tmp_avis : {},
+            showModalFlag : false, 
+            okPressed : false, 
         }
     },
 
@@ -124,7 +163,28 @@ export default defineComponent({
             }
             window.location.reload();
 
+        }, 
+        modifyComment(){
+            console.log("Modify");
+            this.showModal();
+        },
+
+
+        showModal(){
+        this.okPressed = false;
+        this.showModalFlag = true;
+        },
+
+        async okModal(){
+          this.okPressed = true;
+          this.showModalFlag = false;
+        },
+        cancelModal() {
+            this.okPressed = false;
+            this.showModalFlag = false;
         }
+
+
     }
 })
 
