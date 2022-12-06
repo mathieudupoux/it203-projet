@@ -12,8 +12,9 @@
           <th>Pseudo</th>
           <th>Mail</th>
           <th>Nombre d'avis donné</th>
-          <th>Action1</th>
-          <th>Action2</th>
+          <th>Afficher les commentaires</th>
+          <th>Modier le joueur</th>
+          <th>Supprimer le joueur</th>
         </tr>
       </thead>
       <tbody>
@@ -56,15 +57,25 @@
           <td>{{ item.pseudo }}</td>
           <td>{{ item.mail }}</td>
           <td>{{ item.nombre_avis }}</td>
+          <td><button class="button is-small is-danger" @click="displayComments(item)">Afficher les
+              commentaires</button></td>
           <td><button class="button is-small is-success"
               @click="showModal(item.numero_personne, item.pseudo, item.mail)">Modifier</button></td>
           <td><button class="button is-small is-danger" @click="deletePlayer(item.numero_personne)">Supprimer</button>
           </td>
-
         </tr>
       </tbody>
     </table>
 
+    <!-- Comment of players prefered list -->
+    <h1 class="Title">Commentaires sur les jeux préférés de {{ selectedPlayer.pseudo }}</h1>
+    <div class="block" v-for="comment in commentsItems" :key="comment.numero_avis">
+      <div class="card">
+        <header class="card-header subtitle">
+        </header>
+        <CommentView :avis='comment'></CommentView>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -74,6 +85,7 @@
 import axios from "axios";
 import { defineComponent } from "vue";
 import { Player } from "../types/Player";
+import { Comment } from "../types/Comment";
 
 export default defineComponent({
   name: "GamesList",
@@ -86,6 +98,8 @@ export default defineComponent({
       tmp_id: "default",
       tmp_pseudo: "default",
       tmp_mail: "default",
+      commentsItems: [] as Comment[],
+      selectedPlayer: {} as Player,
     };
   },
 
@@ -105,6 +119,20 @@ export default defineComponent({
         console.log(err);
       }
     },
+
+    async displayComments(player: Player) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/comments/player/OnlyPrefered/${player.numero_personne}`
+        );
+        this.commentsItems = response.data;
+        this.selectedPlayer = player;
+      } catch (err) {
+        console.log(err);
+      }
+      this.getListPlayers();
+    },
+
     async modifyPlayer() {
       console.log("Modify :", this.tmp_id);
       console.log("Modify :", this.tmp_pseudo);

@@ -50,7 +50,8 @@
                   <select class="dropdown-content" v-model="item.numero_configuration">
                     <option class="dropdown-item" v-for="config in configList" :key="config.numero_configuration"
                       :value="config.numero_configuration">
-                      {{ config.nom_jeu }} avec l'extension {{ config.nom_extension }}
+                      {{ config.nom_jeu }} avec l'extension {{ config.nom_extension }} pour {{ config.nb_joueurs }}
+                      joueurs
                     </option>
                   </select>
                 </p>
