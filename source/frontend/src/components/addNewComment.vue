@@ -115,7 +115,7 @@ export default defineComponent({
     },
 
     async getConfigList() {
-      const res = await axios.get(`http://localhost:3000/games/config/${this.mainGame}`);
+      const res = await axios.get(`http://localhost:3000/games/config/byMainGame/${this.mainGame}`);
       this.configList = res.data;
     },
 
