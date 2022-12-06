@@ -1,9 +1,11 @@
 <template>
-    <div class="control" @change="$emit('theme', $event)">
+    <div class="control" @change="$emit('selectedTheme', $event)">
         <ul class="is-info">
             <li v-for="menuItem in themeMenuItems" :key="menuItem.numero_theme" :value="menuItem.numero_theme">
                 <div class="b-checkbox is-info">
-                    <input type="checkbox" :id="'checkbox' + menuItem.numero_theme" :value="menuItem.theme" class="styled is-info" v-model="selectedThemes">
+                    <input type="checkbox" :id="'checkbox' + menuItem.numero_theme" :value="menuItem.theme"
+                        class="styled is-info" true_value="true" v-model="selectedThemes"
+                        @change="$emit('input', $event.target.changed)">
                     <label :for="'checkbox' + menuItem.numero_theme" class="checkbox"> {{ menuItem.theme
                     }}</label>
                 </div>
@@ -17,33 +19,23 @@
 import axios from 'axios';
 import { defineComponent } from 'vue';
 import { Theme } from '../../types/Theme';
-
-
-
 export default defineComponent({
-    name: "ThemeList",
-    props: ["value"],
-    emits: {
-        theme: Number,
+    props: {
+        options: {
+            type: Array,
+            required: false,
+            default: () => []
+        }
     },
-
     data() {
         return {
-            themeMenuActive: false,
-            themeMenuItems: [] as Theme[],
-            theme: "",
-            selectedThemes: [],
+            checked: [],
+            themeMenuItems: [] as Array<Theme>
         };
     },
-
-    created() {
-        this.getThemeNames();
-    },
-
     methods: {
-        toggleThemeMenu(e: any) {
-            this.theme =
-                e.target.options[e.target.options.selectedIndex].text;
+        onChange() {
+            this.$emit('input', this.checked);
         },
 
         async getThemeNames() {
@@ -56,7 +48,6 @@ export default defineComponent({
                 console.log(err);
             }
         },
-
     }
 })
 
