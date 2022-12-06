@@ -83,8 +83,8 @@ export default defineComponent({
         date_de_parution: "",
         type_de_jeu: "",
         duree_jeu: "",
-        selectedMecanics: MechanicCheckBox.data().selectedMecanics,
-        selectedThemes:  ThemeCheckBox.data().selectedThemes,
+        selectedMecanics: [],
+        selectedThemes:  [],
         
       },
       dateTime: bulmaCalendar.attach(".date", {
