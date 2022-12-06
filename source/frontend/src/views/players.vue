@@ -11,57 +11,60 @@
           <th>ID</th>
           <th>Pseudo</th>
           <th>Mail</th>
+          <th>Nombre d'avis donné</th>
           <th>Action1</th>
           <th>Action2</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in items" :key="item.numero_personne">
-                <!-- modal -->
-                <div class="modal" :class="{'is-active' : showModalFlag}">
-                <div class="modal-background"></div>
-                <div class="modal-card">
-                  <header class="modal-card-head">
-                    <p class="modal-card-title">Modifier joueur {{tmp_id}}</p>
-                    <button class="delete" aria-label="close"></button>
-                  </header>
-                  <section class="modal-card-body">
+          <!-- modal -->
+          <div class="modal" :class="{ 'is-active': showModalFlag }">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Modifier joueur {{ tmp_id }}</p>
+                <button class="delete" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
 
-                    <!-- beginning form -->
-                    <div class="field">
-                    <label class="label">Pseudo</label>
-                    <div class="control">
-                      <input class="input" v-model="tmp_pseudo" />
-                    </div>
+                <!-- beginning form -->
+                <div class="field">
+                  <label class="label">Pseudo</label>
+                  <div class="control">
+                    <input class="input" v-model="tmp_pseudo" />
                   </div>
-
-                  <div class="field">
-                    <label class="label">Mail</label>
-                    <div class="control">
-                      <input class="input" v-model="tmp_mail" />
-                    </div>
-                  </div>
-                  <!-- end form -->
-
-                  </section>
-                  <footer class="modal-card-foot">
-                    <button class="button is-success" @click="modifyPlayer">Save changes</button>
-                    <button class="button" @click="cancelModal">Cancel</button>
-                  </footer>
                 </div>
-              </div>
-              <!-- end modal  -->
 
+                <div class="field">
+                  <label class="label">Mail</label>
+                  <div class="control">
+                    <input class="input" v-model="tmp_mail" />
+                  </div>
+                </div>
+                <!-- end form -->
+
+              </section>
+              <footer class="modal-card-foot">
+                <button class="button is-success" @click="modifyPlayer">Save changes</button>
+                <button class="button" @click="cancelModal">Cancel</button>
+              </footer>
+            </div>
+          </div>
+          <!-- end modal  -->
           <td>{{ item.numero_personne }}</td>
           <td>{{ item.pseudo }}</td>
           <td>{{ item.mail }}</td>
-          <td><button class="button is-small is-success" @click="showModal(item.numero_personne, item.pseudo,item.mail)">Modifier</button></td>
-          <td><button class="button is-small is-danger" @click="deletePlayer(item.numero_personne)">Supprimer</button></td>
+          <td>{{ item.nombre_avis }}</td>
+          <td><button class="button is-small is-success"
+              @click="showModal(item.numero_personne, item.pseudo, item.mail)">Modifier</button></td>
+          <td><button class="button is-small is-danger" @click="deletePlayer(item.numero_personne)">Supprimer</button>
+          </td>
 
         </tr>
       </tbody>
     </table>
-  
+
 
   </div>
 </template>
@@ -76,13 +79,13 @@ export default defineComponent({
   name: "GamesList",
   data() {
     return {
-      showModalFlag : false, 
-      okPressed : false, 
-      message : "Press OK or Cancel",
+      showModalFlag: false,
+      okPressed: false,
+      message: "Press OK or Cancel",
       items: [] as Player[],
-      tmp_id : "default",
-      tmp_pseudo : "default",
-      tmp_mail : "default",
+      tmp_id: "default",
+      tmp_pseudo: "default",
+      tmp_mail: "default",
     };
   },
 
@@ -102,9 +105,9 @@ export default defineComponent({
         console.log(err);
       }
     },
-    async modifyPlayer(){
-      console.log("Modify :",this.tmp_id);
-      console.log("Modify :",this.tmp_pseudo);
+    async modifyPlayer() {
+      console.log("Modify :", this.tmp_id);
+      console.log("Modify :", this.tmp_pseudo);
       console.log(this.tmp_mail);
       // this.showModal();
       try {
@@ -121,8 +124,8 @@ export default defineComponent({
       this.showModalFlag = false;
       this.getListPlayers();
     },
-    async deletePlayer(id : number){
-      console.log("Delete :",id);
+    async deletePlayer(id: number) {
+      console.log("Delete :", id);
       try {
         const response = await axios.get(
           `http://localhost:3000/players/remove/${id.toString()}`
@@ -133,7 +136,7 @@ export default defineComponent({
       }
       this.getListPlayers();
     },
-    showModal(id : number, pseudo : string, mail : string){
+    showModal(id: number, pseudo: string, mail: string) {
       this.tmp_pseudo = pseudo;
       this.tmp_mail = mail;
       this.tmp_id = id.toString();

@@ -71,7 +71,7 @@ export const linkGameTheme = (req: Request, res: Response) => {
     from bd.jeu, bd.theme
     where bd.jeu.nom=(?)
     and bd.theme.theme=(?);`;
-    let values = [req.query.nom_jeu,req.query.theme];
+    let values = [req.query.nom_jeu, req.query.theme];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -81,7 +81,7 @@ export const linkGameMecanisme = (req: Request, res: Response) => {
     from bd.jeu, bd.mecanique
     where bd.jeu.nom=(?)
     and bd.mecanique.mecanisme=(?);`;
-    let values = [req.query.nom_jeu,req.query.mecanisme];
+    let values = [req.query.nom_jeu, req.query.mecanisme];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
