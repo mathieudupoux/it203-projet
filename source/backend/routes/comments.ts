@@ -1,5 +1,5 @@
 import express from 'express';
-import { updateComment, addCommentOnConfig, getAllComments, getCommentsAppreciators, getMainGameFromComment, getMostDebatedComment, getMostRecentComments, getMostReliableComments, removeComment } from '../models/commentModels';
+import { updateComment, addCommentOnConfig, getAllComments, getCommentsAppreciators, getMainGameFromComment, getMostDebatedComment, getMostRecentComments, getMostReliableComments, removeComment, getCommentFromPlayerPreferences } from '../models/commentModels';
 const router = express.Router();
 
 /* GET appreciators by comment id */
@@ -20,8 +20,8 @@ router.get('/mostDebated', getMostDebatedComment);
 /* GET Main Game from a given comment*/
 router.get('/:commentID/game', getMainGameFromComment)
 
-/* POST Comment */
-router.post('/new', addCommentOnConfig);
+/* GET Comments from player preferences */
+router.get('/player/OnlyPrefered/:numero_joueur', getCommentFromPlayerPreferences);
 
 /* GET removeComment */
 router.get('/remove/:id', removeComment);

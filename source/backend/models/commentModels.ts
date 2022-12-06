@@ -48,7 +48,21 @@ export const getMainGameFromComment = (req: Request, res: Response) => {
     let values = [
         req.params.commentID,
     ]
-    execute(sql, values).then(data => res.json(data)).catch(err => res.status(499).json(err));
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const getCommentFromPlayerPreferences = (req: Request, res: Response) => {
+    let sql = `select vue_avis.*, jeu.*
+    from bd.vue_avis
+    inner join bd.configuration on vue_avis.numero_configuration = configuration.numero_configuration
+    inner join bd.jeu on bd.jeu.numero_jeu=configuration.numero_jeu
+    inner join bd.utilsation_mecanique on bd.utilsation_mecanique.numero_jeu=bd.jeu.numero_jeu
+    inner join bd.preference_mecanique on bd.preference_mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+    inner join bd.joueur on bd.preference_mecanique.numero_personne=bd.joueur.numero_personne
+    where bd.joueur.numero_personne=(?);`;
+    let values = req.params.numero_joueur;
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+
 }
 
 export const addCommentOnConfig = (req: Request, res: Response) => {

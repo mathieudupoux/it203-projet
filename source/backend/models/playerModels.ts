@@ -5,7 +5,11 @@ import { execute } from "../utils/mariadb.connector";
 import mysql from "mysql";
 
 export const getAllPlayers = (req: Request, res: Response) => {
-    let sql = "select * from joueur";
+    let sql = `select count(bd.avis.numero_avis) as nombre_avis, bd.joueur.* 
+        from joueur
+        left join bd.avis on bd.avis.numero_personne=bd.joueur.numero_personne
+        group by bd.joueur.numero_personne
+        order by count(bd.avis.numero_avis) DESC;`;
     execute(sql, []).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -44,8 +48,8 @@ export const getPlayerGamesByPreferences = (req: Request, res: Response) => {
 }
 
 export const addNewPlayer = (req: Request, res: Response) => {
-    let sql =`INSERT INTO joueur(numero_personne,pseudo,mail) VALUES (?,?,?);`;
-    let values = [req.query.id,req.query.pseudo, req.query.mail];
+    let sql = `INSERT INTO joueur(numero_personne,pseudo,mail) VALUES (?,?,?);`;
+    let values = [req.query.id, req.query.pseudo, req.query.mail];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -57,6 +61,6 @@ export const removePlayer = (req: Request, res: Response) => {
 
 export const updatePlayer = (req: Request, res: Response) => {
     let sql = "UPDATE bd.joueur SET pseudo = ?, mail = ? WHERE numero_personne = ?";;
-    let values = [req.query.pseudo,req.query.mail,req.query.id];
+    let values = [req.query.pseudo, req.query.mail, req.query.id];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }

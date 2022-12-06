@@ -203,9 +203,9 @@ where bd.avis.numero_avis=3;
 
 ----------------------------  1  ------------------------------
 
-select count(bd.avis.numero_avis) , bd.joueur.* 
+select count(bd.avis.numero_avis) as nombre_avis, bd.joueur.* 
 from joueur
-inner join bd.avis on bd.avis.numero_personne=bd.joueur.numero_personne
+left join bd.avis on bd.avis.numero_personne=bd.joueur.numero_personne
 group by bd.joueur.numero_personne
 order by count(bd.avis.numero_avis) DESC;
 -- attention, on pourrait croire qu'il pourrait y avoir plus de joueurs, mais les autres personnes ne sont pas des joueurs !
