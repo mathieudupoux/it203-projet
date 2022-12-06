@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllGames, getGamesByMechanics, getThemeNames, addGame, getConfigFromMainGame, getConfigFromID, removeGame, getGames, getMechanicNames, linkGameMecanisme, linkGameTheme } from '../models/gameModels';
+import { getAllGames, getGamesByTheme, getThemeNames, addGame, getConfigFromMainGame, getConfigFromID, removeGame, getGames, getMechanicNames, linkGameMecanisme, linkGameTheme } from '../models/gameModels';
 const router = express.Router();
 
 /* GET all games with mecanics and themes*/
@@ -15,7 +15,7 @@ router.get('/themeNames', getThemeNames);
 router.get('/mechanicNames', getMechanicNames);
 
 /* GET games filtered by mechanics */
-router.get('/list/:mechanic', getGamesByMechanics);
+router.get('/list/:numero_theme', getGamesByTheme);
 
 /* POST new game */
 router.post('/add', addGame);
