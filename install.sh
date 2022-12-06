@@ -22,6 +22,7 @@ sudo docker compose up -d
 
 # Restore database
 echo "Wait for 5 second to finish installation before restore database"
-sleep 5
+sleep 10
 sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROOT_PASSWORD"' < ./sql/create.sql;
 sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROOT_PASSWORD"' < ./sql/insert.sql;
+sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROOT_PASSWORD"' < ./sql/vues.sql;
