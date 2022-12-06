@@ -1,5 +1,5 @@
 import express from 'express';
-import { addCommentOnConfig, getAllComments, getCommentsAppreciators, getMainGameFromComment, getMostDebatedComment, getMostRecentComments, getMostReliableComments, removeComment } from '../models/commentModels';
+import { updateComment, addCommentOnConfig, getAllComments, getCommentsAppreciators, getMainGameFromComment, getMostDebatedComment, getMostRecentComments, getMostReliableComments, removeComment } from '../models/commentModels';
 const router = express.Router();
 
 /* GET appreciators by comment id */
@@ -25,5 +25,11 @@ router.post('/new', addCommentOnConfig);
 
 /* GET removeComment */
 router.get('/remove/:id', removeComment);
+
+/* GET removeComment */
+// example of url
+// http://localhost:3000/comments/update?date_avis=2020-01-01&note=18&commentaire=Test&numero_configuration=3&numero_personne=3&numero_avis=1
+router.post('/update', updateComment);
+
 
 export default router;
