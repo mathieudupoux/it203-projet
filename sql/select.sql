@@ -183,8 +183,6 @@ inner join bd.utilsation_mecanique on bd.utilsation_mecanique.numero_jeu=bd.jeu.
 inner join bd.preference_mecanique on bd.preference_mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
 inner join bd.joueur on bd.preference_mecanique.numero_personne=bd.joueur.numero_personne
 where bd.joueur.numero_personne=6;
--- réslutat qu'avec 6 pour le moment vu les données
-
 
 ----------------------------  3  ------------------------------
 
@@ -193,7 +191,6 @@ from bd.joueur
 inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne
 inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis
 where bd.avis.numero_avis=3;
-
 
 
 --------------------------------------------------------------------------
