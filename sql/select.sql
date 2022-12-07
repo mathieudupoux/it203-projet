@@ -149,7 +149,7 @@
 ----------------------------  1  ------------------------------
 select * 
 from bd.jeu, bd.theme, bd.utilsation_theme, bd.configuration, bd.avis, bd.mecanique, bd.utilsation_mecanique
-where bd.theme.theme='Policier' 
+where bd.theme.theme='Policier' -- remplacer 'Policier' par n'importe quel theme
 and bd.theme.numero_theme=bd.utilsation_theme.numero_theme
 and bd.jeu.numero_jeu=bd.utilsation_theme.numero_jeu
 and bd.avis.numero_configuration=bd.configuration.numero_configuration
@@ -169,7 +169,7 @@ inner join bd.configuration on bd.configuration.numero_jeu=bd.jeu.numero_jeu
 inner join bd.avis on bd.avis.numero_configuration=bd.configuration.numero_configuration
 inner join bd.utilsation_mecanique on bd.jeu.numero_jeu=bd.utilsation_mecanique.numero_jeu
 inner join bd.mecanique on bd.mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
-where bd.theme.theme='Policier'
+where bd.theme.theme='Policier' -- remplacer 'Policier' par n'importe quel theme
 group by bd.jeu.numero_jeu
 order by bd.mecanique.mecanisme;
 
@@ -182,7 +182,7 @@ inner join bd.jeu on bd.jeu.numero_jeu=bd.configuration.numero_jeu
 inner join bd.utilsation_mecanique on bd.utilsation_mecanique.numero_jeu=bd.jeu.numero_jeu
 inner join bd.preference_mecanique on bd.preference_mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
 inner join bd.joueur on bd.preference_mecanique.numero_personne=bd.joueur.numero_personne
-where bd.joueur.numero_personne=6;
+where bd.joueur.numero_personne=6; -- remplacer 6 par n'importe quel numéro_personne
 
 ----------------------------  3  ------------------------------
 
@@ -190,7 +190,7 @@ select *
 from bd.joueur
 inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne
 inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis
-where bd.avis.numero_avis=3;
+where bd.avis.numero_avis=3; -- remplacer 3 par n'importe quel numéro_avis
 
 
 --------------------------------------------------------------------------
@@ -214,9 +214,7 @@ order by count(bd.avis.numero_avis) DESC;
 select * 
 from bd.avis
 order by bd.avis.date_avis DESC
-limit 3;
-
-
+limit 3; -- remplacer 3 par n'importe quelle valeur
 
 ----------------------------  3  ------------------------------
 
