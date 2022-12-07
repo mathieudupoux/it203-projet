@@ -35,7 +35,7 @@
     <div class="field">
       <label class="label">Duree du jeu</label>
       <div class="control">
-        <input class="input" v-model.lazy="item.duree_jeu" />
+        <input class="input" v-model.lazy="item.duree" />
       </div>
     </div>
 
@@ -72,7 +72,7 @@
     </div>
 
     <router-link class="button is-primary" to="/games" v-on:click="addGame">Soumettre</router-link>
-    
+
     <div class="notification is-info is-light">
       <button class="delete"></button>
     </div>
@@ -101,7 +101,7 @@ export default defineComponent({
         editeur: "",
         date_de_parution: "",
         type_de_jeu: "",
-        duree_jeu: "",
+        duree: "",
       },
       selectedThemes: [] as Array<Theme>,
       selectedMechanics: [] as Array<Mechanic>,
@@ -141,36 +141,36 @@ export default defineComponent({
     async addGame() {
       console.log("Try to add Game ...")
       try {
-          await axios.post(`http://localhost:3000/games/add?nom_jeu=${this.item.nom_jeu}&editeur=${this.item.editeur}&date_de_parution=${this.item.date_de_parution}&type_de_jeu=${this.item.type_de_jeu}&duree=${this.item.duree_jeu}`);
-          console.log("Success !")
-      } 
-      catch (err) {
-          console.log(err);
-          console.log("Error !")
+        await axios.post(`http://localhost:3000/games/add?nom_jeu=${this.item.nom_jeu}&editeur=${this.item.editeur}&date_de_parution=${this.item.date_de_parution}&type_de_jeu=${this.item.type_de_jeu}&duree=${this.item.duree}`);
+        console.log("Success !")
       }
-      if(this.selectedMechanics.length !== 0){
-          this.selectedMechanics.forEach(el => {
+      catch (err) {
+        console.log(err);
+        console.log("Error !")
+      }
+      if (this.selectedMechanics.length !== 0) {
+        this.selectedMechanics.forEach(el => {
           try {
             axios.post(`http://localhost:3000/games/link/GameMecanisme?nom_jeu=${this.item.nom_jeu}&mecanisme=${el}`);
             console.log("Success !")
-          } 
+          }
           catch (err) {
             console.log(err);
             console.log("Error !")
           }
         });
       }
-      if(this.selectedThemes.length !== 0){
+      if (this.selectedThemes.length !== 0) {
         this.selectedThemes.forEach(el => {
           try {
             axios.post(`http://localhost:3000/games/link/GameTheme?nom_jeu=${this.item.nom_jeu}&theme=${el}`);
             console.log("Success !")
-          } 
+          }
           catch (err) {
             console.log(err);
             console.log("Error !")
           }
-      });
+        });
       }
     },
   },

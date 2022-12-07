@@ -61,7 +61,7 @@ export const getGamesByTheme = (req: Request, res: Response) => {
 }
 export const addGame = (req: Request, res: Response) => {
     let sql = `INSERT INTO bd.jeu (nom, editeur, date_de_parution, type_de_jeu, duree) VALUES (?,?,?,?,?)`;
-    let values = [req.query.nom_jeu, req.query.editeur, req.query.date_de_parution, req.query.type_de_jeu, req.query.duree_jeu];
+    let values = [req.query.nom_jeu, req.query.editeur, req.query.date_de_parution, req.query.type_de_jeu, req.query.duree];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -95,6 +95,6 @@ export const removeGame = (req: Request, res: Response) => {
 
 export const updateGame = (req: Request, res: Response) => {
     let sql = "UPDATE bd.jeu SET nom = ?, editeur = ?, date_de_parution = ?, type_de_jeu = ?, duree = ? WHERE numero_jeu = ?";;
-    let values = [req.body.nom,req.body.editeur,req.body.date_de_parution, req.body.type_de_jeu, req.body.duree, req.body.numero_jeu];
+    let values = [req.body.nom, req.body.editeur, req.body.date_de_parution, req.body.type_de_jeu, req.body.duree, req.body.numero_jeu];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }

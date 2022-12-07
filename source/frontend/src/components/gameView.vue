@@ -16,6 +16,7 @@
           <li>Éditeur : {{ jeu.editeur }}</li>
           <li>Date de parution : {{ formatDate(jeu.date_de_parution) }}</li>
           <li>Type de jeu : {{ jeu.type_de_jeu }}</li>
+          <li>Durée d'une partie : {{ jeu.duree }} min</li>
           <li>Mécanisme : {{ jeu.mecanisme }}</li>
           <li>Thème : {{ jeu.theme }}</li>
         </ul>
