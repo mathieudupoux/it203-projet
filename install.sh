@@ -18,10 +18,10 @@ sed -i "s/USER_PWD/$user_password/g" .env
 
 #Build and start app and database
 sudo docker compose build
-sudo docker compose up -d
+sudo docker compose up -d db backend frontend
 
 # Restore database
-echo "Wait for 5 second to finish installation before restore database"
+echo "Wait for 10 second to finish installation before restore database"
 sleep 10
 sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROOT_PASSWORD"' < ./sql/create.sql;
 sudo docker exec -i it203-projet-db-1 sh -c 'exec mariadb -uroot -p"$MARIADB_ROOT_PASSWORD"' < ./sql/triggers.sql;
