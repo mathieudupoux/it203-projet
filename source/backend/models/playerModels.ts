@@ -64,3 +64,25 @@ export const updatePlayer = (req: Request, res: Response) => {
     let values = [req.query.pseudo, req.query.mail, req.query.id];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+
+export const linkPlayerTheme = (req: Request, res: Response) => {
+    let sql = `INSERT INTO bd.preference_theme (numero_personne, numero_theme)
+    select bd.joueur.numero_personne, bd.theme.numero_theme
+    from bd.joueur, bd.theme
+    where bd.joueur.numero_personne=?
+    and bd.theme.theme=?`;
+    let values = [req.query.numero_personne, req.query.theme];
+    console.log(values);
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const linkPlayerMecanic = (req: Request, res: Response) => {
+    let sql = `INSERT INTO bd.preference_mecanique (numero_personne, numero_mecanique)
+    select bd.joueur.numero_personne, bd.mecanique.numero_mecanique
+    from bd.joueur, bd.mecanique
+    where bd.joueur.numero_personne=?
+    and bd.mecanique.mecanisme=?`;
+    let values = [req.query.numero_personne, req.query.mecanisme];
+    console.log(values);
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}

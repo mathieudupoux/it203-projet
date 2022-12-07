@@ -1,5 +1,5 @@
 import express from 'express';
-import { addNewPlayer,getPlayerById, getAllPlayers,getPlayerCommentsOnPreferedGames, getPlayerGamesByPreferences, removePlayer, updatePlayer } from '../models/playerModels';
+import {  linkPlayerMecanic,linkPlayerTheme,addNewPlayer,getPlayerById, getAllPlayers,getPlayerCommentsOnPreferedGames, getPlayerGamesByPreferences, removePlayer, updatePlayer } from '../models/playerModels';
 const router = express.Router();
 
 router.get('/', getAllPlayers);
@@ -19,5 +19,11 @@ router.get('/remove/:id', removePlayer);
 // Example of url 
 // http://localhost:3000/players/update?id=new_id&pseudo=new_pseudo&mail=new_mail
 router.post('/update', updatePlayer);
+
+/* POST link between a game and a theme */
+router.post('/link/PlayerTheme', linkPlayerTheme);
+
+/* POST link between a game and a theme */
+router.post('/link/PlayerMecanic', linkPlayerMecanic);
 
 export default router;

@@ -131,3 +131,15 @@ export const GetConfigByGameName = (req: Request, res: Response) => {
     let values = [req.query.nom_jeu];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
+
+export const getMecanicsFromIdGame = (req: Request, res: Response) => {
+    let sql = "SELECT bd.mecanique.mecanisme FROM bd.jeu NATURAL JOIN bd.utilsation_mecanique NATURAL JOIN bd.mecanique WHERE bd.jeu.numero_jeu = ?;";
+    let values = [req.params.id];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const getThemesFromIdGame = (req: Request, res: Response) => {
+    let sql = "SELECT bd.theme.theme FROM bd.jeu NATURAL JOIN bd.utilsation_theme NATURAL JOIN bd.theme WHERE bd.jeu.numero_jeu = ?;";
+    let values = [req.params.id];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
