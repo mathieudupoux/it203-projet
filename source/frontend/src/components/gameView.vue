@@ -213,7 +213,7 @@ export default defineComponent({
     async getMecanics() {
       try {
         const response = await axios.get(`http://localhost:3000/games/mecanics/${this.jeu.numero_jeu}`);
-        this.themes = response.data;
+        this.mecanisms= response.data;
       } catch (err) {
         console.log(err);
       }
@@ -222,7 +222,7 @@ export default defineComponent({
     async getThemes() {
       try {
         const response = await axios.get(`http://localhost:3000/games/themes/${this.jeu.numero_jeu}`);
-        this.mecanisms = response.data;
+        this.themes = response.data;
       } catch (err) {
         console.log(err);
       }
