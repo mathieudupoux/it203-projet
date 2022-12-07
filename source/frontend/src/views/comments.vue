@@ -2,13 +2,20 @@
   <div class="block">
     <div class="block">
       <h1 class="title">Top commentaire</h1>
-      Voici le commentaire le plus jugé du site :
+      <p>Voici le commentaire le plus jugé du site :</p>
       <div class="card">
-        <header class="card-header subtitle">
-        </header>
-        <CommentView :avis='mostDebatedComment' @is_updated="getMostDebatedComment"></CommentView>
+        <div class="block" v-for="comment in mostDebatedComment" :key="comment.numero_avis">
+          <div class="card">
+            <!--<header class="card-header">
+              <p class="card-header-title subtitle">Sur {{ mostDebatedConfig.nom_jeu }} +
+                {{ mostDebatedConfig.nom_extension }}</p>
+            </header>-->
+            <CommentView :avis='comment' @reload="update"></CommentView>
+          </div>
+        </div>
       </div>
     </div>
+
     <div class="block">
       <h1 class="title">Tous les commentaires</h1>
       <div class="tabs is-centered">
@@ -44,9 +51,7 @@
         </div>
         <div class="block" v-for="comment in commentsItems" :key="comment.numero_avis">
           <div class="card">
-            <header class="card-header subtitle">
-            </header>
-            <CommentView :avis='comment' @is_updated="update"></CommentView>
+            <CommentView class="card-content" :avis='comment' @reload="update"></CommentView>
           </div>
         </div>
       </div>
@@ -60,6 +65,7 @@ import CommentView from "../components/commentView.vue";
 import axios from "axios";
 import { defineComponent } from "vue";
 import { Comment } from '../types/Comment';
+import { Config } from '../types/Config'
 
 export default defineComponent({
   name: "CommentList",
@@ -70,7 +76,8 @@ export default defineComponent({
       viewMostReliable: "",
       viewMostRecentNb: "",
       commentsItems: [] as Comment[],
-      mostDebatedComment: Comment,
+      mostDebatedComment: [] as Comment[],
+      mostDebatedConfig: {} as Config,
       nbRecentComments: 100,
     };
   },
@@ -86,12 +93,26 @@ export default defineComponent({
       this.getMostRecentComments();
     },
 
+    async getMostDebatedConfig() {
+      try {
+        await axios.get(
+          `http://localhost:3000/games/config/FromID/${this.mostDebatedComment[0].numero_avis}`
+        ).then(res => {
+          this.mostDebatedComment = res.data;
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async getMostDebatedComment() {
+      this.mostDebatedComment = [];
       try {
         await axios.get(
           "http://localhost:3000/comments/mostDebated"
         ).then(res => {
-          this.mostDebatedComment = res.data[0];
+          this.mostDebatedComment = res.data;
+          this.mostDebatedConfig = res.data[0]
         });
       } catch (err) {
         console.log(err);

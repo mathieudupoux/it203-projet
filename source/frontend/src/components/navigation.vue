@@ -37,7 +37,7 @@
                 <router-link class="navbar-item" to="/games/add"> Ajouter un jeux </router-link>
               </div>
             </div>
-            <router-link class="navbar-item" to="/comments"> Derniers commentaires </router-link>
+            <router-link class="navbar-item" to="/comments"> Commentaires </router-link>
 
             <div class="navbar-item has-dropdown is-hoverable">
               <router-link class="navbar-link" to="/players"> Joueurs </router-link>
@@ -46,19 +46,7 @@
                 <router-link class="navbar-item" to="/players/add"> Ajouter un joueur </router-link>
               </div>
             </div>
-
-
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link"> Administration </a>
-
-              <div class="navbar-dropdown">
-                <a class="navbar-item"> Modération </a>
-                <a class="navbar-item"> Jeux référencés </a>
-                <a class="navbar-item"> Utilisateurs </a>
-              </div>
-            </div>
           </div>
-
         </div>
       </nav>
     </div>
