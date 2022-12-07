@@ -6,7 +6,7 @@ import Games from "../views/games.vue";
 import AddGame from "../views/addNewGame.vue";
 import Players from "../views/players.vue";
 import AddPlayer from "../views/addNewPlayer.vue";
-
+import AddExtension from "../views/addExtension.vue";
 
 
 const routes = [
@@ -14,6 +14,7 @@ const routes = [
     { path: "/comments", name: "Derniers commentaires", component: Comments },
     { path: "/games", name: "Jeux", component: Games },
     { path: "/games/add", name: "Ajouter un jeu", component: AddGame },
+    { path: "/games/extensions/add", name: "Ajouter une extension", component: AddExtension },
     { path: "/players", name: "Joueurs", component: Players },
     { path: "/players/add", name: "Ajouter un joueur", component: AddPlayer },
     { path: "/: catchAll(.*)", name: "Notfound", component: NotFound }

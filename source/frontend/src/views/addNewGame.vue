@@ -71,6 +71,24 @@
       </div>
     </div>
 
+  <div class="field">
+      <label class="label">Nombre de joueur</label>
+      <div class="control">
+        <ul class="is-info">
+          <li v-for="menuItem in numMenuItems" :key="menuItem" :value="menuItem">
+            <div class="b-checkbox is-info">
+              <input type="checkbox" :id="'numCheckbox' + menuItem" :value="menuItem"
+                class="styled is-info" v-model="selectedNum">
+              <label :for="'numCheckbox' + menuItem" class="checkbox"> {{ menuItem
+              }}</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+
     <router-link class="button is-primary" to="/games" v-on:click="addGame">Soumettre</router-link>
 
     <div class="notification is-info is-light">
@@ -93,9 +111,10 @@ export default defineComponent({
   name: "addGameRequest",
   data() {
     return {
-      value: "",
+      value: "", 
       themeMenuItems: [] as Array<Theme>,
       mechanicMenuItems: [] as Array<Mechanic>,
+      numMenuItems: ["1","2","3","4","5","6","7","8","9","10"],
       item: {
         nom_jeu: "",
         editeur: "",
@@ -103,10 +122,11 @@ export default defineComponent({
         type_de_jeu: "",
         duree: "",
       },
+      selectedNum: [],
       selectedThemes: [] as Array<Theme>,
       selectedMechanics: [] as Array<Mechanic>,
       dateTime: bulmaCalendar.attach(".date", {
-        type: "datetime"
+        type: "datetime" 
       }),
     };
   },
@@ -138,7 +158,7 @@ export default defineComponent({
       }
     },
 
-    async addGame() {
+    async addGame(){  
       console.log("Try to add Game ...")
       try {
         await axios.post(`http://localhost:3000/games/add?nom_jeu=${this.item.nom_jeu}&editeur=${this.item.editeur}&date_de_parution=${this.item.date_de_parution}&type_de_jeu=${this.item.type_de_jeu}&duree=${this.item.duree}`);
@@ -172,9 +192,23 @@ export default defineComponent({
           }
         });
       }
+      if (this.selectedNum.length !== 0) {
+        this.selectedNum.forEach(el => {
+          try {
+            axios.post(`http://localhost:3000/games/AddConfig?nb_joueur=${el}&nom_jeu=${this.item.nom_jeu}`);
+            console.log("Success !");
+          }
+          catch (err) {
+            console.log(err);
+            console.log("Error !");
+          }
+        });
+      }
+      
     },
   },
 });
+
 </script>
 
   <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -35,6 +35,7 @@
               <div class="navbar-dropdown">
                 <router-link class="navbar-item" to="/games"> Voir les jeux </router-link>
                 <router-link class="navbar-item" to="/games/add"> Ajouter un jeux </router-link>
+                <router-link class="navbar-item" to="/games/extensions/add"> Ajouter une extension</router-link>
               </div>
             </div>
             <router-link class="navbar-item" to="/comments"> Commentaires </router-link>

@@ -72,7 +72,6 @@ export const linkGameTheme = (req: Request, res: Response) => {
     where bd.jeu.nom=?
     and bd.theme.theme=?`;
     let values = [req.query.nom_jeu, req.query.theme];
-    console.log(values);
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -83,7 +82,6 @@ export const linkGameMecanisme = (req: Request, res: Response) => {
     where bd.jeu.nom=?
     and bd.mecanique.mecanisme=?`;
     let values = [req.query.nom_jeu, req.query.mecanisme];
-    console.log(values);
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
 
@@ -96,5 +94,40 @@ export const removeGame = (req: Request, res: Response) => {
 export const updateGame = (req: Request, res: Response) => {
     let sql = "UPDATE bd.jeu SET nom = ?, editeur = ?, date_de_parution = ?, type_de_jeu = ?, duree = ? WHERE numero_jeu = ?";;
     let values = [req.body.nom, req.body.editeur, req.body.date_de_parution, req.body.type_de_jeu, req.body.duree, req.body.numero_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const AddConfig = (req: Request, res: Response) => {
+    let sql = `INSERT INTO bd.configuration (nb_joueurs, numero_jeu)
+    select ? , bd.jeu.numero_jeu
+    from bd.jeu
+    where bd.jeu.nom=?`;
+    let values = [req.query.nb_joueur, req.query.nom_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const AddExtension = (req: Request, res: Response) => {
+    let sql = `INSERT INTO bd.extension (nom, date_parution, numero_jeu)
+    select ? , ?, bd.jeu.numero_jeu
+    from bd.jeu
+    where bd.jeu.nom=?`;
+    let values = [req.query.nom_extension, req.query.date_de_parution, req.query.nom_jeu];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const LinkExtension = (req: Request, res: Response) => {
+    let sql = `INSERT INTO bd.extension_configuration (numero_configuration, numero_extension)
+    select ?, bd.extension.numero_extension
+    from bd.extension
+    where bd.extension.nom=?`;
+    let values = [req.query.num_config,req.query.nom_extension];
+    execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
+}
+
+export const GetConfigByGameName = (req: Request, res: Response) => {
+    let sql = `select bd.configuration.*
+    from bd.configuration, bd.jeu
+    where  bd.configuration.numero_jeu = bd.jeu.numero_jeu and bd.jeu.nom = ?`;
+    let values = [req.query.nom_jeu];
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
 }
