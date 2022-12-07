@@ -1,49 +1,61 @@
 <template>
+  <div class="modal" :class="{ 'is-active': showModalFlag }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Modifier commentaire {{ avis.numero_avis }}</p>
+        <button class="delete" aria-label="close" @click="cancelModal"></button>
+      </header>
+      <section class="modal-card-body">
 
-  <div class="box">
-    <article class="media">
-      <div class="media-content">
-        <div class="field">
-          <p class="control">
-            <textarea class="textarea" placeholder="Votre commentaire" v-model="tmp_item.commentaire"></textarea>
-          </p>
-        </div>
-        <nav class="level">
-          <div class="level-left">
-            <div class="level-item">
-              <p class="control subtitle"><label class="label">Joueur</label></p>
-            </div>
-            <div class="level-item">
-              <div class="field">
-                <p class="control">
-                  <select class="dropdown-content" v-model="tmp_item.numero_personne">
-                    <option class="dropdown-item" v-for="player in players" :key="player.numero_personne"
-                      :value="player.numero_personne">
-                      {{ player.pseudo }}
-                    </option>
-                  </select>
-                </p>
-              </div>
-            </div>
+        <!-- beginning form -->
+        <div class="card-content">
+          <div class="content">
+            <div class="box">
+              <article class="media">
+                <div class="media-content">
+                  <div class="field">
+                    <p class="control">
+                      <textarea class="textarea" placeholder="Votre commentaire"
+                        v-model="tmp_item.commentaire"></textarea>
+                    </p>
+                  </div>
+                  <nav class="level">
+                    <div class="level-left">
+                      <div class="level-item">
+                        <p class="control subtitle"><label class="label">Joueur</label></p>
+                      </div>
+                      <div class="level-item">
+                        <div class="field">
+                          <p class="control">
+                            <select class="dropdown-content" v-model="tmp_item.numero_personne">
+                              <option class="dropdown-item" v-for="player in players" :key="player.numero_personne"
+                                :value="player.numero_personne">
+                                {{ player.pseudo }}
+                              </option>
+                            </select>
+                          </p>
+                        </div>
+                      </div>
 
-            <div class="level-item">
-              <p class="control"><label class="label">Note</label></p>
-            </div>
-            <div class="level-item">
-              <div class="field">
-                <p class="control">
-                  <select class="dropdown-content" v-model="tmp_item.note">
-                    <option class="dropdown-item" v-for="n in 21" :key="n" :value="(n - 1)">
-                      {{ n - 1 }}
-                    </option>
-                  </select>
-                </p>
-              </div>
-            </div>
-          </div>
-        </nav>
+                      <div class="level-item">
+                        <p class="control"><label class="label">Note</label></p>
+                      </div>
+                      <div class="level-item">
+                        <div class="field">
+                          <p class="control">
+                            <select class="dropdown-content" v-model="tmp_item.note">
+                              <option class="dropdown-item" v-for="n in 21" :key="n" :value="(n - 1)">
+                                {{ n - 1 }}
+                              </option>
+                            </select>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </nav>
 
-        <!-- <nav class="level">
+                  <!-- <nav class="level">
           <div>
             <div class="level-left">
               <div class="level-item">
@@ -65,19 +77,32 @@
           </div>
           </nav> -->
 
-      </div>
-    </article>
-    <div class="field">
-    </div>
+                </div>
+              </article>
+              <div class="field">
+              </div>
 
-    <div class="notification is-info is-light">
-      <button class="delete"></button>
-      Requete sql ici !
-      {{ avis }}
-      {{configList}}
+              <div class="notification is-info is-light">
+                <button class="delete"></button>
+                Requete sql ici !
+                {{ showModalFlag }}
+                {{ avis }}
+                {{ configList }}
+              </div>
+            </div>
+            J e ne sais pas ce que je fais !
+            <!-- {{ avis }} -->
+          </div>
+        </div>
+        <!-- end form -->
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" @click="okModal">Save changes</button>
+        <button class="button" @click="cancelModal">Cancel</button>
+      </footer>
     </div>
   </div>
-
 
 
 </template>
@@ -91,15 +116,16 @@ import { Config } from "../types/Config";
 
 export default defineComponent({
 
-  props: ["mainGame","avis"],
+  props: ["toggleModal", "avis", "mainGame"],
+  emits: ["is_over", "is_updated"],
 
   data() {
     return {
       configList: [] as Array<Config>,
       players: [] as Array<Player>,
       item: {} as Comment,
-      tmp_item : {} as Comment,
-
+      tmp_item: {} as Comment,
+      showModalFlag: false,
     };
 
   },
@@ -110,8 +136,16 @@ export default defineComponent({
     this.cp_avis();
   },
 
+  watch: {
+    toggleModal() {
+      if (this.toggleModal == true) {
+        this.showModal();
+      }
+    }
+  },
+
   methods: {
-    cp_avis(){
+    cp_avis() {
       this.tmp_item.commentaire = this.avis.commentaire;
       this.tmp_item.numero_personne = this.avis.numero_personne;
       this.tmp_item.note = this.avis.note;
@@ -142,9 +176,9 @@ export default defineComponent({
 
     async updateComment() {
       try {
-        // this.item.date_avis = this.getCurrentDate();
+        this.tmp_item.date_avis = this.getCurrentDate();
         // console.log("verif arg : note :" + this.item.note + " avis :" + this.item.commentaire);
-        console.log("item",this.tmp_item);
+        console.log("item", this.tmp_item);
         const res = await axios.post(
           `http://localhost:3000/comments/update`, this.tmp_item);
         console.log("My res", res);
@@ -152,7 +186,20 @@ export default defineComponent({
         console.log("Erreur pour update une personne");
       }
     },
+    async showModal() {
+      this.showModalFlag = true;
+    },
 
+    async okModal() {
+      this.updateComment();
+      this.showModalFlag = false;
+      this.$emit('is_over');
+      this.$emit('is_updated');
+    },
+    cancelModal() {
+      this.showModalFlag = false;
+      this.$emit('is_over')
+    }
   }
 });
 </script>

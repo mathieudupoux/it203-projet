@@ -36,42 +36,14 @@
                             <span class="icon"><i class="fas fa-thumbs-down"></i></span>
                         </button>
                     </div>
-                    <button class="button level-item is-info" @click="modifyComment">
+                    <!-- modal -->
+                    <UpdateComment :toggleModal="showModalFlag" :mainGame='avis.numero_jeu' :avis='avis'
+                        @is_over="toggleModalFlag" @is_updated="update">
+                    </UpdateComment>
+                    <button class="button level-item is-info" @click="toggleModalFlag">
                         <span class="icon"><i class="fas fa-edit"></i></span>
                     </button>
 
-                      <!-- modal -->
-                      <div class="modal" :class="{'is-active' : showModalFlag}">
-                        <div class="modal-background"></div>
-                        <div class="modal-card">
-                        <header class="modal-card-head">
-                            <p class="modal-card-title">Modifier commentaire {{avis.numero_avis}}</p>
-                            <button class="delete" aria-label="close" @click="cancelModal"></button>
-                        </header>
-                        <section class="modal-card-body">
-
-                         <!-- beginning form -->
-                         <div class="card-content">
-                            <div class="content">
-
-
-                    <UpdateComment :mainGame='avis.numero_jeu' :avis='avis'></UpdateComment>
-
-
-  J                             e ne sais pas ce que je fais !
-                                <!-- {{ avis }} -->
-                            </div>
-                        </div>
-                        <!-- end form -->
-
-                        </section>
-                        <footer class="modal-card-foot">
-                            <button class="button is-success" @click="okModal">Save changes</button>
-                            <button class="button" @click="cancelModal">Cancel</button>
-                        </footer>
-                        </div>
-                    </div>
-                    <!-- end modal  -->
 
                     <button @click="removeComment()" class="button level-item is-danger">
                         <span class="icon"><i class="fas fa-trash"></i></span>
@@ -96,20 +68,21 @@ export default defineComponent({
     props: [
         "avis"
     ],
+    emits: ['is_updated'],
     components: { Popper, UpdateComment },
     data() {
         return {
             openAppreciators: false,
             player: {
-                numero_personne : -1,
-                pseudo : "Unknown",
-                mail : "Unknown"
+                numero_personne: -1,
+                pseudo: "Unknown",
+                mail: "Unknown"
             } as Player,
             appreciators: [] as Array<Player>,
             nbAppreciatons: Number,
-            tmp_avis : {},
-            showModalFlag : false, 
-            okPressed : false, 
+            tmp_avis: {},
+            showModalFlag: false,
+            okPressed: false,
         }
     },
 
@@ -119,6 +92,9 @@ export default defineComponent({
     },
 
     methods: {
+        update() {
+            this.$emit("is_updated");
+        },
 
         async getAuthor() {
             try {
@@ -126,7 +102,7 @@ export default defineComponent({
                     `http://localhost:3000/players/${this.avis.numero_personne}`
                 );
                 let res = response.data[0];
-                if(res != undefined && res.pseudo != undefined){
+                if (res != undefined && res.pseudo != undefined) {
                     this.player = res;
                 }
             } catch (err) {
@@ -163,27 +139,11 @@ export default defineComponent({
             }
             window.location.reload();
 
-        }, 
-        modifyComment(){
+        },
+        toggleModalFlag() {
             console.log("Modify");
-            this.showModal();
+            this.showModalFlag = !this.showModalFlag;
         },
-
-
-        showModal(){
-        this.okPressed = false;
-        this.showModalFlag = true;
-        },
-
-        async okModal(){
-          this.okPressed = true;
-          this.showModalFlag = false;
-        },
-        cancelModal() {
-            this.okPressed = false;
-            this.showModalFlag = false;
-        }
-
 
     }
 })

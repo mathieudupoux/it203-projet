@@ -1,56 +1,56 @@
 <template>
   <div class="block">
-  <div class="block">
-    <h1 class="title">Top commentaire</h1>
-    Voici le commentaire le plus jugé du site :
-    <div class="card">
-      <header class="card-header subtitle">
-      </header>
-      <CommentView :avis='mostDebatedComment'></CommentView>
+    <div class="block">
+      <h1 class="title">Top commentaire</h1>
+      Voici le commentaire le plus jugé du site :
+      <div class="card">
+        <header class="card-header subtitle">
+        </header>
+        <CommentView :avis='mostDebatedComment' @is_updated="getMostDebatedComment"></CommentView>
+      </div>
     </div>
-  </div>
-  <div class="block">
-    <h1 class="title">Tous les commentaires</h1>
-    <div class="tabs is-centered">
-      <ul>
-        <li :class="viewMostRecent" @click="getMostRecentComments()">
-          <a>
-            <span>Les plus récents</span>
-            <span class="icon is-small"><i class="fas fa-clock" aria-hidden="true"></i></span>
-          </a>
-        </li>
-        <li :class="viewMostReliable" @click="getMostReliableComments()">
-          <a>
-            <span>Les plus fiables</span>
-            <span class="icon is-small"><i class="far fa-star-half-stroke" aria-hidden="true"></i></span>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="container">
-      <div class="field is-horizontal" :class="viewMostRecentNb">
-        <div class="field-label is-normal">
-          <label class="label">Nombre d'éléments à afficher</label>
+    <div class="block">
+      <h1 class="title">Tous les commentaires</h1>
+      <div class="tabs is-centered">
+        <ul>
+          <li :class="viewMostRecent" @click="getMostRecentComments()">
+            <a>
+              <span>Les plus récents</span>
+              <span class="icon is-small"><i class="fas fa-clock" aria-hidden="true"></i></span>
+            </a>
+          </li>
+          <li :class="viewMostReliable" @click="getMostReliableComments()">
+            <a>
+              <span>Les plus fiables</span>
+              <span class="icon is-small"><i class="far fa-star-half-stroke" aria-hidden="true"></i></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <div class="field is-horizontal" :class="viewMostRecentNb">
+          <div class="field-label is-normal">
+            <label class="label">Nombre d'éléments à afficher</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input v-model="nbRecentComments" @keyup.enter="getMostRecentComments()" type="number" min="0" max="100"
+                  class="input" />
+                <button @click="getMostRecentComments()" class="button is-primary">Valider</button>
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control">
-              <input v-model="nbRecentComments" @keyup.enter="getMostRecentComments()" type="number" min="0" max="100"
-                class="input" />
-              <button @click="getMostRecentComments()" class="button is-primary">Valider</button>
-            </p>
+        <div class="block" v-for="comment in commentsItems" :key="comment.numero_avis">
+          <div class="card">
+            <header class="card-header subtitle">
+            </header>
+            <CommentView :avis='comment' @is_updated="update"></CommentView>
           </div>
         </div>
       </div>
-      <div class="block" v-for="comment in commentsItems" :key="comment.numero_avis">
-        <div class="card">
-          <header class="card-header subtitle">
-          </header>
-          <CommentView :avis='comment'></CommentView>
-        </div>
-      </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -70,7 +70,7 @@ export default defineComponent({
       viewMostReliable: "",
       viewMostRecentNb: "",
       commentsItems: [] as Comment[],
-      mostDebatedComment: {} as Comment,
+      mostDebatedComment: Comment,
       nbRecentComments: 100,
     };
   },
@@ -81,12 +81,18 @@ export default defineComponent({
   },
 
   methods: {
+    update() {
+      this.getMostDebatedComment();
+      this.getMostRecentComments();
+    },
+
     async getMostDebatedComment() {
       try {
-        const response = await axios.get(
+        await axios.get(
           "http://localhost:3000/comments/mostDebated"
-        );
-        this.mostDebatedComment = response.data[0];
+        ).then(res => {
+          this.mostDebatedComment = res.data[0];
+        });
       } catch (err) {
         console.log(err);
       }
