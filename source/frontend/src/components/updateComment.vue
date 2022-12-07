@@ -117,7 +117,7 @@ import { Config } from "../types/Config";
 export default defineComponent({
 
   props: ["toggleModal", "avis", "mainGame"],
-  emits: ["is_over", "is_updated"],
+  emits: ["reload"],
 
   data() {
     return {
@@ -191,14 +191,12 @@ export default defineComponent({
     },
 
     async okModal() {
-      this.updateComment();
+      this.updateComment().then(() => this.$emit('reload'));
       this.showModalFlag = false;
-      this.$emit('is_over');
-      this.$emit('is_updated');
     },
     cancelModal() {
       this.showModalFlag = false;
-      this.$emit('is_over')
+      this.$emit('reload')
     }
   }
 });

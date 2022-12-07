@@ -38,14 +38,14 @@
                     </div>
                     <!-- modal -->
                     <UpdateComment :toggleModal="showModalFlag" :mainGame='avis.numero_jeu' :avis='avis'
-                        @is_over="toggleModalFlag" @is_updated="update">
+                        @reload="update">
                     </UpdateComment>
                     <button class="button level-item is-info" @click="toggleModalFlag">
                         <span class="icon"><i class="fas fa-edit"></i></span>
                     </button>
 
 
-                    <button @click="removeComment()" class="button level-item is-danger">
+                    <button @click="removeComment" class="button level-item is-danger">
                         <span class="icon"><i class="fas fa-trash"></i></span>
                     </button>
                 </div>
@@ -68,7 +68,7 @@ export default defineComponent({
     props: [
         "avis"
     ],
-    emits: ['is_updated'],
+    emits: ['reload'],
     components: { Popper, UpdateComment },
     data() {
         return {
@@ -93,7 +93,8 @@ export default defineComponent({
 
     methods: {
         update() {
-            this.$emit("is_updated");
+            this.toggleModalFlag();
+            this.$emit("reload");
         },
 
         async getAuthor() {
@@ -137,12 +138,12 @@ export default defineComponent({
             } catch (err) {
                 console.log(err);
             }
-            window.location.reload();
+            this.$emit('reload');
 
         },
         toggleModalFlag() {
-            console.log("Modify");
             this.showModalFlag = !this.showModalFlag;
+            console.log("Modify");
         },
 
     }

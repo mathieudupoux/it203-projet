@@ -46,7 +46,7 @@
           <div class="card">
             <header class="card-header subtitle">
             </header>
-            <CommentView :avis='comment' @is_updated="update"></CommentView>
+            <CommentView :avis='comment' @reload="update"></CommentView>
           </div>
         </div>
       </div>
