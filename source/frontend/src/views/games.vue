@@ -9,7 +9,7 @@
 
     <div class="container">
       <div class="block" v-for="item in items" :key="item.numero_jeu">
-        <GameView :jeu='item'></GameView>
+        <GameView :jeu='item' @reload="getGames"></GameView>
       </div>
     </div>
 
