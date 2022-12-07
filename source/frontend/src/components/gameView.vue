@@ -17,8 +17,8 @@
           <li>Date de parution : {{ formatDate(jeu.date_de_parution) }}</li>
           <li>Type de jeu : {{ jeu.type_de_jeu }}</li>
           <li>Durée d'une partie : {{ jeu.duree }} min</li>
-          <li>Mécanisme : {{ mecanisms }}</li>
-          <li>Thème : {{ themes }}</li>
+          <li>Mécanisme : {{ jeu.mecanisme }}</li>
+          <li>Thème : {{ jeu.theme }}</li>
         </ul>
       </div>
     </div>
@@ -149,14 +149,7 @@ export default defineComponent({
       okPressed: false,
       items: [],
       tmp_game: {} as Game,
-      mecanisms : [],
-      themes : [],
     }
-  },
-
-  created() {
-    this.getMecanics();
-    this.getThemes();
   },
 
   methods: {
@@ -209,29 +202,6 @@ export default defineComponent({
     cancelModal() {
       this.okPressed = false;
       this.showModalFlag = false;
-    },
-    async getMecanics() {
-      try {
-        const response = await axios.get(`http://localhost:3000/games/mecanics/${this.jeu.numero_jeu}`);
-        this.themes = response.data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-
-    async getThemes() {
-      try {
-        const response = await axios.get(`http://localhost:3000/games/themes/${this.jeu.numero_jeu}`);
-        this.mecanisms = response.data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-
-    displayThemes(){
-        for(const value of this.themes){
-          console.log("value ",value);
-        }
     }
 
   },
