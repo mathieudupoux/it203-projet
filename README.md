@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# ii203-projet
-=======
 # Qu'est que VGDB ?
 **VGDB** est une solution au projet "Jeux" de SGBD proposé aux élèves de la promotion 2021-2024 Informatique de [l'ENSEIRB-Matméca](https://enseirb-matmeca.bordeaux-inp.fr/fr/informatique). 
 
@@ -111,4 +108,3 @@ source
        ├── package.json
        └── vue.config.js // Configuration de Vue.JS
 ```
->>>>>>> 91e7891cb4ce3c46f2179fd2986595ecec15ba58
