@@ -5,7 +5,7 @@ DROP VIEW IF EXISTS bd.vue_avis;
 DROP VIEW IF EXISTS bd.vue_config;
 
 -- ========================================
---      Vue : vue_avis
+--      Vue : vue_jeu
 -- ========================================
 CREATE OR REPLACE VIEW bd.vue_jeu AS (
     SELECT J.numero_jeu, J.nom, J.editeur, J.date_de_parution, J.type_de_jeu, J.duree,
