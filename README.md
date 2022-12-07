@@ -4,38 +4,20 @@
 Celle-ci propose une implémentation d'une base de donnée d'une communauté de joueurs de jeux de société/jeux de rôle manipulée à l'aide d'une application Web se voulant proche du fonctionnement d'un "forum".
 # Démarrage rapide
 ## Pré-requis
-L'interface et la base de données étant conteneurisés, il est nécessaire d'avoir la dernière version de `Docker`. Pour cela, on recommande de suivre la documentation officielle sur [l'installation de Docker Engine](https://docs.docker.com/engine/install/). L'application nécessite aussi les accès administrateurs (`sudo`) pour déployer les conteneurs.
-
-## Lancement
-L'installation de l'application se fait simplement via le script :
-```sh
-./install.sh
-```
-Il faudra alors préciser :
-- le mot de passe administrateur `ROOT` de la base de donnée
-- un utilisateur `USER`et son mot de passe `USER_PASSWD` pour la base de donnée
-
-Attention : l'installation peut-être un peu longue la première fois le temps de de télécharger et construire les trois containers.
-
-L'application est alors accessible via http://localhost:5000
-
-## Environnement de développement
-Ce dépôt propose aussi aux développeurs un script permettant de démarrer uniquement le conteneur MariaDB ainsi que l'interface de gestion [**Adminer**](https://www.adminer.org). 
-
-### Démarrage de l'environnement de développement
-1. Lancer le script de lancement 
+La base de données étant conteneurisés, il est nécessaire d'avoir la dernière version de `Docker`. Pour cela, on recommande de suivre la documentation officielle sur [l'installation de Docker Engine](https://docs.docker.com/engine/install/). L'application nécessite aussi les accès administrateurs (`sudo`) pour déployer les conteneurs.
+### Lancement
+1. Lancer le script de lancement de la base de donnée
 ```sh
 ./devrun.sh
 ```
-2. Démarrer l'API dans un terminal avec
+2. Démarrer l'API backend dans un terminal avec
 ```sh
 cd source/backend && npm run dev
 ```
-3. Démarrer l'interface utilisateur dans autre un terminal avec
+3. Démarrer l'interface utilisateur frontend dans autre un terminal avec
 ```sh
 cd source/frontend && npm run serve
 ```
-
 ### Accès :
 - Frontend : http://localhost:5000
 - Backend : http://localhost:3000
