@@ -21,7 +21,8 @@
     <div class="field">
       <label class="label">Jeu associé à l'extension</label>
       <div class="control">
-        <select class="dropdown-content"  v-model="selectedGame">
+        <select class="dropdown-content"  v-on:change="getGameConfig" v-model="selectedGame">
+      
           <option v-for="menuItem in GameMenuItems" :key="menuItem.numero_jeu" v-bind:value="menuItem.nom">
 
               {{ menuItem.nom}}
@@ -32,7 +33,7 @@
 
   
 
-    <router-link class="button is-primary" to="/games" v-on:click="getGameConfig(); AddExtension()">Soumettre</router-link>
+    <router-link class="button is-primary" to="/games" v-on:click="AddExtension">Soumettre</router-link>
 
     <div class="notification is-info is-light">
       <button class="delete"></button>
