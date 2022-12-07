@@ -28,14 +28,7 @@
                     <button class="button level-item">
                         <span>{{ avis.indice }}</span><span class="icon"><i class="fas fa-star-half-stroke"></i></span>
                     </button>
-                    <div class="level-item">
-                        <button class="button is-primary is-outlined">
-                            <span class="icon"><i class="fas fa-thumbs-up"></i></span>
-                        </button>
-                        <button class="button is-danger is-outlined">
-                            <span class="icon"><i class="fas fa-thumbs-down"></i></span>
-                        </button>
-                    </div>
+
                     <!-- modal -->
                     <UpdateComment :toggleModal="showModalFlag" :mainGame='avis.numero_jeu' :avis='avis'
                         @reload="update">
