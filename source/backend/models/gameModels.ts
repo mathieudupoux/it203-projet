@@ -69,8 +69,8 @@ export const linkGameTheme = (req: Request, res: Response) => {
     let sql = `INSERT INTO bd.utilsation_theme (numero_jeu, numero_theme)
     select bd.jeu.numero_jeu, bd.theme.numero_theme
     from bd.jeu, bd.theme
-    where bd.jeu.nom="?"
-    and bd.theme.theme="?"`;
+    where bd.jeu.nom=?
+    and bd.theme.theme=?`;
     let values = [req.query.nom_jeu, req.query.theme];
     console.log(values);
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
@@ -80,8 +80,8 @@ export const linkGameMecanisme = (req: Request, res: Response) => {
     let sql = `INSERT INTO bd.utilsation_mecanique (numero_jeu, numero_mecanique)
     select bd.jeu.numero_jeu, bd.mecanique.numero_mecanique
     from bd.jeu, bd.mecanique
-    where bd.jeu.nom="?"
-    and bd.mecanique.mecanisme="?"`;
+    where bd.jeu.nom=?
+    and bd.mecanique.mecanisme=?`;
     let values = [req.query.nom_jeu, req.query.mecanisme];
     console.log(values);
     execute(sql, values).then(data => res.json(data)).catch(err => res.status(500).json(err));
