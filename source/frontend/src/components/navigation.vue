@@ -1,11 +1,11 @@
 <template>
   <section class="hero is-small is-warning">
-    <div class="hero-body has-text-centered">
-      <p class="title">
-        Sujet Jeux
+    <div class="hero-body is-medium has-text-centered">
+      <p class="title is-medium">
+        VGDB
       </p>
-      <p class="subtitle">
-        Par Marine, Nolan, Théodore et Mathieu
+      <p class="subtitle is-medium">
+        Par Marine, Théodore, Mathieu et Nolan
       </p>
     </div>
 
@@ -15,7 +15,7 @@
         <!-- Navbar Brand containing the Heading -->
         <div class="navbar-brand">
           <a class="navbar-item" href="#">
-            <router-link class="navbar-item" to="/">Sujet Jeux</router-link>
+            <router-link class="navbar-item" to="/">VGDB</router-link>
           </a>
 
           <!-- Burger Icons for responsive navbar -->

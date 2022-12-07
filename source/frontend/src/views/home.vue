@@ -1,18 +1,20 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <div class="block is-centered">
-    <h1 class="title">Welcome Here !</h1>
+  <div class="content has-text-left is-medium">
+    <h1 class="title">Hello World!</h1>
     <article>
       <p>Bienvenue sur le prototype de serveur de la communauté <strong>VGDB</strong></p>
       <p>Actuellement, il existe 3 onglets principaux pour manipuler notre base de donnée : </p>
-      <ul>
-        <li><router-link class="button" to="/games"> Jeux </router-link>,
-          pour voir, ajouter, modifier et supprimer un jeu et/ou ses extensions</li>
-        <li><router-link class="button" to="/comments"> Commentaires </router-link>
-          pour voir, ajouter, modifier et supprimer les avis des joueurs sur leurs jeux préférés (ou pas)</li>
-        <li><router-link class="button" to="/comments"> Joueurs </router-link>
-          pour voir, ajouter, modifier et supprimer les joueurs membre de la communauté VGDB</li>
-      </ul>
+      <div class="content has-text-left">
+        <ul class="list">
+          <li class="item"><router-link class="link" to="/games"> Jeux </router-link>
+            pour voir, ajouter, modifier et supprimer un jeu et/ou ses extensions</li> <br />
+          <li><router-link class="link" to="/comments"> Commentaires </router-link>
+            pour voir, ajouter, modifier et supprimer les avis des joueurs sur leurs jeux préférés (ou pas)</li><br />
+          <li><router-link class="link" to="/comments"> Joueurs </router-link>
+            pour voir, ajouter, modifier et supprimer les joueurs membre de la communauté VGDB</li>
+        </ul>
+      </div>
     </article>
   </div>
 </template>
