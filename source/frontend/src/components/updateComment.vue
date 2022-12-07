@@ -90,7 +90,6 @@
                 {{ configList }}
               </div>
             </div>
-            J e ne sais pas ce que je fais !
             <!-- {{ avis }} -->
           </div>
         </div>
