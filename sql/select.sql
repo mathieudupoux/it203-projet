@@ -259,8 +259,7 @@ group by numero_avis)
 select c_table.numero_avis,(1+c_table.c)/(1+d_table.d) as indice, c+d as nbUp
 from c_table
 inner join d_table on c_table.numero_avis=d_table.numero_avis
-group by c_table.numero_avis
-)
+group by c_table.numero_avis)
 as classement on bd.avis.numero_avis=classement.numero_avis
 order by classement.indice DESC;
 
