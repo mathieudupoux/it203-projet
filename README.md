@@ -29,11 +29,11 @@ Ce dépôt propose aussi aux développeurs un script permettant de démarrer uni
 ```
 2. Démarrer l'API dans un terminal avec
 ```sh
-cd source/backend && npm i && npm run dev
+cd source/backend && npm run dev
 ```
 3. Démarrer l'interface utilisateur dans autre un terminal avec
 ```sh
-cd source/frontend && npm i && npm run serve
+cd source/frontend && npm run serve
 ```
 
 ### Accès :
@@ -88,7 +88,7 @@ source
 ### Interface utilisateur
 L'interface utilisateur est quand à elle conçue via le framework [**VueJS 3**](https://vuejs.org), avec le thème CSS [**Bulma**](https://bulma.io). 
 
-L'application est conçue en une seule page comportant différentes vues sur les jeux, les commentaires, les joueurs. L'appel aux requêtes RESTa été voulu comme étant le plus natuel possible en implémentant une interface proche ce que l'on pourrait trouver sur un vrai forum. Par exemple, les requêtes de suppression et de modification sont lancés via des boutons "Modifier" et "Supprimer". Les vues par défaut (liste de joueurs, de jeux, de commentaire) correspondent aux requêtes de sélections demandés dans le sujet et peuvent être le cas échéant paramétrés via des menus déroulants ou des champs de saisie.
+L'application est conçue en une seule page comportant différentes vues sur les jeux, les commentaires, les joueurs. L'appel aux requêtes REST a été voulu comme étant le plus natuel possible en implémentant une interface proche ce que l'on pourrait trouver sur un vrai forum. Par exemple, les requêtes de suppression et de modification sont lancés via des boutons "Modifier" et "Supprimer". Les vues par défaut (liste de joueurs, de jeux, de commentaire) correspondent aux requêtes de sélections demandés dans le sujet et peuvent être le cas échéant paramétrés via des menus déroulants ou des champs de saisie.
 
 Les sources de l'application sont contenues dans le dossier `source/frontend` et sont réparties de la manière suivante :
 ```
