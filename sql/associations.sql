@@ -1,22 +1,7 @@
-
--- ajouter une personne et un joueur en même temps 
-
-insert into bd.personne (nom, prenom) values ( 'Joueur'     , 'N'        ) ;
-insert into bd.joueur (numero_personne, pseudo, mail)
-select bd.personne.numero_personne, 'pseudo', 'n@gmail.com'
-from bd.personne
-where bd.personne.nom='Joueur'
-and bd.personne.prenom='N';
-
-commit;
-
-
-------------------------
-
 -- utilisation_mécanique entre jeu et mécanique en fonction du nom du jeu, et de la mécanique
 
 
-insert into bd.utilsation_mecanique 
+insert into bd.utilsation_mecanique (numero_jeu, numero_mecanique)
 select bd.jeu.numero_jeu, bd.mecanique.numero_mecanique
 from bd.jeu, bd.mecanique
 where bd.jeu.nom='Monopoly'
@@ -24,12 +9,19 @@ and bd.mecanique.mecanisme='Draft';
 
 commit;
 
+-- linkGameMecanisme()
+-- `INSERT INTO bd.utilsation_mecanique (numero_jeu, numero_mecanique)
+--     select bd.jeu.numero_jeu, bd.mecanique.numero_mecanique
+--     from bd.jeu, bd.mecanique
+--     where bd.jeu.nom=?
+--     and bd.mecanique.mecanisme=?`
+
 
 ------------------------
 
 -- utilisation_theme entre jeu et theme en fonction du nom du jeu, et du theme
 
-insert into bd.utilsation_theme 
+insert into bd.utilsation_theme (numero_jeu, numero_theme)
 select bd.jeu.numero_jeu, bd.theme.numero_theme
 from bd.jeu, bd.theme
 where bd.jeu.nom='Monopoly'
@@ -37,18 +29,32 @@ and bd.theme.theme='Policier';
 
 commit;
 
+-- linkGameTheme
+-- INSERT INTO bd.utilsation_theme (numero_jeu, numero_theme)
+--     select bd.jeu.numero_jeu, bd.theme.numero_theme
+--     from bd.jeu, bd.theme
+--     where bd.jeu.nom=?
+--     and bd.theme.theme=?
+
 
 ------------------------
 
 -- preferences_mécanique entre joueur et mécanique en fonction du pseudo, et de la mécanique
 
-insert into bd.preference_mecanique 
+insert into bd.preference_mecanique (numero_personne, numero_mecanique)
 select bd.joueur.numero_personne, bd.mecanique.numero_mecanique
 from bd.joueur, bd.mecanique
-where bd.joueur.pseudo='clio'
+where bd.joueur.numero_personne=2
 and bd.mecanique.mecanisme='Draft';
 
 commit;
+
+-- linkPlayerMecanic
+-- `INSERT INTO bd.preference_mecanique (numero_personne, numero_mecanique)
+--     select bd.joueur.numero_personne, bd.mecanique.numero_mecanique
+--     from bd.joueur, bd.mecanique
+--     where bd.joueur.numero_personne=?
+--     and bd.mecanique.mecanisme=?`;
 
 
 ------------------------
@@ -58,12 +64,17 @@ commit;
 insert into bd.preference_theme 
 select bd.joueur.numero_personne, bd.theme.numero_theme
 from bd.joueur, bd.theme
-where bd.joueur.pseudo='clio'
+where bd.joueur.numero_personne=2
 and bd.theme.theme='Policier';
 
 commit;
 
-
+-- linkPlayerTheme
+-- `INSERT INTO bd.preference_theme (numero_personne, numero_theme)
+--     select bd.joueur.numero_personne, bd.theme.numero_theme
+--     from bd.joueur, bd.theme
+--     where bd.joueur.numero_personne=?
+--     and bd.theme.theme=?`
 
 ------------------------
 
@@ -71,9 +82,9 @@ commit;
 -- appréciation entre joueur et avis en fonction du pseudo, numéro avis
 
 insert into bd.appreciation (numero_personne, numero_avis, pertinence)
-select bd.jeu.numero_personne, 3, 5
-from bd.jeu
-where bd.jeu.pseudo='tbm';
+select bd.joueur.numero_personne, 3, 5
+from bd.joueur
+where bd.joueur.pseudo='tbm';
 commit;
 
 ------------------------
@@ -90,6 +101,12 @@ and bd.jeu.numero_jeu=bd.extension.numero_jeu
 and bd.jeu.numero_jeu=bd.configuration.numero_jeu; -- vérifie si la configuration appartient bien au même jeu que l'extension
 
 commit;
+
+-- LinkExtension 
+-- `INSERT INTO bd.extension_configuration (numero_configuration, numero_extension)
+--     select ?, bd.extension.numero_extension
+--     from bd.extension
+--     where bd.extension.nom=?`
 
 ------------------------
 
@@ -118,4 +135,23 @@ and bd.jeu.nom='Monopoly';
 
 
 commit;
+
+
+---------------------------
+
+-- AddConfig
+-- `INSERT INTO bd.configuration (nb_joueurs, numero_jeu)
+--     select ? , bd.jeu.numero_jeu
+--     from bd.jeu
+--     where bd.jeu.nom=?`
+
+-- AddExtension
+-- `INSERT INTO bd.extension (nom, date_parution, numero_jeu)
+--     select ? , ?, bd.jeu.numero_jeu
+--     from bd.jeu
+--     where bd.jeu.nom=?`
+
+
+
+
 
