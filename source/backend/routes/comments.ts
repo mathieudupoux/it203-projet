@@ -29,5 +29,8 @@ router.get('/remove/:id', removeComment);
 /* GET removeComment */
 router.post('/update', updateComment);
 
+/* POST new comment */
+router.post('/new', addCommentOnConfig);
+
 
 export default router;
