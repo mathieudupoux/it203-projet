@@ -4,7 +4,7 @@
 Celle-ci propose une implémentation d'une base de donnée d'une communauté de joueurs de jeux de société/jeux de rôle manipulée à l'aide d'une application Web se voulant proche du fonctionnement d'un "forum".
 # Démarrage rapide
 ## Pré-requis
-L'interface et la base de données étant contenerisés, il est nécessaire d'avoir la dernière version de `Docker`. Pour cela, on recommande de suivre la documentation officielle sur [l'installation de Docker Engine](https://docs.docker.com/engine/install/). L'application nécessite aussi les accès administrateurs (`sudo`) pour déployer les conteneurs.
+L'interface et la base de données étant conteneurisés, il est nécessaire d'avoir la dernière version de `Docker`. Pour cela, on recommande de suivre la documentation officielle sur [l'installation de Docker Engine](https://docs.docker.com/engine/install/). L'application nécessite aussi les accès administrateurs (`sudo`) pour déployer les conteneurs.
 
 ## Lancement
 L'installation de l'application se fait simplement via le script :
@@ -48,7 +48,7 @@ Les identifiants de la base de donnée sont répertoriés dans `.env_local` et e
 L'application est décomposée en trois parties : base de donnée, API ("backend") et interface utilisateur ("frontend"). L'application complète (backend + frontend) sont entièrement développés en TypeScript à l'aide de différents frameworks disponibles dans le gestionnaire de paquets `npm`.
 
 ### Base de donnée
-La base de donéne en elle-même est hébergée par un serveur **MariaDB** avec le moteur de stockage **InnoDB**. Le conteneur peut recueillir ses requêtes directement via le port `3306` mais aussi via [**Adminer**](https://www.adminer.org/), une interface simplifiée de manipulation de base de donnée.
+La base de donnée en elle-même est hébergée par un serveur **MariaDB** avec le moteur de stockage **InnoDB**. Le conteneur peut recueillir ses requêtes directement via le port `3306` mais aussi via [**Adminer**](https://www.adminer.org/), une interface simplifiée de manipulation de base de donnée.
 
 L'ensemble des requêtes utilisés par l'application sont regroupées dans le dossier `sql` et réparties en plusieurs fichiers :
 ```
@@ -68,11 +68,11 @@ L'interaction de la base de donnée est implémentée par un gestionnaire de req
 
 L'API reçoit ses requêtes REST sur http://localhost:3000 et envoie directement une requête SQL contenue dans chaque route à la base de donnée via le connecteur `mariadb.connector.ts`.
 
-Les sources de cette partie "backend" de l'application se trouvent dans `source/bakend` et se répartissent ainsi :
+Les sources de cette partie "backend" de l'application se trouvent dans `source/backend` et se répartissent ainsi :
 ```
 source
 └── backend
-    ├── app.ts // Fichier principale, entrée du backend
+    ├── app.ts // Fichier principal, entrée du backend
     ├── config // Configuration du backend et de     
     │             la base de donnée
     ├── models // Ensemble des fonctions permettant  
@@ -88,7 +88,7 @@ source
 ### Interface utilisateur
 L'interface utilisateur est quand à elle conçue via le framework [**VueJS 3**](https://vuejs.org), avec le thème CSS [**Bulma**](https://bulma.io). 
 
-L'application est conçue en une seule page comportant différentes vues sur les jeux, les commentaires, les joueurs. L'appel aux requêtes REST a été voulu comme étant le plus natuel possible en implémentant une interface proche ce que l'on pourrait trouver sur un vrai forum. Par exemple, les requêtes de suppression et de modification sont lancés via des boutons "Modifier" et "Supprimer". Les vues par défaut (liste de joueurs, de jeux, de commentaire) correspondent aux requêtes de sélections demandés dans le sujet et peuvent être le cas échéant paramétrés via des menus déroulants ou des champs de saisie.
+L'application est conçue en une seule page comportant différentes vues sur les jeux, les commentaires, les joueurs. L'appel aux requêtes REST a été voulu comme étant le plus naturel possible en implémentant une interface proche ce que l'on pourrait trouver sur un vrai forum. Par exemple, les requêtes de suppression et de modification sont lancés via des boutons "Modifier" et "Supprimer". Les vues par défaut (liste de joueurs, de jeux, de commentaire) correspondent aux requêtes de sélections demandés dans le sujet et peuvent être le cas échéant paramétrés via des menus déroulants ou des champs de saisie.
 
 Les sources de l'application sont contenues dans le dossier `source/frontend` et sont réparties de la manière suivante :
 ```
