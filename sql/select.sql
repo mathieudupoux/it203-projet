@@ -140,3 +140,142 @@
  SELECT bd.avis.date_avis, bd.avis.note, bd.avis.commentaire FROM bd.joueur, bd.avis WHERE bd.joueur.numero_personne = bd.joueur.numero_personne && bd.joueur.pseudo = pseudo;
 
 
+
+--------------------------------------------------------------------------
+-------------------------- Consultation ----------------------------------
+--------------------------------------------------------------------------
+
+
+----------------------------  1  ------------------------------
+select * 
+from bd.jeu, bd.theme, bd.utilsation_theme, bd.configuration, bd.avis, bd.mecanique, bd.utilsation_mecanique
+where bd.theme.theme='Policier' -- remplacer 'Policier' par n'importe quel theme
+and bd.theme.numero_theme=bd.utilsation_theme.numero_theme
+and bd.jeu.numero_jeu=bd.utilsation_theme.numero_jeu
+and bd.avis.numero_configuration=bd.configuration.numero_configuration
+and bd.configuration.numero_jeu=bd.jeu.numero_jeu
+and bd.jeu.numero_jeu=bd.utilsation_mecanique.numero_jeu
+and bd.mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+group by bd.jeu.numero_jeu
+order by bd.mecanique.mecanisme;
+
+--- ou 
+
+select * 
+from bd.jeu
+inner join bd.utilsation_theme on bd.utilsation_theme.numero_jeu=bd.jeu.numero_jeu
+inner join  bd.theme on bd.theme.numero_theme=bd.utilsation_theme.numero_theme
+inner join bd.configuration on bd.configuration.numero_jeu=bd.jeu.numero_jeu
+inner join bd.avis on bd.avis.numero_configuration=bd.configuration.numero_configuration
+inner join bd.utilsation_mecanique on bd.jeu.numero_jeu=bd.utilsation_mecanique.numero_jeu
+inner join bd.mecanique on bd.mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+where bd.theme.theme='Policier' -- remplacer 'Policier' par n'importe quel theme
+group by bd.jeu.numero_jeu
+order by bd.mecanique.mecanisme;
+
+----------------------------  2  ------------------------------
+
+select *
+from bd.avis
+inner join bd.configuration on bd.configuration.numero_configuration=bd.avis.numero_configuration
+inner join bd.jeu on bd.jeu.numero_jeu=bd.configuration.numero_jeu
+inner join bd.utilsation_mecanique on bd.utilsation_mecanique.numero_jeu=bd.jeu.numero_jeu
+inner join bd.preference_mecanique on bd.preference_mecanique.numero_mecanique=bd.utilsation_mecanique.numero_mecanique
+inner join bd.joueur on bd.preference_mecanique.numero_personne=bd.joueur.numero_personne
+where bd.joueur.numero_personne=6; -- remplacer 6 par n'importe quel numéro_personne
+
+----------------------------  3  ------------------------------
+
+select *
+from bd.joueur
+inner join bd.appreciation on bd.appreciation.numero_personne=bd.joueur.numero_personne
+inner join bd.avis on bd.avis.numero_avis=bd.appreciation.numero_avis
+where bd.avis.numero_avis=3; -- remplacer 3 par n'importe quel numéro_avis
+
+
+--------------------------------------------------------------------------
+-------------------------- Statistiques ----------------------------------
+--------------------------------------------------------------------------
+
+
+----------------------------  1  ------------------------------
+
+select count(bd.avis.numero_avis) as nombre_avis, bd.joueur.* 
+from joueur
+left join bd.avis on bd.avis.numero_personne=bd.joueur.numero_personne
+group by bd.joueur.numero_personne
+order by count(bd.avis.numero_avis) DESC;
+-- attention, on pourrait croire qu'il pourrait y avoir plus de joueurs, mais les autres personnes ne sont pas des joueurs !
+
+
+
+----------------------------  2  ------------------------------
+
+select * 
+from bd.avis
+order by bd.avis.date_avis DESC
+limit 3; -- remplacer 3 par n'importe quelle valeur
+
+----------------------------  3  ------------------------------
+
+select *, count(bd.appreciation.pertinence) 
+from bd.avis
+inner join bd.appreciation on bd.appreciation.numero_avis=bd.avis.numero_avis
+group by bd.avis.numero_avis
+order by count(bd.appreciation.pertinence) desc
+limit 1;
+
+
+----------------------------  4  ------------------------------
+
+
+
+select bd.avis.numero_avis, 
+case 
+  when classement.indice IS NOT NULL 
+  then classement.indice
+  else 0
+  end as indice , bd.avis.date_avis, bd.avis.commentaire from bd.avis left join
+(
+with c_table as ( select numero_avis,
+case 
+  WHEN sum(pertinence)>=1 THEN sum(pertinence)
+  ELSE 0
+end as c
+from bd.appreciation
+group by numero_avis)
+, d_table as ( select numero_avis,
+case 
+  WHEN sum(pertinence)<=-1 THEN sum(pertinence)*-1
+  ELSE 0
+end as d
+from bd.appreciation
+group by numero_avis)
+select c_table.numero_avis,(1+c_table.c)/(1+d_table.d) as indice, c+d as nbUp
+from c_table
+inner join d_table on c_table.numero_avis=d_table.numero_avis
+group by c_table.numero_avis)
+as classement on bd.avis.numero_avis=classement.numero_avis
+order by classement.indice DESC;
+
+
+--------------------------------------------------------------------------------------
+-------- Requête supplémentaire getAllGames
+
+
+SELECT J.numero_jeu, J.nom, J.editeur, J.date_de_parution, J.type_de_jeu, J.duree,
+CASE 
+WHEN M.numero_mecanique IS NOT NULL 
+THEN M.mecanisme 
+ELSE 'Pas de mécanique'
+END,
+CASE 
+WHEN T.numero_theme IS NOT NULL 
+THEN T.theme 
+ELSE 'Pas de thème'
+END
+FROM jeu as J 
+LEFT OUTER JOIN utilsation_mecanique as UM on J.numero_jeu=UM.numero_jeu 
+LEFT OUTER JOIN mecanique as M on UM.numero_mecanique=M.numero_mecanique 
+LEFT OUTER JOIN utilsation_theme as UT on J.numero_jeu=UT.numero_jeu 
+LEFT OUTER JOIN theme as T on T.numero_theme = UT.numero_theme ;
